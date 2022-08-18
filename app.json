@@ -1,5 +1,5 @@
 {
-      "name": "Kyouko Hori",
+      "name": "Zero Two",
       "description": "A Powerful  Telegram group management bot with anime theme.",
       "keywords": [
          "telegram",
@@ -9,8 +9,8 @@
          "naorobot"
       ],
     
-   "logo":    "https://telegra.ph/file/35e56ba7eace7332356ad.jpg",  
-   "repository": "https://github.com/kennedy-ex/https://github.com/kennedy-ex/EmikoRobot",
+   "logo":    "https://telegra.ph/file/f22d73dc5d935142b6d0c.png",  
+   "repository": "https://github.com/",
    "buildpacks": [
     {
       "url": "https://github.com/heroku/heroku-buildpack-python"
@@ -38,14 +38,8 @@
       "OWNER_ID": {
          "description": "Your user ID as an integer.",
          "required": true,
-         "value": "2088106582"
+         "value": "1191870547"
      },
-
-      "STRING_SESSION": {
-         "description": "Fill with telethon string session.",
-         "required": true,
-         "value": "" 
-      },
       "HEROKU_API_KEY": {
         "description": "Your Heroku API key, get it from 'https://dashboard.heroku.com/account'",
         "value": ""
@@ -56,7 +50,7 @@
       },
       "BOT_USERNAME": {
          "description": "username of your bot without the @",
-         "value": "emiexrobot"
+         "value": "MissZeroTwoBot"
       },
 
       "BOT_ID": {
@@ -66,7 +60,7 @@
 
       "OWNER_USERNAME": {
          "description": "Your username without the @",
-         "value": "excrybaby"
+         "value": "KillMeOnce"
       },
       "SUPPORT_CHAT": {
          "description": "Your Telegram support group chat username where your users will go and bother you with shit But be like: MyGroupChatUsernameBlah. If this ever points to masha support than consider you made an enemy.",
@@ -77,14 +71,7 @@
          "description": "Required for database connections.",
          "required": true,
          "value": ""
-      },
-      "IBM_WATSON_CRED_URL": {
-         "description": "This is required for the speech to text module. Get your USERNAME from https://console.bluemix.net/docs/services/speech-to-text/getting-started.html",
-         "required": false
-     },
-     "IBM_WATSON_CRED_PASSWORD": {
-        "description": "This is required for the speech to text module. Get your PASSWORD from https://console.bluemix.net/docs/services/speech-to-text/getting-started.html",
-        "required": false
+      }
      },
      "EVENT_LOGS": {
          "description": "Event logs channel to note down important bot level events, recommend to make this public. ex: '-123456'",
@@ -107,13 +94,7 @@
          "value": "-xyz"
      }, 
 
-      "OPENWEATHERMAP_ID": {
-        "description": "Get your own API from https://api.openweathermap.org/data/2.5/weather",
-        "value": "",
-        "required": false
-      },
-
-      "DEV_USERS": {
+      "MOD_USERS": {
          "description": "ID of users who are Devs of your bot (can use /py etc.). If you are a noob and would come and bother Masha support then keep the current ID's here at they are and add yours.",
          "required": false,
          "value": ""
@@ -123,10 +104,6 @@
          "required": false,
          "value": ""
      },
-        "ARQ_API": {
-            "description": "Get this from @ARQRobot.",
-            "required": true
-        },
 
       "SPAMWATCH_API": {
          "description": "Spamwatch API Token, Get one from @SpamWatchBot.",
@@ -147,7 +124,7 @@
          "required": false,
          "value": ""
       },
-      "TIGERS": {
+      "REAPERS": {
          "description": "A space separated list of user IDs who you wanna assign as tiger users.",
          "required": false,
          "value": ""

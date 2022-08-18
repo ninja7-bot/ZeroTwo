@@ -1,1 +1,1 @@
-worker: python3 -m horisan
+worker: python3 -m tg_bot

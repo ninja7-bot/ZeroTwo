@@ -185,12 +185,12 @@ def manga(update: Update, context: CallbackContext):
             rep, parse_mode=ParseMode.HTML, reply_markup=InlineKeyboardMarkup(keyb)
         )
 
-ANIME_HANDLER = DisableEnableCommandHandler("manime", anime, pass_args=True, run_async=True)
-CHARACTER_HANDLER = DisableEnableCommandHandler(
+ANIME_HANDLER = CommandHandler("manime", anime, pass_args=True, run_async=True)
+CHARACTER_HANDLER = CommandHandler(
     "mcharacter", character, pass_args=True, run_async=True
 )
-UPCOMING_HANDLER = DisableEnableCommandHandler("mupcoming", upcoming, run_async=True)
-MANGA_HANDLER = DisableEnableCommandHandler("mmanga", manga, pass_args=True, run_async=True)
+UPCOMING_HANDLER = CommandHandler("mupcoming", upcoming, run_async=True)
+MANGA_HANDLER = CommandHandler("mmanga", manga, pass_args=True, run_async=True)
 
 dispatcher.add_handler(ANIME_HANDLER)
 dispatcher.add_handler(CHARACTER_HANDLER)

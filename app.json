@@ -10,7 +10,7 @@
       ],
     
    "logo":    "https://telegra.ph/file/f22d73dc5d935142b6d0c.png",  
-   "repository": "https://github.com/",
+   "repository": "https://github.com/ninja7-bot/Zero-Two",
    "buildpacks": [
     {
       "url": "https://github.com/heroku/heroku-buildpack-python"
@@ -21,90 +21,87 @@
   ],  
    "env": {
       "TOKEN": {
-         "description": "Your bot token. Get one from @BotFather duh",
-         "required": true,
-         "value": ""
+          "description": "Your bot token. Get one from @BotFather duh",
+          "required": true,
+          "value": ""
       },
       "API_ID": {
-         "description": "Get API_ID from my.telegram.org, used for telethon based modules.",
-         "required": true,
-         "value": ""
+          "description": "Get API_ID from my.telegram.org, used for telethon based modules.",
+          "required": true,
+          "value": ""
       },
       "API_HASH": {
-         "description": "Get API_HASH from my.telegram.org, used for telethon based modules.",
-         "required": true,
-         "value": ""
+          "description": "Get API_HASH from my.telegram.org, used for telethon based modules.",
+          "required": true,
+          "value": ""
       },    
       "OWNER_ID": {
-         "description": "Your user ID as an integer.",
-         "required": true,
-         "value": "1191870547"
+          "description": "Your user ID as an integer.",
+          "required": true,
+          "value": "1191870547"
      },
       "HEROKU_API_KEY": {
-        "description": "Your Heroku API key, get it from 'https://dashboard.heroku.com/account'",
-        "value": ""
+          "description": "Your Heroku API key, get it from 'https://dashboard.heroku.com/account'",
+          "value": ""
       },
       "HEROKU_APP_NAME": {
-        "description": "Enter the Heroku app name here (Must an exact same name with your input above).",
-        "required": false
+          "description": "Enter the Heroku app name here (Must an exact same name with your input above).",
+          "required": false
       },
       "BOT_USERNAME": {
-         "description": "username of your bot without the @",
-         "value": "MissZeroTwoBot"
+          "description": "username of your bot without the @",
+          "value": "MissZeroTwoBot"
       },
-
       "BOT_ID": {
-         "description": "to get your bot_id using other bot or userbot",
-         "value": ""
+          "description": "to get your bot_id using other bot or userbot",
+          "value": ""
       },
-
-      "OWNER_USERNAME": {
-         "description": "Your username without the @",
-         "value": "KillMeOnce"
-      },
-      "SUPPORT_CHAT": {
-         "description": "Your Telegram support group chat username where your users will go and bother you with shit But be like: MyGroupChatUsernameBlah. If this ever points to masha support than consider you made an enemy.",
-         "required": true,
-         "value": "emikosupport"
-      },
-      "MONGO_DB_URI": {
-         "description": "Required for database connections.",
-         "required": true,
-         "value": ""
-      }
+     "OWNER_USERNAME": {
+          "description": "Your username without the @",
+          "value": "KillMeOnce"
+     },
+     "SUPPORT_CHAT": {
+          "description": "Your Telegram support group chat username where your users will go and bother you with shit But be like: MyGroupChatUsernameBlah. If this ever points to masha support than consider you made an enemy.",
+          "required": true,
+          "value": "lmao"
+     },
+     "MONGO_DB_URI": {
+          "description": "Required for database connections.",
+          "required": true,
+          "value": ""
      },
      "EVENT_LOGS": {
-         "description": "Event logs channel to note down important bot level events, recommend to make this public. ex: '-123456'",
-         "required": true,
-         "value": "-1001626554919"
+          "description": "Event logs channel to note down important bot level events, recommend to make this public. ex: '-123456'",
+          "required": true,
+          "value": "-1001626554919"
       },
       "JOIN_LOGGER": {
-         "description": "A channel where bot will print who added it to what group, useful during debugging or spam handling.",
-         "required": true,
-         "value": "-1001626554919"
+          "description": "A channel where bot will print who added it to what group, useful during debugging or spam handling.",
+          "required": true,
+          "value": "-1001626554919"
       },      
       "CASH_API_KEY": {
-         "description": "Required for currency converter. Get yours from https://www.alphavantage.co/support/#api-key",
-         "required": true,
-         "value": "-xyz"
+          "description": "Required for currency converter. Get yours from https://www.alphavantage.co/support/#api-key",
+          "required": true,
+          "value": "-xyz"
       },
       "TIME_API_KEY": {
-         "description": "Required for timezone information. Get yours from https://timezonedb.com/api",
-         "required": true,
-         "value": "-xyz"
-     }, 
+          "description": "Required for timezone information. Get yours from https://timezonedb.com/api",
+          "required": true,
+          "value": "-xyz"
+      }, 
 
       "MOD_USERS": {
-         "description": "ID of users who are Devs of your bot (can use /py etc.). If you are a noob and would come and bother Masha support then keep the current ID's here at they are and add yours.",
-         "required": false,
-         "value": ""
-     },
+          "description": "ID of users who are Devs of your bot (can use /py etc.). If you are a noob and would come and bother Masha support then keep the current ID's here at they are and add yours.",
+          "required": false,
+          "value": ""
+      },
       "ERROR_LOG": {
-         "description": "ID of log for show error.",
-         "required": false,
-         "value": ""
-     },
-
+          "description": "ID of log for show error.",
+          "required": false,
+          "value": ""
+      },
+      
       "SPAMWATCH_API": {
          "description": "Spamwatch API Token, Get one from @SpamWatchBot.",
          "required": false,
@@ -176,10 +173,10 @@
          "description": "Set this to True if you want to delete command messages from users who don't have the perms to run that command.",
          "value": "True"
       },
-        "ARQ_API": {
+      "ARQ_API": {
             "description": "Get this from @ARQRobot.",
             "required": true
-        },
+      },
       "BAN_STICKER": {
          "description": "ID of the sticker you want to use when banning people.",
          "required": false,

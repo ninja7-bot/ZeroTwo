@@ -367,7 +367,6 @@ def bot_about_callback(update, context):
                  [
                     InlineKeyboardButton(text="Go Back", callback_data="bot_back"),
                  ]
-                ]
             ),
         )
     elif query.data == "bot_back":

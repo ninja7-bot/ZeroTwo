@@ -13,7 +13,7 @@ from tg_bot import dispatcher as d, LOGGER
 from typing import Optional, Union, List
 
 
-class horiHandler:
+class botHandler:
     def __init__(self, d):
         self._dispatcher = d
 
@@ -54,7 +54,7 @@ class horiHandler:
                         group,
                     )
                 LOGGER.debug(
-                    f"[HORICMD] Loaded handler {command} for function {func.__name__} in group {group}"
+                    f"[BOTCMD] Loaded handler {command} for function {func.__name__} in group {group}"
                 )
             except TypeError:
                 if can_disable:
@@ -81,7 +81,7 @@ class horiHandler:
                         )
                     )
                 LOGGER.debug(
-                    f"[HORICMD] Loaded handler {command} for function {func.__name__}"
+                    f"[BOTCMD] Loaded handler {command} for function {func.__name__}"
                 )
 
             return func
@@ -110,7 +110,7 @@ class horiHandler:
                         MessageHandler(pattern, func, run_async=run_async), group
                     )
                 LOGGER.debug(
-                    f"[HORIMSG] Loaded filter pattern {pattern} for function {func.__name__} in group {group}"
+                    f"[BOTMSG] Loaded filter pattern {pattern} for function {func.__name__} in group {group}"
                 )
             except TypeError:
                 if can_disable:
@@ -124,7 +124,7 @@ class horiHandler:
                         MessageHandler(pattern, func, run_async=run_async)
                     )
                 LOGGER.debug(
-                    f"[HORIMSG] Loaded filter pattern {pattern} for function {func.__name__}"
+                    f"[BOTMSG] Loaded filter pattern {pattern} for function {func.__name__}"
                 )
 
             return func
@@ -139,7 +139,7 @@ class horiHandler:
                 )
             )
             LOGGER.debug(
-                f"[HORICALLBACK] Loaded callbackquery handler with pattern {pattern} for function {func.__name__}"
+                f"[BOTCALLBACK] Loaded callbackquery handler with pattern {pattern} for function {func.__name__}"
             )
             return func
 
@@ -165,14 +165,14 @@ class horiHandler:
                 )
             )
             LOGGER.debug(
-                f"[HORIINLINE] Loaded inlinequery handler with pattern {pattern} for function {func.__name__} | PASSES USER DATA: {pass_user_data} | PASSES CHAT DATA: {pass_chat_data} | CHAT TYPES: {chat_types}"
+                f"[BOTINLINE] Loaded inlinequery handler with pattern {pattern} for function {func.__name__} | PASSES USER DATA: {pass_user_data} | PASSES CHAT DATA: {pass_chat_data} | CHAT TYPES: {chat_types}"
             )
             return func
 
         return _inlinequery
 
 
-horicmd = horiHandler(d).command
-horimsg = horiHandler(d).message
-horicallback = horiHandler(d).callbackquery
-horiinline = horiHandler(d).inlinequery
+botcmd = botHandler(d).command
+botmsg = botHandler(d).message
+botcallback = botHandler(d).callbackquery
+botinline = botHandler(d).inlinequery

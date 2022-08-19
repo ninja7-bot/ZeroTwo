@@ -15,4 +15,4 @@ PHOTO = "https://telegra.ph/file/9c2e4c8599e3b56c9fcd8.mp4"
 @register(pattern=("/alive"))
 async def awake(event):
     TEXT = f"**Zero Two seems to be working perfectly!** \n\n"
-    await tbot.send_file(event.chat_id, PHOTO, caption=TEXT)
+    await tbot.send_photo(event.chat_id, PHOTO, caption=TEXT)

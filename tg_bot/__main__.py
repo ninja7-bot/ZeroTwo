@@ -85,7 +85,7 @@ ZEROTWO_IMG = "https://images8.alphacoders.com/923/923161.jpg"
 
 PM_START_TEXT = """
 Hey there, {}!
-I am called {}, Pistil for Strelizia.
+I am called Zero Two, Pistil for Strelizia.
 *Codename*: [002](https://images8.alphacoders.com/923/923161.jpg) 
 *Status*: `Reincarnated`
 *Life Force*: `0%` 
@@ -106,7 +106,17 @@ buttons = [
 
 
 HELP_STRINGS = """
-Click on the buttons bellow to get description of Zero Two's commands!"""
+*Zero Two* at your service.
+I can help you with following functions in managing group.
+*Main* commands available:
+ • /help: PM's you this message.
+ • /help <module name>: PM's you info about that module.
+ • /donate: information on how to donate!
+ • /settings:
+   • in PM: will send you your settings for all supported modules.
+   • in a group: will redirect you to pm, with all that chat's settings.
+{}
+And the following:"""
 
 DONATE_STRING = """Zero Two has got no use for fundings at the moment. Enjoy the service. If interested, can checkout @HanabiAddict!"""
 

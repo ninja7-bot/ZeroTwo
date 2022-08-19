@@ -1,9 +1,9 @@
 import threading
 
-from sqlalchemy import Column, String, UnicodeText, Boolean, distinct, func, Integer
+from sqlalchemy import Column, String, UnicodeText, Boolean, Integer, distinct, func
 
-from tg_bot.modules.helper_funcs.msg_types import Types
-from tg_bot.modules.sql import BASE, SESSION
+from ZeroTwo.modules.helper_funcs.msg_types import Types
+from ZeroTwo.modules.sql import BASE, SESSION
 
 
 class CustomFilters(BASE):
@@ -69,7 +69,7 @@ class CustomFilters(BASE):
         return bool(
             isinstance(other, CustomFilters)
             and self.chat_id == other.chat_id
-            and self.keyword == other.keyword,
+            and self.keyword == other.keyword
         )
 
 
@@ -95,7 +95,7 @@ class NewCustomFilters(BASE):
         return bool(
             isinstance(other, CustomFilters)
             and self.chat_id == other.chat_id
-            and self.keyword == other.keyword,
+            and self.keyword == other.keyword
         )
 
 
@@ -360,19 +360,11 @@ def __migrate_filters():
             print(str(x.chat_id), x.keyword, x.reply, file_type.value)
             if file_type == Types.TEXT:
                 filt = CustomFilters(
-                    str(x.chat_id),
-                    x.keyword,
-                    x.reply,
-                    file_type.value,
-                    None,
+                    str(x.chat_id), x.keyword, x.reply, file_type.value, None
                 )
             else:
                 filt = CustomFilters(
-                    str(x.chat_id),
-                    x.keyword,
-                    None,
-                    file_type.value,
-                    x.reply,
+                    str(x.chat_id), x.keyword, None, file_type.value, x.reply
                 )
 
             SESSION.add(filt)

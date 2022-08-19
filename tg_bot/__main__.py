@@ -81,7 +81,7 @@ def get_readable_time(seconds: int) -> str:
     return ping_time
 
 
-GROUP_START_IMG = "https://images8.alphacoders.com/923/923161.jpg"
+ZEROTWO_IMG = "https://images8.alphacoders.com/923/923161.jpg"
 
 PM_START_TEXT = """
 Hey there, {}!
@@ -209,23 +209,21 @@ def start(update: Update, context: CallbackContext):
 
         else:
             first_name = update.effective_user.first_name
-            update.effective_message.reply_text(
+            update.effective_message.reply_photo(
+                ZEROTWO_IMG,
                 PM_START_TEXT.format(
-                    escape_markdown(first_name),
-                    escape_markdown(uptime),
-                    sql.num_users(),
-                    sql.num_chats()),                        
+                    escape_markdown(first_name),                       
                 reply_markup=InlineKeyboardMarkup(buttons),
                 parse_mode=ParseMode.MARKDOWN,
                 timeout=60,
-                disable_web_page_preview=False,
+                disable_web_page_preview=True,
             )
               
     else:
-        update.effective_message.reply_animation(
-            GROUP_START_IMG,
+        update.effective_message.reply_photo(
+            ZEROTWO_IMG,
             caption="Up and running since: <code>{}</code>".format(
-                uptime
+                uptime, parse_mode=ParseMode.HTML
             )
         )
 

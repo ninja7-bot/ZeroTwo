@@ -198,10 +198,7 @@ __help__ = """
  `/cash 1 usd inr`
  Output: `1.0 USD = 75.505 INR`
 
-*Music Modules:*
- • /video or /vsong (query): download video from youtube
- • /music or /song (query): download song from yt servers. (API BASED)
- • /lyrics (song name) : This plugin searches for song lyrics with song name.
+ •`/reverse` `/rev` : reply to a sticker, or an image to search it!
 """
 
 ECHO_HANDLER = DisableAbleCommandHandler(
@@ -217,7 +214,7 @@ dispatcher.add_handler(WIKI_HANDLER)
 dispatcher.add_handler(WALLPAPER_HANDLER)
 
 __mod_name__ = "Extras"
-__command_list__ = ["id", "echo", "wiki", "wall"]
+__command_list__ = ["id", "echo", "wiki", "wall", "reverse"]
 __handlers__ = [
     ECHO_HANDLER,
     MD_HELP_HANDLER,

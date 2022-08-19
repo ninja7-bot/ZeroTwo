@@ -81,7 +81,7 @@ def get_readable_time(seconds: int) -> str:
     return ping_time
 
 
-ZEROTWO_IMG = "https://telegra.ph/file/4c6f55dbbe553e003ba14.gif"
+ZEROTWO_IMG = "https://images8.alphacoders.com/923/923161.jpg"
 
 PM_START_TEXT = """
 Hey there, **{}**!
@@ -219,7 +219,7 @@ def start(update: Update, context: CallbackContext):
 
         else:
             first_name = update.effective_user.first_name
-            update.effective_message.reply_animation(
+            update.effective_message.reply_photo(
                 ZEROTWO_IMG,
                 PM_START_TEXT.format(
                     escape_markdown(first_name),                       
@@ -230,7 +230,7 @@ def start(update: Update, context: CallbackContext):
             ))
               
     else:
-        update.effective_message.reply_animation(
+        update.effective_message.reply_photo(
             ZEROTWO_IMG,
             caption="Up and running since: <code>{}</code>".format(
                 uptime, parse_mode=ParseMode.HTML

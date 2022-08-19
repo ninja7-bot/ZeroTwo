@@ -555,11 +555,34 @@ def site_search(update: Update, context: CallbackContext, site: str):
             reply_markup=InlineKeyboardMarkup(buttons),
             disable_web_page_preview=True,
         )
+            
+    elif site == "anidl":
+        search_url = f"https://anidl.org/?s={search_query}"
+        html_text = requests.get(search_url).text
+        soup = bs4.BeautifulSoup(html_text, "html.parser")
+        search_result = soup.find_all("h2", {'class': "post-title"})
+
+        if search_result:
+            result = f"<b>Search results for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>AniDL</code>: \n"
+            for entry in search_result:
+                post_link = entry.a['href']
+                post_name = html.escape(entry.text)
+                result += f"- <a href='{post_link}'>{post_name}</a>\n"
+        else:
+            more_results = False
+            result = f"<b>No result found for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>AnimeDL.</code> \nTry using <code>/kayo </code>!"
+            
+    buttons = [[InlineKeyboardButton("See all results", url=search_url)]]
+
+    if more_results:
+        message.reply_text(
+            result,
+            parse_mode=ParseMode.HTML,
+            reply_markup=InlineKeyboardMarkup(buttons),
+            disable_web_page_preview=True)
     else:
         message.reply_text(
-            result, parse_mode=ParseMode.HTML, disable_web_page_preview=True
-        )
-
+            result, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
 
 def kaizoku(update: Update, context: CallbackContext):
     site_search(update, context, "kaizoku")
@@ -567,7 +590,10 @@ def kaizoku(update: Update, context: CallbackContext):
 
 def kayo(update: Update, context: CallbackContext):
     site_search(update, context, "kayo")
-
+    
+    
+def anidl(update: Update, context: CallbackContext):
+    site_search(update, context, "anidl")
 
 __help__ = """
 Get information about anime, manga or characters from [AniList](anilist.co).

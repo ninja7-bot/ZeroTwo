@@ -303,6 +303,7 @@ def info(update: Update, context: CallbackContext):
         if spamwtc:
             text += "\n\n<b>This person is Spamwatched!</b>"
             text += f"\nReason: <pre>{spamwtc.reason}</pre>"
+            text += f"\nAppeal at @SpamwatchBot."
     except:
         pass  # don't crash if api is down somehow...
 

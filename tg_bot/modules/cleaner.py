@@ -30,10 +30,9 @@ command_list = [
     "start",
     "help",
     "settings",
-    "donate",
-    "stalk",
-    "aka",
-    "leaderboard",
+    "rev",
+    "reverse",
+    "donate"
 ]
 
 for handler_list in dispatcher.handlers:
@@ -213,7 +212,7 @@ def bluetext_ignore_list(update: Update, context: CallbackContext):
     message.reply_text(text, parse_mode=ParseMode.HTML)
     return
 
-
+__mod_name__="Cleaner"
 __help__ = """
  Blue text cleaner removed any made up commands that people send in your chat.
 

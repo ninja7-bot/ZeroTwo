@@ -136,7 +136,6 @@ async def nsfw_scan_command(_, message):
 """
     )
 
-
 @pbot.on_message(filters.command(["antinsfw", f"antinsfw@{bn}"]) & ~filters.private)
 @adminsOnly("can_change_info")
 async def nsfw_enable_disable(_, message):
@@ -156,3 +155,17 @@ async def nsfw_enable_disable(_, message):
         await message.reply_text("Disabled AntiNSFW System.")
     else:
         await message.reply_text("Unknown Suffix, Use /antinsfw [on/off]")
+        
+
+
+__help__ = """
+*Anti-Spam* Module consists of Anti-NSFW and Anti-Channel.
+
+
+In order to be able to deal with new types of spammers utilizing channels, this module has been added. Any type of content which can be considered spam or porn will automatically be deleted and every channel message will be eliminated at the same time.
+
+• `/antinsfw` on/off*:* Toggles Anti-NSFW.
+• `/antichannel` on/off*:* Toggles Anti-Channel.
+
+"""        
+__modname__ = "Anti-Spam"

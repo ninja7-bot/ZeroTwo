@@ -168,4 +168,4 @@ In order to be able to deal with new types of spammers utilizing channels, this 
 • `/antichannel` on/off*:* Toggles Anti-Channel.
 
 """        
-__modname__ = "Anti-Spam"
+__mod_name__ = "Anti-Spam"

@@ -37,9 +37,7 @@ logging.getLogger("pyrogram").setLevel(logging.INFO)
 logging.getLogger('ptbcontrib.postgres_persistence.postgrespersistence').setLevel(logging.WARNING)
 
 LOGGER = logging.getLogger('[tg_bot]')
-LOGGER.info("tg_bot is starting. | An Void Project. | Licensed under GPLv3.")
-LOGGER.info("Not affiliated to other anime or Villain in any way whatsoever.")
-LOGGER.info("Project maintained by: github.com/voidxtoxic (t.me/voidxtoxic)")
+LOGGER.info("Zero Two is now up!")
 
 # if version < 3.9, stop bot.
 if sys.version_info[0] < 3 or sys.version_info[1] < 9:

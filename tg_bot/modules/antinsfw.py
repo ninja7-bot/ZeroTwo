@@ -7,13 +7,6 @@ from tg_bot.utils.errors import capture_err
 from tg_bot.utils.permissions import adminsOnly
 from tg_bot.ex_plugins.dbfunctions import is_nsfw_on, nsfw_off, nsfw_on
 
-__help__ = """ Anti-NSFW is a very necessary to have module as of now in groups to prevent users from spamming NSFW stuff in your
-group chats.
-"""
-
-__mod_name__ = "Anti-NSFW"
-
-
 async def get_file_id_from_message(message):
     file_id = None
     if message.document:

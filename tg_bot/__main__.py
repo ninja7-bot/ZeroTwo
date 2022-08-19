@@ -81,14 +81,14 @@ def get_readable_time(seconds: int) -> str:
     return ping_time
 
 
-ZEROTWO_IMG = "https://images8.alphacoders.com/923/923161.jpg"
+ZEROTWO_IMG = "https://telegra.ph/file/4c6f55dbbe553e003ba14.gif"
 
 PM_START_TEXT = """
-Hey there, {}!
+Hey there, **{}**!
 I am called Zero Two, Pistil for Strelizia.
-*Codename*: [002](https://images8.alphacoders.com/923/923161.jpg) 
-*Status*: `Reincarnated`
-*Life Force*: `0%` 
+**Codename**: <code>002</code>
+**Status**: <code>Reincarnated</code>
+**Life Force**: <code>0%</code> 
 I help Nines in groups while providing some fun games and anime commands for members. Click /help for help window.
 """
 
@@ -219,18 +219,18 @@ def start(update: Update, context: CallbackContext):
 
         else:
             first_name = update.effective_user.first_name
-            update.effective_message.reply_photo(
+            update.effective_message.reply_animation(
                 ZEROTWO_IMG,
                 PM_START_TEXT.format(
                     escape_markdown(first_name),                       
                 reply_markup=InlineKeyboardMarkup(buttons),
-                parse_mode=ParseMode.MARKDOWN,
+                parse_mode=ParseMode.HTML,
                 timeout=60,
                 disable_web_page_preview=True,
             ))
               
     else:
-        update.effective_message.reply_photo(
+        update.effective_message.reply_animation(
             ZEROTWO_IMG,
             caption="Up and running since: <code>{}</code>".format(
                 uptime, parse_mode=ParseMode.HTML

@@ -536,17 +536,72 @@ def devlist(update: Update, context: CallbackContext):
             pass
     m.edit_text(reply, parse_mode=ParseMode.HTML)
 
+__help__ = f"""
+*⚠️ Notice:*
+Commands listed here only work for users with special access are mainly used for troubleshooting, debugging purposes.
+Group admins/group owners do not need these commands. 
+ ╔ *List all special users:*
+ ╠ `/execs`*:* Lists all Executioners
+ ╠ `/reapers`*:* Lists all Reapers
+ ╠ `/samurai`*:* Lists all Samurai
+ ╠ `/ninja`*:* Lists all Ninja
+ ╚ `/mods`*:* Lists all Moderators
+ 
+ ╔ *Ping:*
+ ╠ `/ping`*:* gets ping time of bot to telegram server
+ ╚ `/pingall`*:* gets all listed ping times
+ 
+ ╔ *Broadcast: (Bot owner only)*
+ ╠  *Note:* This supports basic markdown
+ ╠ `/broadcastall`*:* Broadcasts everywhere
+ ╠ `/broadcastusers`*:* Broadcasts too all users
+ ╚ `/broadcastgroups`*:* Broadcasts too all groups
+ 
+ ╔ *Groups Info:*
+ ╠ `/groups`*:* List the groups with Name, ID, members count as a txt
+ ╚ `/getchats`*:* Gets a list of group names the user has been seen in. Bot owner only
+ 
+ ╔ *Blacklist:* 
+ ╠ `/ignore`*:* Blacklists a user from 
+ ╠  using the bot entirely
+ ╚ `/notice`*:* Whitelists the user to allow bot usage
+ ╔ *Speedtest:*
+ ╚ `/speedtest`*:* Runs a speedtest and gives you 2 options to choose from, text or image output
+
+ ╔ *Module loading:*
+ ╠ `/listmodules`*:* Lists names of all modules
+ ╠ `/load modulename`*:* Loads the said module to 
+ ╠   memory without restarting.
+ ╠ `/unload modulename`*:* Loads the said module from
+ ╚   memory without restarting.memory without restarting the bot 
+ 
+ ╔ *Remote commands:*
+ ╠ `/rban user group`*:* Remote ban
+ ╠ `/runban user group`*:* Remote un-ban
+ ╠ `/rpunch user group`*:* Remote punch
+ ╠ `/rmute user group`*:* Remote mute
+ ╠ `/runmute user group`*:* Remote un-mute
+ ╚ `/ginfo username/link/ID`*:* Pulls info panel for entire group
+ 
+ ╔ *Debugging and Shell:* 
+ ╠ `/debug <on/off>`*:* Logs commands to updates.txt
+ ╠ `/logs`*:* Run this in support group to get logs in pm
+ ╠ `/eval`*:* Self explanatory
+ ╠ `/sh`*:* Self explanator
+ ╚ `/py`*:* Self explanatory
+"""
+
 
 SUDO_HANDLER = CommandHandler(("addsudo"), addsudo, run_async=True)
 SUPPORT_HANDLER = CommandHandler(("addsupport"), addsupport, run_async=True)
-TIGER_HANDLER = CommandHandler(("adtg"), addtiger, run_async=True)
+TIGER_HANDLER = CommandHandler(("addtg"), addtiger, run_async=True)
 WHITELIST_HANDLER = CommandHandler(("addwhitelist"), addwhitelist, run_async=True)
 UNSUDO_HANDLER = CommandHandler(("rmvsudo"), removesudo, run_async=True)
 UNSUPPORT_HANDLER = CommandHandler(("rmvsupport"), removesupport, run_async=True)
 UNTIGER_HANDLER = CommandHandler(("rmvtiger"), removetiger, run_async=True)
 UNWHITELIST_HANDLER = CommandHandler(("rmvwhitelist"), removewhitelist, run_async=True)
-WHITELISTLIST_HANDLER = CommandHandler(["whitelistlist"], whitelistlist, run_async=True)
-TIGERLIST_HANDLER = CommandHandler(["REAPERS"], tigerlist, run_async=True)
+WHITELISTLIST_HANDLER = CommandHandler(["ninja"], whitelistlist, run_async=True)
+TIGERLIST_HANDLER = CommandHandler(["reapers"], tigerlist, run_async=True)
 SUPPORTLIST_HANDLER = CommandHandler(["supportlist"], supportlist, run_async=True)
 SUDOLIST_HANDLER = CommandHandler(["sudolist"], sudolist, run_async=True)
 DEVLIST_HANDLER = CommandHandler(["devlist"], devlist, run_async=True)

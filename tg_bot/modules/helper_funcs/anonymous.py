@@ -7,7 +7,7 @@ from telegram.inline.inlinekeyboardbutton import InlineKeyboardButton
 from telegram.inline.inlinekeyboardmarkup import InlineKeyboardMarkup
 
 from tg_bot import MOD_USERS, DRAGONS, dispatcher
-from tg_bot.modules.helper_funcs.decorators import horicallback
+from tg_bot.modules.helper_funcs.decorators import botcallback
 
 
 class AdminPerms(Enum):
@@ -61,7 +61,7 @@ def user_admin(permission: AdminPerms):
     return wrapper
 
 
-@horicallback(pattern="anoncb")
+@botcallback(pattern="anoncb")
 def anon_callback_handler1(upd: Update, _: CallbackContext):
     callback = upd.callback_query
     perm = callback.data.split('/')[3]

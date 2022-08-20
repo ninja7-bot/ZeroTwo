@@ -84,11 +84,11 @@ def get_readable_time(seconds: int) -> str:
 ZEROTWO_IMG = "https://images8.alphacoders.com/923/923161.jpg"
 
 PM_START_TEXT = """
-Hey there, **{}**!
-I am called Zero Two, Pistil for Strelizia.
-**Codename**: <code>002</code>
-**Status**: <code>Reincarnated</code>
-**Life Force**: <code>0%</code> 
+Hey there, {}!
+I am called {}, Pistil for Strelizia.
+*Codename*: [002](https://images8.alphacoders.com/923/923161.jpg) 
+*Status*: `Reincarnated`
+*Life Force*: `0%` 
 I help Nines in groups while providing some fun games and anime commands for members. Click /help for help window.
 """
 
@@ -115,7 +115,6 @@ I can help you with following functions in managing group.
  • /settings:
    • in PM: will send you your settings for all supported modules.
    • in a group: will redirect you to pm, with all that chat's settings.
-{}
 And the following:"""
 
 DONATE_STRING = """Zero Two has got no use for fundings at the moment. Enjoy the service. If interested, can checkout @HanabiAddict!"""
@@ -222,9 +221,10 @@ def start(update: Update, context: CallbackContext):
             update.effective_message.reply_photo(
                 ZEROTWO_IMG,
                 PM_START_TEXT.format(
-                    escape_markdown(first_name),                       
+                    escape_markdown(first_name),
+                    escape_markdown(context.bot.name),
                 reply_markup=InlineKeyboardMarkup(buttons),
-                parse_mode=ParseMode.HTML,
+                parse_mode="markdown",
                 timeout=60,
                 disable_web_page_preview=True,
             ))
@@ -233,7 +233,7 @@ def start(update: Update, context: CallbackContext):
         update.effective_message.reply_photo(
             ZEROTWO_IMG,
             caption="Up and running since: <code>{}</code>".format(
-                uptime, parse_mode=ParseMode.HTML
+                uptime, parse_mode="HTML"
             )
         )
 
@@ -362,9 +362,9 @@ def bot_about_callback(update, context):
     query = update.callback_query
     if query.data == "bot_":
         query.message.edit_text(
-            text="๏ I'm *Zero Two*, a group moderator bot. \n\nYou can check my help panel to know the features I possess. A few of my functions are: \nAnti-Channel, Anti-Spam, Anti-NSFW, Purge."
+            text="I'm *Zero Two*, a group moderator bot. \n\nYou can check my help panel to know the features I possess. A few of my functions are: \nAnti-Channel, Anti-Spam, Anti-NSFW, Purge."
             "\n\n Click on button bellow to get basic help.",
-            parse_mode=ParseMode.MARKDOWN,
+            parse_mode="markdown",
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
                 [
@@ -383,12 +383,10 @@ def bot_about_callback(update, context):
         query.message.edit_text(
             PM_START_TEXT.format(
                 escape_markdown(first_name),
-                escape_markdown(uptime),
-                sql.num_users(),
-                sql.num_chats(),
+                escape_markdown(context.bot.name),
             ),
             reply_markup=InlineKeyboardMarkup(buttons),
-            parse_mode=ParseMode.MARKDOWN,
+            parse_mode="markdown",
             timeout=60,
             disable_web_page_preview=False,
         )
@@ -399,7 +397,7 @@ def bot_about_callback(update, context):
             "\nAll the admin functions are now accessible. "
             "\n\n*Greetings*"
             "\nSet a welcome message, checkout Greetings Module!",
-            parse_mode=ParseMode.MARKDOWN,
+            parse_mode="markdown",
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
                 [[InlineKeyboardButton(text="Back", callback_data="bot_")]]

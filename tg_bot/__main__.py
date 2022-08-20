@@ -223,18 +223,19 @@ def start(update: Update, context: CallbackContext):
                 ZEROTWO_IMG,
                 PM_START_TEXT.format(
                     escape_markdown(first_name),
-                    escape_markdown(context.bot.name),
-                reply_markup=InlineKeyboardMarkup(buttons),
-                parse_mode="markdown",
-                timeout=60,
+                    escape_markdown(context.bot.first_name)),
+                parse_mode=ParseMode.MARKDOWN,
                 disable_web_page_preview=True,
+                reply_markup=InlineKeyboardMarkup(buttons),
+                timeout=60,
             ))
               
     else:
         update.effective_message.reply_photo(
             ZEROTWO_IMG,
-            caption="Up and running since: <code>{}</code>".format(
-                uptime, parse_mode="HTML"
+            caption="Up and running since: `{}`".format(
+                uptime, 
+                parse_mode=ParseMode.MARKDOWN,
             )
         )
 
@@ -365,7 +366,7 @@ def bot_about_callback(update, context):
         query.message.edit_text(
             text="I'm *Zero Two*, a group moderator bot. \n\nYou can check my help panel to know the features I possess. A few of my functions are: \nAnti-Channel, Anti-Spam, Anti-NSFW, Purge."
             "\n\n Click on button bellow to get basic help.",
-            parse_mode="markdown",
+            parse_mode=ParseMode.MARKDOWN,
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
                 [
@@ -387,7 +388,7 @@ def bot_about_callback(update, context):
                 escape_markdown(context.bot.name),
             ),
             reply_markup=InlineKeyboardMarkup(buttons),
-            parse_mode="markdown",
+            parse_mode=ParseMode.MARKDOWN,
             timeout=60,
             disable_web_page_preview=False,
         )
@@ -398,7 +399,7 @@ def bot_about_callback(update, context):
             "\nAll the admin functions are now accessible. "
             "\n\n*Greetings*"
             "\nSet a welcome message, checkout Greetings Module!",
-            parse_mode="markdown",
+            parse_mode=ParseMode.MARKDOWN,
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
                 [[InlineKeyboardButton(text="Back", callback_data="bot_")]]

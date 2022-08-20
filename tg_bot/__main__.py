@@ -371,11 +371,8 @@ def bot_about_callback(update, context):
                 [
                  [
                     InlineKeyboardButton(text="Admins", callback_data="bot_admin"),
-                 ],
-                 ],
-                 [
                     InlineKeyboardButton(text="Go Back", callback_data="bot_back"),
-                 ]
+                 ],
             ),
         )
     elif query.data == "bot_back":

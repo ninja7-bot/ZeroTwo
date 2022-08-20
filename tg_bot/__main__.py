@@ -219,24 +219,23 @@ def start(update: Update, context: CallbackContext):
 
         else:
             first_name = update.effective_user.first_name
-            update.effective_message.reply_photo(
-                ZEROTWO_IMG,
+            update.effective_message.reply_text(
                 PM_START_TEXT.format(
                     escape_markdown(first_name),
-                    escape_markdown(context.bot.first_name),
-                parse_mode=ParseMode.MARKDOWN,
-                disable_web_page_preview=True,
+                    escape_markdown(context.bot.name),                   
                 reply_markup=InlineKeyboardMarkup(buttons),
+                parse_mode=ParseMode.MARKDOWN,
                 timeout=60,
-            ))
+                disable_web_page_preview=False,
+            )
               
     else:
         update.effective_message.reply_photo(
             ZEROTWO_IMG,
             caption="Up and running since: `{}`".format(
                 uptime, 
-                parse_mode=ParseMode.MARKDOWN,
-            )
+            ),
+            parse_mode=ParseMode.MARKDOWN,
         )
 
 

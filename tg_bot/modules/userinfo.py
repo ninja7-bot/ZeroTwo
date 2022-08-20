@@ -94,7 +94,7 @@ def hpmanager(user):
          new_hp -= no_by_per(total_hp, 10)
 
     if is_afk(user.id):
-         afkst = check_afk_status(user.id)
+         afkst = set_afk(user.id)
             # if user is afk and no reason then decrease 7%
             # else if reason exist decrease 5%
     if not afkst.reason:
@@ -170,10 +170,10 @@ def get_id(update: Update, context: CallbackContext):
                 parse_mode=ParseMode.HTML)
 
 
-@ZeroTwoTelethonClient.on(
+@telethn.on(
     events.NewMessage(
         pattern='/ginfo ',
-        from_users=(TIGERS or []) + (DRAGONS or []) + (DEMONS or [])))
+        from_users=(REAPER or []) + (DRAGONS or []) + (DEMONS or [])))
 async def group_info(event) -> None:
     chat = event.text.split(' ', 1)[1]
     try:

@@ -222,7 +222,7 @@ def start(update: Update, context: CallbackContext):
             update.effective_message.reply_text(
                 PM_START_TEXT.format(
                     escape_markdown(first_name),
-                    escape_markdown(context.bot.name)),                   
+                    escape_markdown(context.bot.first_name)),                   
                 reply_markup=InlineKeyboardMarkup(buttons),
                 parse_mode=ParseMode.MARKDOWN,
                 timeout=60,
@@ -392,10 +392,19 @@ def bot_about_callback(update, context):
 
     elif query.data == "bot_admin":
         query.message.edit_text(
-            text=f"*Admins Rights granted!*"
-            "\nAll the admin functions are now accessible. "
+            text=f"*Admins Special Commands!*"
+            "\nSeveral Modules require Admin status and permissions."
+            "\n• Muting, Anti-Flood and Anti-Spam require permission to `Ban Users` and `Change Group Info`."
+            "\n• Approval is perfect to exclude members from getting limited or banned by the bot without giving admin status."
+            "\n• Cleaner helps in keeping group clean with the purge feature."
+            "\n• Pinning requires `Pin Message` perm."
+            "\n• For `/fullpromote` or `fpromote` to work *ALL* the permissions must be granted except *Anonymous*."
+            "\n• Anti-Flood is specifically made to deal with spammers."
+            "\n• Anti-NSFW and Anti-Channel is the perfect combination to protect your groups against porn spammers using channels."
+            "\n• Filters and Notes are good to store data and repeatedly asked messages."
+            "\n• Blacklisting and "
             "\n\n*Greetings*"
-            "\nSet a welcome message, checkout Greetings Module!",
+            "\n• Set a welcome message, checkout Greetings Module!",
             parse_mode=ParseMode.MARKDOWN,
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(

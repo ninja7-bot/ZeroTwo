@@ -4,7 +4,8 @@ from telegram import Update, message
 from telegram.ext import CallbackContext
 from ..modules.helper_funcs.anonymous import user_admin, AdminPerms
 import html
-from ..modules.sql.antichannel_sql import antichannel_status, disable_antichannel, enable_antichannel
+
+from ZeroTwo.ex_plugins.dbfunctions import antichannel_status, disable_antichannel, enable_antichannel
 
 
 @botcmd(command="antichannel", group=100)

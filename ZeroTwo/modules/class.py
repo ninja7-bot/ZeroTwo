@@ -15,6 +15,7 @@ from ZeroTwo import (
     dispatcher,
 )
 from ZeroTwo.modules.helper_funcs.chat_status import (is_user_admin, dev_plus, sudo_plus,
+                                                      whitelist_plus,
                                                       support_plus,
                                                       user_admin)
 from ZeroTwo.modules.helper_funcs.extraction import (extract_user,

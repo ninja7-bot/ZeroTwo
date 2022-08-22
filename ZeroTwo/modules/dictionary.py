@@ -22,7 +22,7 @@ def dict(update:Update, context=CallbackContext):
     message = update.effective_message
     text = message.text[len("/dict ") :]
 
-    url = 'https://api.dictionaryapi.dev/api/v2/entries/en/{}'.format(word)
+    url = 'https://api.dictionaryapi.dev/api/v2/entries/en/{}'.format(text)
 
     response = requests.get(url)
 

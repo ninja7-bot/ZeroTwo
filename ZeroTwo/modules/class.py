@@ -26,6 +26,7 @@ from telegram.error import BadRequest, TelegramError
 from telegram.ext import (CallbackContext, CommandHandler, Filters,
                           MessageHandler, run_async)
 from telegram.utils.helpers import mention_html
+from ZeroTwo.modules.log_channel import gloggable
 
 ELEVATED_USERS_FILE = os.path.join(os.getcwd(),
                                    'ZeroTwo/elevated_users.json')

@@ -3,8 +3,6 @@ from ZeroTwo import dispatcher
 from ZeroTwo.modules.disable import DisableAbleCommandHandler
 from telegram import ParseMode, Update
 from telegram.ext import CallbackContext, run_async
-import telebot
-from telebot import util
 from ZeroTwo import OXFORD_APP_ID as APP_ID
 from ZeroTwo import OXFORD_APP_KEY as APP_KEY
 

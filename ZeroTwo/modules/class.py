@@ -14,15 +14,17 @@ from ZeroTwo import (
     HELLHOUND,
     dispatcher,
 )
-from ZeroTwo.modules.helper_funcs.chat_status import (
-    dev_plus,
-    sudo_plus,
-    whitelist_plus,
-)
-from ZeroTwo.modules.helper_funcs.extraction import extract_user
-from ZeroTwo.modules.log_channel import gloggable
-from telegram import ParseMode, TelegramError, Update
-from telegram.ext import CallbackContext, CommandHandler
+from ZeroTwo.modules.helper_funcs.chat_status import (is_user_admin,
+                                                           support_plus,
+                                                           user_admin)
+from ZeroTwo.modules.helper_funcs.extraction import (extract_user,
+                                                          extract_user_and_text)
+from ZeroTwo.modules.helper_funcs.misc import send_to_list
+from ZeroTwo.modules.sql.users_sql import get_all_chats
+from telegram import ParseMode, Update
+from telegram.error import BadRequest, TelegramError
+from telegram.ext import (CallbackContext, CommandHandler, Filters,
+                          MessageHandler, run_async)
 from telegram.utils.helpers import mention_html
 
 ELEVATED_USERS_FILE = os.path.join(os.getcwd(),

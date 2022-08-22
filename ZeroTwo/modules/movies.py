@@ -8,7 +8,7 @@ import random
 from telegram.ext import(CommandHandler, MessageHandler, Filters, Updater)
 from ZeroTwo import dispatcher
 from ZeroTwo import TMDB_API
-from ZeroTwo import ParseMode
+from telegram import ParseMode
 
 tmdb = TMDb()
 tmdb.api_key = TMDB_API

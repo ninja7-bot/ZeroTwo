@@ -112,7 +112,8 @@ if ENV:
     SUPPORT_CHAT = os.environ.get("SUPPORT_CHAT", None)
     SPAMWATCH_SUPPORT_CHAT = os.environ.get("SPAMWATCH_SUPPORT_CHAT", None)
     SPAMWATCH_API = os.environ.get("SPAMWATCH_API", None)
-    CF_API_KEY = os.environ.get("CF_API_KEY", None)
+    OXFORD_APP_ID = os.environ.get("OXFORD_APP_ID", None)
+    OXFORD_APP_KEY = os.environ.get("OXFORD_APP_KEY", None)
     WELCOME_DELAY_KICK_SEC = os.environ.get("WELCOME_DELAY_KICK_SEC", None)
     BOT_ID = int(os.environ.get("BOT_ID", None))
     ARQ_API_URL = "https://arq.hamker.in"

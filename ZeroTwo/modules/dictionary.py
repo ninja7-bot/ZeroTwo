@@ -18,23 +18,60 @@ def ud(update: Update, context: CallbackContext):
         reply_text = "No results found."
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN)
 
-def dict(update: Update, context: CallbackContext):
+def dict(update:Update, context=CallbackContext):
     message = update.effective_message
-    endpoint = "entries"
-    language_code = "en-us"
     text = message.text[len("/dict ") :]
-    url = "https://od-api.oxforddictionaries.com/api/v2/" + endpoint + "/" + language_code + "/" + text.lower()
-    r = requests.get(url, headers = {"app_id": APP_ID, "app_key": APP_KEY})
-    try:
-        try:
-            definitions = r.json()['results'][0]['lexicalEntries'][0]['entries'][0]['senses'][0]['definitions'][0]
-            sentence = r.json()['results'][0]['lexicalEntries'][0]['entries'][0]['senses'][0]['examples'][0]['text']
-            message.reply_text(message.chat.id, f'*Word* - {word_id}\n*Definition* - {definitions}\n*Example* - {sentence.capitalize()}.')
-        except:
-            message.reply_text('Meaning not found!', parse_mode=ParseMode.MARKDOWN)
-    except:
-        message.reply_text(message.chat.id, 'Something went wrong...')
 
+    url = 'https://api.dictionaryapi.dev/api/v2/entries/en/{}'.format(word)
+
+    response = requests.get(url)
+
+# return a custom response if an invalid word is provided
+    if response.status_code == 404:
+        error_response = 'We are not able to provide any information about your word. Please confirm that the word is ' \
+                         'correctly spelt or try the search again at a later time.'
+        return message.reply_text(error_response)
+
+    word_info = response.json()[0]
+    
+    word = word_info['word']
+
+    meanings = '\n'
+    synonyms = ''
+    definition = ''
+    example = ''
+    antonyms = ''
+
+    
+    for word_meaning in word_info['meanings']:
+        meanings += 'Meaning ' + ':\n'
+
+        for word_definition in word_meaning['definitions']:
+            # extract the each of the definitions of the word
+            definition = word_definition['definition']
+
+            # extract each example for the respective definition
+            if 'example' in word_definition:
+                example = word_definition['example']
+
+            # extract the collection of synonyms for the word based on the definition
+            for word_synonym in word_definition['synonyms']:
+                synonyms += word_synonym + ', '
+
+            # extract the antonyms of the word based on the definition
+            for word_antonym in word_definition['antonyms']:
+                antonyms += word_antonym + ', '
+
+        meanings += '*Definition*: ' + definition + '\n\n'
+        meanings += '*Example*: ' + example + '\n\n'
+        meanings += '*Synonym*: ' + synonyms + '\n\n'
+        meanings += '*Antonym*: ' + antonyms + '\n\n\n'
+
+        meaning_counter += 1
+
+    # format the data into a string
+    meaning = f"Word: *{word}*\n\n{meanings}"
+    message.reply_text(meaning, parse_mode=ParseMode.MARKDOWN)
 
 
 

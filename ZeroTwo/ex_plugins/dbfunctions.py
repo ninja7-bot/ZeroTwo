@@ -23,6 +23,7 @@ captchadb = db.captcha
 solved_captcha_db = db.solved_captcha
 captcha_cachedb = db.captcha_cache
 antiservicedb = db.antiservice
+antichanneldb = db.antichannel
 pmpermitdb = db.pmpermit
 welcomedb = db.welcome_text
 blacklist_filtersdb = db.blacklistFilters
@@ -236,6 +237,26 @@ async def remove_warns(chat_id: int, name: str) -> bool:
         )
         return True
     return False
+
+#Anti-Channel
+async def antichannel_status(chat_id: int) -> bool:
+    chat = antichanneldb.find_one({"chat_id": chat_id})
+    if not chat:
+        return True
+    return False
+
+async def enable_antichannel(chat_id: int):
+    is_antichannel = is_antichannel_enabled(chat_id)
+    if is_antichannel:
+        return
+    return antichanneldb.delete_one({"chat_id": chat_id})
+
+async def disable_antichannel(chat_id: int):
+    is_antichannel = is_antichannel_enabled(chat_id)
+    if is_antichannel:
+        return
+    return antichanneldb.insert_one({"chat_id": chat_id})
+
 
 #NSFW Scanning
 async def is_nsfw_enabled(chat_id: int) -> bool:

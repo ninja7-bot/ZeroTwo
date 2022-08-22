@@ -4,7 +4,7 @@ import time
 from datetime import datetime
 from io import BytesIO
 
-from telegram import ParseMode, Update, dispatcher
+from telegram import ParseMode, Update
 from telegram.error import BadRequest, TelegramError, Unauthorized
 from telegram.ext import CallbackContext, CommandHandler, Filters, MessageHandler
 from telegram.utils.helpers import mention_html
@@ -34,6 +34,8 @@ from ZeroTwo.modules.helper_funcs.extraction import (
 )
 from ZeroTwo.modules.helper_funcs.misc import send_to_list
 from ZeroTwo.modules.sql.users_sql import get_user_com_chats
+
+from ZeroTwo import dispatcher
 
 GBAN_ENFORCE_GROUP = 6
 

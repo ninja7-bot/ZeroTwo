@@ -172,7 +172,7 @@ def get_id(update: Update, context: CallbackContext):
 @telethn.on(
     events.NewMessage(
         pattern='/ginfo ',
-        from_users=(REAPER or []) + (SUDOS or []) + (RONIN or [])))
+        from_users=(REAPERS or []) + (SUDOS or []) + (RONIN or [])))
 async def group_info(event) -> None:
     chat = event.text.split(' ', 1)[1]
     try:

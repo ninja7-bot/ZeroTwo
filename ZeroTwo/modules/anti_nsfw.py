@@ -1,12 +1,14 @@
 from os import remove
-from ZeroTwo.utils.errors import capture_err
-from ZeroTwo.utils.permissions import adminsOnly
+import ZeroTwo
 
 from pyrogram import filters
-from pyrogram.types import Message
 
-from ZeroTwo import ZeroTwoTelethonClient, arq
-from ZeroTwo.ex_plugins.dbfunctions import (enable_nsfw, disable_nsfw, enable_spam, disable_spam, is_spam_enabled, is_nsfw_enabled)
+from ZeroTwo import ZeroTwoTelethonClient, arq, BOT_USERNAME as bn
+from ZeroTwo.utils.errors import capture_err
+from ZeroTwo.utils.permissions import adminsOnly
+from ZeroTwo.ex_plugins.dbfunctions import is_nsfw_on, nsfw_off, nsfw_on
+
+__mod_name__ = "Anti-NSFW"
 
 
 async def get_file_id_from_message(message):
@@ -41,69 +43,66 @@ async def get_file_id_from_message(message):
         file_id = message.video.thumbs[0].file_id
     return file_id
 
-    
-@ZeroTwoTelethonClient.on_message(
-    filters.command("anti_nsfw") & ~filters.private, group=3
-)
-@adminsOnly("can_change_info")
-async def nsfw_toggle_func(_, message: Message):
-    if len(message.command) != 2:
-        return await message.reply_text(
-            "Usage: /anti_nsfw [ENABLE|DISABLE]"
-        )
-    status = message.text.split(None, 1)[1].strip()
-    status = status.lower()
-    chat_id = message.chat.id
-    if status == "enable":
-        if is_nsfw_enabled(chat_id):
-            return await message.reply("Already enabled.")
-        enable_nsfw(chat_id)
-        await message.reply_text("Enabled NSFW Detection.")
-    elif status == "disable":
-        if not is_nsfw_enabled(chat_id):
-            return await message.reply("Already disabled.")
-        disable_nsfw(chat_id)
-        await message.reply_text("Disabled NSFW Detection.")
-    else:
-        await message.reply_text(
-            "Unknown Suffix, Use /anti_nsfw [ENABLE|DISABLE]"
-        )
-
 
 @ZeroTwoTelethonClient.on_message(
-    filters.command("anti_spam") & ~filters.private, group=3
+    (
+        filters.document
+        | filters.photo
+        | filters.sticker
+        | filters.animation
+        | filters.video
+    )
+    & ~filters.private,
+    group=8,
 )
-@adminsOnly("can_change_info")
-async def spam_toggle_func(_, message: Message):
-    if len(message.command) != 2:
-        return await message.reply_text(
-            "Usage: /anti_spam [ENABLE|DISABLE]"
-        )
-    status = message.text.split(None, 1)[1].strip()
-    status = status.lower()
-    chat_id = message.chat.id
-    if status == "enable":
-        if is_spam_enabled(chat_id):
-            return await message.reply("Already enabled.")
-        enable_spam(chat_id)
-        await message.reply_text("Enabled Spam Detection.")
-    elif status == "disable":
-        if not is_spam_enabled(chat_id):
-            return await message.reply("Already disabled.")
-        disable_spam(chat_id)
-        await message.reply_text("Disabled Spam Detection.")
-    else:
-        await message.reply_text(
-            "Unknown Suffix, Use /anti_spam [ENABLE|DISABLE]"
-        )
-
-
-@ZeroTwoTelethonClient.on_message(filters.command("nsfw_scan"), group=3)
 @capture_err
-async def nsfw_scan_command(_, message: Message):
-    err = "Reply to an image/document/sticker/animation to scan it."
+async def detect_nsfw(_, message):
+    if not await is_nsfw_on(message.chat.id):
+        return
+    if not message.from_user:
+        return
+    file_id = await get_file_id_from_message(message)
+    if not file_id:
+        return
+    file = await ZeroTwoTelethonClient.download_media(file_id)
+    try:
+        results = await arq.nsfw_scan(file=file)
+    except Exception:
+        return
+    if not results.ok:
+        return
+    results = results.result
+    remove(file)
+    nsfw = results.is_nsfw
+    if not nsfw:
+        return
+    try:
+        await message.delete()
+    except Exception:
+        return
+    await message.reply_text(
+        f"""
+**NSFW Image Detected & Deleted Successfully!
+————————————————————**
+**User:** {message.from_user.mention} [`{message.from_user.id}`]
+**Safe:** `{results.neutral} %`
+**Porn:** `{results.porn} %`
+**Adult:** `{results.sexy} %`
+**Hentai:** `{results.hentai} %`
+**Drawings:** `{results.drawings} %`
+**————————————————————**
+__Use `/antinsfw off` to disable this.__
+"""
+    )
+
+
+@ZeroTwoTelethonClient.on_message(filters.command("nsfwscan"))
+@capture_err
+async def nsfw_scan_command(_, message):
     if not message.reply_to_message:
-        await message.reply_text(err)
+        await message.reply_text(
+            "`Reply to an image/document/sticker/animation to scan it.`"
+        )
         return
     reply = message.reply_to_message
     if (
@@ -113,17 +112,19 @@ async def nsfw_scan_command(_, message: Message):
         and not reply.animation
         and not reply.video
     ):
-        await message.reply_text(err)
+        await message.reply_text(
+            "Reply to an image/document/sticker/animation to scan it."
+        )
         return
-    m = await message.reply_text("Scanning")
-    file_id = await get_file_id_from_message(message)
+    m = await message.reply_text("`Scanning...`")
+    file_id = await get_file_id_from_message(reply)
     if not file_id:
-        return await m.edit("Something went wrong.")
+        return await m.edit("`Something wrong happened...|")
     file = await ZeroTwoTelethonClient.download_media(file_id)
     try:
         results = await arq.nsfw_scan(file=file)
-    except Exception as e:
-        return await m.edit(str(e))
+    except Exception:
+        return
     remove(file)
     if not results.ok:
         return await m.edit(results.result)
@@ -140,31 +141,22 @@ async def nsfw_scan_command(_, message: Message):
     )
 
 
-@ZeroTwoTelethonClient.on_message(filters.command("spam_scan"), group=3)
-@capture_err
-async def scanNLP(_, message: Message):
-    if not message.reply_to_message:
-        return await message.reply("Reply to a message to scan it.")
-    r = message.reply_to_message
-    text = r.text or r.caption
-    if not text:
-        return await message.reply("Can't scan that")
-    data = await arq.nlp(text)
-    data = data.result[0]
-    msg = f"""
-**Is Spam:** {data.is_spam}
-**Spam Probability:** {data.spam_probability} %
-**Spam:** {data.spam}
-**Ham:** {data.ham}
-**Profanity:** {data.profanity}
-"""
-    await message.reply(msg, quote=True)
-
-__help__ = """
-In order to be able to deal with new types of spammers utilizing channels, this module has been added. Any type of content which can be considered spam or porn will automatically be deleted and every channel message will be eliminated at the same time.
-
-• `/antinsfw` on/off*:* Toggles Anti-NSFW.
-• `/antichannel` on/off*:* Toggles Anti-Channel.
-
-"""        
-__mod_name__="Anti_NSFW"
+@ZeroTwo.ZeroTwoTelethonClient.on_message(filters.command(["antinsfw", f"antinsfw@{bn}"]) & ~filters.private)
+@adminsOnly("can_change_info")
+async def nsfw_enable_disable(_, message):
+    if len(message.command) != 2:
+        await message.reply_text("Usage: /antinsfw [on/off]")
+        return
+    status = message.text.split(None, 1)[1].strip()
+    status = status.lower()
+    chat_id = message.chat.id
+    if status == "on" or status == "yes":
+        await nsfw_on(chat_id)
+        await message.reply_text(
+            "Enabled AntiNSFW System. I will Delete Messages Containing Inappropriate Content."
+        )
+    elif status == "off" or status == "no":
+        await nsfw_off(chat_id)
+        await message.reply_text("Disabled AntiNSFW System.")
+    else:
+        await message.reply_text("Unknown Suffix, Use /antinsfw [on/off]")

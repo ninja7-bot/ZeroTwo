@@ -61,4 +61,4 @@ COPY . .
 
 RUN python3 -m pip install -U -r requirements.txt
 
-CMD ["python3", "-m", "tg_bot"]
+CMD ["python3", "-m", "ZeroTwo"]

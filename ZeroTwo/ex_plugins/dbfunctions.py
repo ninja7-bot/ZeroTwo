@@ -259,44 +259,23 @@ async def disable_antichannel(chat_id: int):
 
 
 #NSFW Scanning
-async def is_nsfw_enabled(chat_id: int) -> bool:
+async def is_nsfw_on(chat_id: int) -> bool:
     chat = nsfwdb.find_one({"chat_id": chat_id})
     if not chat:
         return True
     return False
 
-async def enable_nsfw(chat_id: int):
+async def nsfw_on(chat_id: int):
     is_nsfw = is_nsfw_enabled(chat_id)
     if is_nsfw:
         return
     return nsfwdb.delete_one({"chat_id": chat_id})
 
-async def disable_nsfw(chat_id: int):
+async def nsfw_off(chat_id: int):
     is_nsfw = is_nsfw_enabled(chat_id)
     if not is_nsfw:
         return
     return nsfwdb.insert_one({"chat_id": chat_id})
-
-#SPAM Scanning
-async def is_spam_enabled(chat_id: int) -> bool:
-    chat = spamdb.find_one({"chat_id": chat_id})
-    if not chat:
-        return True
-    return False
-
-async def enable_spam(chat_id: int):
-    is_spam = is_spam_enabled(chat_id)
-    if is_spam:
-        return
-    return spamdb.delete_one({"chat_id": chat_id})
-
-async def disable_spam(chat_id: int):
-    is_spam = is_spam_enabled(chat_id)
-    if not is_spam:
-        return
-    return spamdb.insert_one({"chat_id": chat_id}) 
-
-
 
 async def is_served_chat(chat_id: int) -> bool:
     chat = await chatsdb.find_one({"chat_id": chat_id})

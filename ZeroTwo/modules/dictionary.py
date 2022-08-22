@@ -66,9 +66,7 @@ def dict(update:Update, context=CallbackContext):
         meanings += '*Example*: ' + example + '\n\n'
         meanings += '*Synonym*: ' + synonyms + '\n\n'
         meanings += '*Antonym*: ' + antonyms + '\n\n\n'
-
-        meaning_counter += 1
-
+        
     # format the data into a string
     meaning = f"Word: *{word}*\n\n{meanings}"
     message.reply_text(meaning, parse_mode=ParseMode.MARKDOWN)

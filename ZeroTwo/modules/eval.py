@@ -6,8 +6,8 @@ import textwrap
 import traceback
 from contextlib import redirect_stdout
 
-from tg_bot import LOGGER, dispatcher
-from tg_bot.modules.helper_funcs.chat_status import dev_plus
+from ZeroTwo import LOGGER, dispatcher
+from ZeroTwo.modules.helper_funcs.chat_status import dev_plus
 from telegram import ParseMode, Update
 from telegram.ext import CallbackContext, CommandHandler, run_async
 

@@ -8,7 +8,7 @@ from ZeroTwo import (
     SUDOS,
     SUPPORT_CHAT,
     REAPERS,
-    REAPERS,
+    RONIN,
     HELLHOUND,
     dispatcher,
 )
@@ -22,7 +22,7 @@ THREAD_LOCK = RLock()
 
 
 def is_whitelist_plus(chat: Chat, user_id: int, member: ChatMember = None) -> bool:
-    return any(user_id in user for user in [HELLHOUND, REAPERS, REAPERS, SUDOS, MOD_USERS])
+    return any(user_id in user for user in [HELLHOUND, REAPERS, RONIN, SUDOS, MOD_USERS])
 
 
 def is_support_plus(chat: Chat, user_id: int, member: ChatMember = None) -> bool:
@@ -277,7 +277,7 @@ def bot_can_delete(func):
         message_chat_title = update.effective_message.chat.title
 
         if update_chat_title == message_chat_title:
-            cant_delete = "**Admin Status/Rights Missing!**\n**Requirements**: `can delete messages`"
+            cant_delete = "<b>Admin Status/Rights Missing!</b>\n<b>Requirements</b>: `can delete messages`"
         else:
             cant_delete = f"Rights missing in <b>{update_chat_title}</b>!\n**Requirements**: `can_delete_messages`"
 
@@ -298,7 +298,7 @@ def can_pin(func):
 
         if update_chat_title == message_chat_title:
             cant_pin = (
-                "*Admin Status/Rights Missing!**\n**Requirements**: `can pin messages`"
+                "<b>Admin Status/Rights Missing!\nRequirements</b>: `can pin messages`"
             )
         else:
             cant_pin = f"I can't pin messages in <b>{update_chat_title}</b>!\nMake sure I'm admin and can pin messages there."
@@ -319,7 +319,7 @@ def can_promote(func):
         message_chat_title = update.effective_message.chat.title
 
         if update_chat_title == message_chat_title:
-            cant_promote = "*Admin Status/Rights Missing!**\n**Requirements**: `add new admins`"
+            cant_promote = "<b>Admin Status/Rights Missing!\nRequirements</b>: `add new admins`"
         else:
             cant_promote = (
                 f"I can't promote/demote people in <b>{update_chat_title}</b>!\n"

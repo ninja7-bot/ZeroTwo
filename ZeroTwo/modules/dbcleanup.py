@@ -1,8 +1,9 @@
 from time import sleep
 
-import tg_bot.modules.sql.users_sql as user_sql
-from tg_bot import MOD_USERS, OWNER_ID, dispatcher
-from tg_bot.modules.helper_funcs.chat_status import dev_plus
+import ZeroTwo.modules.sql.users_sql as user_sql
+import ZeroTwo.modules.sql.global_bans_sql as gban_sql
+from ZeroTwo import MOD_USERS, OWNER_ID, dispatcher
+from ZeroTwo.modules.helper_funcs.chat_status import dev_plus
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.error import BadRequest, Unauthorized
 from telegram.ext import (
@@ -59,6 +60,30 @@ def get_invalid_chats(update: Update, context: CallbackContext, remove: bool = F
         user_sql.rem_chat(muted_chat)
     return kicked_chats
 
+def get_invalid_gban(update: Update, context: CallbackContext, remove: bool = False):
+    bot = context.bot
+    banned = gban_sql.get_gban_list()
+    ungbanned_users = 0
+    ungban_list = []
+
+    for user in banned:
+        user_id = user["user_id"]
+        sleep(0.1)
+        try:
+            bot.get_chat(user_id)
+        except BadRequest:
+            ungbanned_users += 1
+            ungban_list.append(user_id)
+        except:
+            pass
+
+    if not remove:
+        return ungbanned_users
+    else:
+        for user_id in ungban_list:
+            sleep(0.1)
+            gban_sql.ungban_user(user_id)
+        return ungbanned_users
 
 @dev_plus
 def dbcleanup(update: Update, context: CallbackContext):

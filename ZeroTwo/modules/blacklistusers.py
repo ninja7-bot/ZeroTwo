@@ -6,7 +6,7 @@ from ZeroTwo import (
     OWNER_ID,
     SUDOS,
     REAPERS,
-    REAPERS,
+    RONIN,
     HELLHOUND,
     dispatcher,
 )

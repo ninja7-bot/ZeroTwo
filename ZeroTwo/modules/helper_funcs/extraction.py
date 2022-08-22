@@ -1,7 +1,7 @@
 from typing import List, Optional
 
-from tg_bot import LOGGER
-from tg_bot.modules.users import get_user_id
+from ZeroTwo import LOGGER
+from ZeroTwo.modules.users import get_user_id
 from telegram import Message, MessageEntity
 from telegram.error import BadRequest
 

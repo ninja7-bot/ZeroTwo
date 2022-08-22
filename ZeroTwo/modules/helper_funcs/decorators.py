@@ -1,4 +1,4 @@
-from tg_bot.modules.disable import (
+from ZeroTwo.modules.disable import (
     DisableAbleCommandHandler,
     DisableAbleMessageHandler,
 )
@@ -9,7 +9,7 @@ from telegram.ext import (
     InlineQueryHandler,
 )
 from telegram.ext.filters import MessageFilter
-from tg_bot import dispatcher as d, LOGGER
+from ZeroTwo import dispatcher as d, LOGGER
 from typing import Optional, Union, List
 
 

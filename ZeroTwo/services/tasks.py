@@ -2,8 +2,8 @@ from asyncio import Lock, create_task
 from time import time
 from pyrogram import filters
 from pyrogram.types import Message
-from tg_bot import BOT_ID, BOT_USERNAME, MOD_USERS
-from tg_bot.services.sections import bold, section, w
+from ZeroTwo import BOT_ID, BOT_USERNAME, MOD_USERS
+from ZeroTwo.services.sections import bold, section, w
 
 tasks = {}
 TASKS_LOCK = Lock()

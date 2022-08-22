@@ -32,15 +32,15 @@ import speedtest
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 from pyrogram.types import Message
 
-from tg_bot import aiohttpsession as aiosession
-from tg_bot.ex_plugins.dbfunctions import start_restart_stage
-from tg_bot.utils.http import get, post
+from ZeroTwo import aiohttpsession as aiosession
+from ZeroTwo.ex_plugins.dbfunctions import start_restart_stage
+from ZeroTwo.utils.http import get, post
 
 
 async def restart(m: Message):
     if m:
         await start_restart_stage(m.chat.id, m.message_id)
-    execvp(executable, [executable, "-m", "NaoRobot"])
+    execvp(executable, [executable, "-m", "ZeroTwo"])
 
 
 def generate_captcha():
@@ -69,7 +69,7 @@ def generate_captcha():
     width = 80 * 4
     height = 100
     correct_answer = ""
-    font = ImageFont.truetype("NaoRobot/resources/default.ttf", 55)
+    font = ImageFont.truetype("ZeroTwo/resources/default.ttf", 55)
     file = f"NaoRobot/resources/{randint(1000, 9999)}.jpg"
     image = Image.new("RGB", (width, height), (255, 255, 255))
     draw = ImageDraw.Draw(image)

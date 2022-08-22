@@ -1,17 +1,17 @@
 import html
 from typing import Optional
 
-import tg_bot.modules.sql.blsticker_sql as sql
-from tg_bot import LOGGER, dispatcher
-from tg_bot.modules.connection import connected
-from tg_bot.modules.disable import DisableAbleCommandHandler
-from tg_bot.modules.helper_funcs.alternate import send_message
-from tg_bot.modules.helper_funcs.chat_status import user_admin, user_not_admin
-from tg_bot.modules.helper_funcs.misc import split_message
-from tg_bot.modules.helper_funcs.string_handling import extract_time
+import ZeroTwo.modules.sql.blsticker_sql as sql
+from ZeroTwo import LOGGER, dispatcher
+from ZeroTwo.modules.connection import connected
+from ZeroTwo.modules.disable import DisableAbleCommandHandler
+from ZeroTwo.modules.helper_funcs.alternate import send_message
+from ZeroTwo.modules.helper_funcs.chat_status import user_admin, user_not_admin
+from ZeroTwo.modules.helper_funcs.misc import split_message
+from ZeroTwo.modules.helper_funcs.string_handling import extract_time
 
-from tg_bot.modules.log_channel import loggable
-from tg_bot.modules.warns import warn
+from ZeroTwo.modules.log_channel import loggable
+from ZeroTwo.modules.warns import warn
 from telegram import Chat, Message, ParseMode, Update, User, ChatPermissions
 from telegram.error import BadRequest
 from telegram.ext import CallbackContext, CommandHandler, Filters, MessageHandler
@@ -498,7 +498,7 @@ def __chat_settings__(chat_id, user_id):
 
 
 def __stats__():
-    return " {} blacklist stickers, across {} chats.".format(
+    return "• {} blacklist stickers, across {} chats.".format(
         sql.num_stickers_filters(),
         sql.num_stickers_filter_chats(),
     )

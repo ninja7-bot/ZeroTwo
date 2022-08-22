@@ -601,27 +601,27 @@ def fed_ban(update: Update, context: CallbackContext):
         return
 
     if is_user_fed_owner(fed_id, user_id) is True:
-        message.reply_text("Why did you try the federation fban?")
+        message.reply_text("Why did you try the federation ban?")
         return
 
     if is_user_fed_admin(fed_id, user_id) is True:
-        message.reply_text("He is a federation admin, I can't fban him.")
+        message.reply_text("They are federation admin, I can't fban him.")
         return
 
     if user_id == OWNER_ID:
-        message.reply_text("Disaster level God cannot be fed banned!")
+        message.reply_text("Watcher cannot be fed banned!")
         return
 
     if int(user_id) in SUDOS:
-        message.reply_text("SUDOS cannot be fed banned!")
+        message.reply_text("Sudo cannot be fed banned!")
         return
 
     if int(user_id) in REAPERS:
-        message.reply_text("REAPERS cannot be fed banned!")
+        message.reply_text("Reapers cannot be fed banned!")
         return
 
     if int(user_id) in HELLHOUND:
-        message.reply_text("HELLHOUND cannot be fed banned!")
+        message.reply_text("Hellhound cannot be fed banned!")
         return
 
     if user_id in [777000, 1087968824]:
@@ -2360,7 +2360,7 @@ def get_chat(chat_id, chat_data):
 
 def fed_owner_help(update: Update, context: CallbackContext):
     update.effective_message.reply_text(
-        """*👑 Fed Owner Only:*
+        """*Fed Owner Only:*
  • `/newfed <fed_name>`*:* Creates a Federation, One allowed per user
  • `/renamefed <fed_id> <new_fed_name>`*:* Renames the fed id to a new name
  • `/delfed <fed_id>`*:* Delete a Federation, and any information related to it. Will not cancel blocked users
@@ -2378,7 +2378,7 @@ def fed_owner_help(update: Update, context: CallbackContext):
 
 def fed_admin_help(update: Update, context: CallbackContext):
     update.effective_message.reply_text(
-        """*🔱 Fed Admins:*
+        """*Fed Admins:*
  • `/fban <user> <reason>`*:* Fed bans a user
  • `/unfban <user> <reason>`*:* Removes a user from a fed ban
  • `/fedinfo <fed_id>`*:* Information about the specified Federation
@@ -2404,7 +2404,7 @@ def fed_user_help(update: Update, context: CallbackContext):
     )
 
 
-__mod_name__ = "【ꜰᴇᴅ】"
+__mod_name__ = "Fed"
 
 
 NEW_FED_HANDLER = CommandHandler("newfed", new_fed, run_async=True)

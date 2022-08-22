@@ -5,10 +5,10 @@ from telegram import TelegramError, Update
 from telegram.ext import CallbackContext, CommandHandler, Filters, MessageHandler, run_async
 from telegram.error import BadRequest, Unauthorized
 
-import tg_bot.modules.sql.users_sql as sql
-from tg_bot import MOD_USERS, LOGGER, OWNER_ID, dispatcher
-from tg_bot.modules.helper_funcs.chat_status import dev_plus, sudo_plus
-from tg_bot.modules.sql.users_sql import get_all_users
+import ZeroTwo.modules.sql.users_sql as sql
+from ZeroTwo import MOD_USERS, LOGGER, OWNER_ID, dispatcher
+from ZeroTwo.modules.helper_funcs.chat_status import dev_plus, sudo_plus
+from ZeroTwo.modules.sql.users_sql import get_all_users
 
 USERS_GROUP = 4
 CHAT_GROUP = 5
@@ -157,7 +157,7 @@ def __user_info__(user_id):
 
 
 def __stats__():
-    return f" {sql.num_users()} users, across {sql.num_chats()} chats"
+    return f"• {sql.num_users()} users, across {sql.num_chats()} chats"
 
 
 def __migrate__(old_chat_id, new_chat_id):

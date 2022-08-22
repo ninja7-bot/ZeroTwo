@@ -2,9 +2,9 @@ import importlib
 from typing import Union
 
 from future.utils import string_types
-from tg_bot import dispatcher
-from tg_bot.modules.helper_funcs.handlers import CMD_STARTERS, SpamChecker
-from tg_bot.modules.helper_funcs.misc import is_module_loaded
+from ZeroTwo import dispatcher
+from ZeroTwo.modules.helper_funcs.handlers import CMD_STARTERS, SpamChecker
+from ZeroTwo.modules.helper_funcs.misc import is_module_loaded
 from telegram import ParseMode, Update
 from telegram.ext import (
     CallbackContext,
@@ -22,12 +22,12 @@ FILENAME = __name__.rsplit(".", 1)[-1]
 # If module is due to be loaded, then setup all the magical handlers
 if is_module_loaded(FILENAME):
 
-    from tg_bot.modules.helper_funcs.chat_status import (
+    from ZeroTwo.modules.helper_funcs.chat_status import (
         connection_status,
         is_user_admin,
         user_admin,
     )
-    from tg_bot.modules.sql import disable_sql as sql
+    from ZeroTwo.modules.sql import disable_sql as sql
 
     DISABLE_CMDS = []
     DISABLE_OTHER = []
@@ -308,7 +308,7 @@ if is_module_loaded(FILENAME):
         )
 
     def __stats__():
-        return f" {sql.num_disabled()} disabled items, across {sql.num_chats()} chats."
+        return f"• {sql.num_disabled()} disabled items, across {sql.num_chats()} chats."
 
     def __migrate__(old_chat_id, new_chat_id):
         sql.migrate_chat(old_chat_id, new_chat_id)

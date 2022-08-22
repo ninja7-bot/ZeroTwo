@@ -1,6 +1,6 @@
 import ZeroTwo.modules.sql.blacklistusers_sql as sql
 from ZeroTwo import ALLOW_EXCL
-from ZeroTwo import MOD_USERS, SUDOS, REAPERS, REAPERS, HELLHOUND
+from ZeroTwo import MOD_USERS, SUDOS, REAPERS, RONIN, HELLHOUND
 
 from telegram import Update
 from telegram.ext import CommandHandler, MessageHandler, RegexHandler, Filters
@@ -13,11 +13,10 @@ from pyrate_limiter import (
 )
 
 if ALLOW_EXCL:
-    CMD_STARTERS = ("/", "!", "-")
+    CMD_STARTERS = ("/", "!", "+", "-")
 else:
     CMD_STARTERS = (
         "/",
-        "!",
         "-",
     )
 
@@ -29,7 +28,7 @@ class AntiSpam:
             + (SUDOS or [])
             + (HELLHOUND or [])
             + (REAPERS or [])
-            + (REAPERS or [])
+            + (RONIN or [])
         )
         # Values are HIGHLY experimental, its recommended you pay attention to our commits as we will be adjusting the values over time with what suits best.
         Duration.CUSTOM = 15  # Custom duration, 15 seconds

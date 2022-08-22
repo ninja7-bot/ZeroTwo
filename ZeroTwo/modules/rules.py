@@ -1,9 +1,9 @@
 from typing import Optional
 
-import tg_bot.modules.sql.rules_sql as sql
-from tg_bot import dispatcher
-from tg_bot.modules.helper_funcs.chat_status import user_admin
-from tg_bot.modules.helper_funcs.string_handling import markdown_parser
+import ZeroTwo.modules.sql.rules_sql as sql
+from ZeroTwo import dispatcher
+from ZeroTwo.modules.helper_funcs.chat_status import user_admin
+from ZeroTwo.modules.helper_funcs.string_handling import markdown_parser
 from telegram import (
     InlineKeyboardButton,
     InlineKeyboardMarkup,
@@ -89,7 +89,7 @@ def send_rules(update, chat_id, from_pm=False):
         )
     else:
         update.effective_message.reply_text(
-            "【ʀᴜʟᴇꜱ & ʀᴇɢᴜʟᴀᴛɪᴏɴꜱ ɴᴏᴛ ꜱᴇᴛ ʙʏ ᴍᴇ..】",
+            "Rules haven't been set by the admins.\nPlease do by using /setrules!",
         )
 
 
@@ -109,7 +109,7 @@ def set_rules(update: Update, context: CallbackContext):
         )
 
         sql.set_rules(chat_id, markdown_rules)
-        update.effective_message.reply_text("Done ✅.\n\nrules have been set..")
+        update.effective_message.reply_text("Rules for the chat have been added!")
 
 
 @user_admin
@@ -120,7 +120,7 @@ def clear_rules(update: Update, context: CallbackContext):
 
 
 def __stats__():
-    return f" {sql.num_chats()} chats have rules set."
+    return f"• {sql.num_chats()} chats have rules set."
 
 
 def __import_data__(chat_id, data):

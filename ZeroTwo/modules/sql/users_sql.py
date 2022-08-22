@@ -1,7 +1,7 @@
 import threading
 
-from tg_bot import dispatcher
-from tg_bot.modules.sql import BASE, SESSION
+from ZeroTwo import dispatcher
+from ZeroTwo.modules.sql import BASE, SESSION
 from sqlalchemy import (
     Column,
     ForeignKey,
@@ -13,8 +13,8 @@ from sqlalchemy import (
 )
 from sqlalchemy.sql.sqltypes import BigInteger
 
-from tg_bot import dispatcher
-from tg_bot.modules.sql import BASE, SESSION
+from ZeroTwo import dispatcher
+from ZeroTwo.modules.sql import BASE, SESSION
 
 
 class Users(BASE):

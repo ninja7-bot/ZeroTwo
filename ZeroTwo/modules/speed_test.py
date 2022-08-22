@@ -1,7 +1,7 @@
 import speedtest
-from tg_bot import MOD_USERS, dispatcher
-from tg_bot.modules.disable import DisableAbleCommandHandler
-from tg_bot.modules.helper_funcs.chat_status import dev_plus
+from ZeroTwo import MOD_USERS, dispatcher
+from ZeroTwo.modules.disable import DisableAbleCommandHandler
+from ZeroTwo.modules.helper_funcs.chat_status import dev_plus
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, Update
 from telegram.ext import CallbackContext, CallbackQueryHandler
 

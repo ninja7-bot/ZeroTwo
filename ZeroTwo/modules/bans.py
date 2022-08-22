@@ -29,7 +29,7 @@ from ZeroTwo import (
     OWNER_ID,
     SUDOS,
     REAPERS,
-    REAPERS,
+    RONIN,
     HELLHOUND,
     dispatcher,
 )
@@ -82,7 +82,6 @@ def ban(update: Update, context: CallbackContext) -> str:
         return
 
     user_id, reason = extract_user_and_text(message, args)
-
     if not user_id:
         message.reply_text("User not found.")
         return log_message
@@ -99,23 +98,23 @@ def ban(update: Update, context: CallbackContext) -> str:
 
     if is_user_ban_protected(chat, user_id, member) and user not in MOD_USERS:
         if user_id == OWNER_ID:
-            message.reply_text("Trying to put me against a King huh?")
+            message.reply_text("WATCHER STATUS detected.")
         elif user_id in MOD_USERS:
-            message.reply_text("I can't act against our Prince.")
+            message.reply_text("Moderator Presence.")
         elif user_id in SUDOS:
             message.reply_text(
-                "Fighting this Emperor here will put user lives at risk."
+                "Sudo User."
             )
         elif user_id in REAPERS:
             message.reply_text(
-                "Bring an order from Captain to fight a Assasin servant."
+                "Reapers can't be banned."
             )
-        elif user_id in REAPERS:
-            message.reply_text("Bring an order from Soldier to fight a Lancer servant.")
+        elif user_id in RONIN:
+            message.reply_text("Ronin User.")
         elif user_id in HELLHOUND:
-            message.reply_text("Trader access make them ban immune!")
+            message.reply_text("Hellhound make them ban immune!")
         else:
-            message.reply_text("Cannot banned admin.")
+            message.reply_text("Cannot ban admin.")
         return log_message
     if message.text.startswith("/s"):
         silent = True
@@ -409,7 +408,7 @@ def kick(update: Update, context: CallbackContext) -> str:
 
 @bot_admin
 @can_restrict
-def punchme(update: Update, context: CallbackContext):
+def kickme(update: Update, context: CallbackContext):
     user_id = update.effective_message.from_user.id
     if is_user_admin(update.effective_chat, user_id):
         update.effective_message.reply_text("Leave the group for yourself.")
@@ -418,7 +417,7 @@ def punchme(update: Update, context: CallbackContext):
     res = update.effective_chat.unban_member(user_id)  # unban on current user = kick
     if res:
         update.effective_message.reply_text(
-            "Kickes you out of the group!!",
+            "Kicks you out of the group!!",
         )
     else:
         update.effective_message.reply_text("Huh? I can't :/")
@@ -603,12 +602,12 @@ __mod_name__ = "Ban/Mutes"
 
 BAN_HANDLER = CommandHandler(["ban", "sban"], ban, run_async=True)
 TEMPBAN_HANDLER = CommandHandler(["tban"], temp_ban, run_async=True)
-KICK_HANDLER = CommandHandler(["kick", "kick"], kick, run_async=True)
+KICK_HANDLER = CommandHandler(["kick"], kick, run_async=True)
 UNBAN_HANDLER = CommandHandler("unban", unban, run_async=True)
 ROAR_HANDLER = CommandHandler("roar", selfunban, run_async=True)
 UNBAN_BUTTON_HANDLER = CallbackQueryHandler(unbanb_btn, pattern=r"unbanb_")
 KICKME_HANDLER = DisableAbleCommandHandler(
-    ["kickme", "punchme"], punchme, filters=Filters.chat_type.groups, run_async=True
+    ["kickme"], kickme, filters=Filters.chat_type.groups, run_async=True
 )
 SNIPE_HANDLER = CommandHandler(
     "snipe", snipe, pass_args=True, filters=CustomFilters.sudo_filter, run_async=True

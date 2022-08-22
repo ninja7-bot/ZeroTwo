@@ -2,9 +2,9 @@ import sre_constants
 
 import regex
 import telegram
-from tg_bot import LOGGER, dispatcher
-from tg_bot.modules.disable import DisableAbleMessageHandler
-from tg_bot.modules.helper_funcs.regex_helper import infinite_loop_check
+from ZeroTwo import LOGGER, dispatcher
+from ZeroTwo.modules.disable import DisableAbleMessageHandler
+from ZeroTwo.modules.helper_funcs.regex_helper import infinite_loop_check
 from telegram import Update
 from telegram.ext import CallbackContext, Filters, run_async
 

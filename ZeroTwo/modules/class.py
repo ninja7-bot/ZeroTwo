@@ -9,7 +9,7 @@ from ZeroTwo import (
     OWNER_ID,
     SUDOS,
     SUPPORT_CHAT,
-    REAPERS,
+    RONIN,
     REAPERS,
     HELLHOUND,
     dispatcher,

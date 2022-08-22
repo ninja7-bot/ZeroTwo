@@ -7,8 +7,6 @@ from pyrogram.types import Message
 
 from ZeroTwo import ZeroTwoTelethonClient, arq
 from ZeroTwo.ex_plugins.dbfunctions import (enable_nsfw, disable_nsfw, enable_spam, disable_spam, is_spam_enabled, is_nsfw_enabled)
-from ZeroTwo.utils.arqapi import SUDOERS, arq
-from ZeroTwo import @adminsOnly, capture_err
 
 
 async def get_file_id_from_message(message):
@@ -101,6 +99,7 @@ async def spam_toggle_func(_, message: Message):
 
 
 @ZeroTwoTelethonClient.on_message(filters.command("nsfw_scan"), group=3)
+@capture_err
 async def nsfw_scan_command(_, message: Message):
     err = "Reply to an image/document/sticker/animation to scan it."
     if not message.reply_to_message:
@@ -117,7 +116,7 @@ async def nsfw_scan_command(_, message: Message):
         await message.reply_text(err)
         return
     m = await message.reply_text("Scanning")
-    file_id = get_file_id(reply)
+    file_id = await get_file_id_from_message(message)
     if not file_id:
         return await m.edit("Something went wrong.")
     file = await ZeroTwoTelethonClient.download_media(file_id)
@@ -142,6 +141,7 @@ async def nsfw_scan_command(_, message: Message):
 
 
 @ZeroTwoTelethonClient.on_message(filters.command("spam_scan"), group=3)
+@capture_err
 async def scanNLP(_, message: Message):
     if not message.reply_to_message:
         return await message.reply("Reply to a message to scan it.")
@@ -159,3 +159,12 @@ async def scanNLP(_, message: Message):
 **Profanity:** {data.profanity}
 """
     await message.reply(msg, quote=True)
+
+__help__ = """
+In order to be able to deal with new types of spammers utilizing channels, this module has been added. Any type of content which can be considered spam or porn will automatically be deleted and every channel message will be eliminated at the same time.
+
+• `/antinsfw` on/off*:* Toggles Anti-NSFW.
+• `/antichannel` on/off*:* Toggles Anti-Channel.
+
+"""        
+__mod_name__="Anti_NSFW"

@@ -1,7 +1,7 @@
 import ast
 import threading
-from tg_bot import dispatcher
-from tg_bot.modules.sql import BASE, SESSION
+from ZeroTwo import dispatcher
+from ZeroTwo.modules.sql import BASE, SESSION
 from sqlalchemy import Boolean, Column, String, UnicodeText, Integer
 from telegram.error import BadRequest, Unauthorized
 from sqlalchemy.sql.sqltypes import BigInteger

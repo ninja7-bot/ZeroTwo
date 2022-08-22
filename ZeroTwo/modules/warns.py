@@ -70,10 +70,10 @@ def warn(
 
     if user.id in HELLHOUND:
         if warner:
-            message.reply_text("Wolf are warn immune.")
+            message.reply_text("Hellhound are warn immune.")
         else:
             message.reply_text(
-                "Wolf triggered an auto warn filter!\nI can't warn HELLHOUND but they should avoid abusing this."
+                "Hellhound triggered an auto warn filter!\nI can't warn them but they should avoid abusing this."
             )
         return
 
@@ -493,7 +493,7 @@ def __chat_settings__(chat_id, user_id):
 
 
 __help__ = """
-
+*Admins Only*
  • /warns <userhandle>: get a user's number, and reason, of warns.
  • /warnlist: list of all current warning filters
  • /warn <userhandle>: warn a user. After 3 warns, the user will be banned from the group. Can also be used as a reply.

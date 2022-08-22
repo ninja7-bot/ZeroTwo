@@ -5,12 +5,11 @@
          "telegram",
          "advance",
          "group",
-         "manager",
-         "naorobot"
+         "manager"
       ],
     
    "logo":    "https://telegra.ph/file/f22d73dc5d935142b6d0c.png",  
-   "repository": "https://github.com/ninja7-bot/Zero-Two",
+   "repository": "https://github.com/ninja7-bot/ZeroTwo",
    "buildpacks": [
     {
       "url": "https://github.com/heroku/heroku-buildpack-python"
@@ -121,7 +120,7 @@
          "required": false,
          "value": ""
       },
-      "REAPERS": {
+      "RONIN": {
          "description": "A space separated list of user IDs who you wanna assign as RONIN User users.",
          "required": false,
          "value": ""

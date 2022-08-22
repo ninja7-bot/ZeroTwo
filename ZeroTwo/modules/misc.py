@@ -4,9 +4,9 @@ import re
 import codecs
 from typing import List
 from random import randint
-from tg_bot.modules.helper_funcs.chat_status import user_admin
-from tg_bot.modules.disable import DisableAbleCommandHandler
-from tg_bot import (
+from ZeroTwo.modules.helper_funcs.chat_status import user_admin
+from ZeroTwo.modules.disable import DisableAbleCommandHandler
+from ZeroTwo import (
     dispatcher,
     WALL_API,
 )
@@ -27,9 +27,9 @@ from telegram import (
 from telegram.error import BadRequest
 from telegram.ext.dispatcher import run_async
 from telegram.ext import CallbackContext, Filters, CommandHandler
-from tg_bot import StartTime
-from tg_bot.modules.helper_funcs.chat_status import sudo_plus
-from tg_bot.modules.helper_funcs.alternate import send_action, typing_action
+from ZeroTwo import StartTime
+from ZeroTwo.modules.helper_funcs.chat_status import sudo_plus
+from ZeroTwo.modules.helper_funcs.alternate import send_action, typing_action
 
 MARKDOWN_HELP = f"""
 Markdown is a very powerful formatting tool supported by telegram. {dispatcher.bot.first_name} has some enhancements, to make sure that \
@@ -187,10 +187,15 @@ __help__ = """
  • /markdownhelp*:* quick summary of how markdown works in telegram - can only be called in private chats
  • /paste*:* Saves replied content to `nekobin.com` and replies with a url
  • /react*:* Reacts with a random reaction 
- • /ud <word>*:* Type the word or expression you want to search use
- • /reverse*:* Does a reverse image search of the media which it was replied to.
+
+ Dictionary
+ • /ud <word>*:* Type the word or expression you want to search using Urban Dictionary.
+ • /dict <word>*:* Type the word or expression you want to search using Oxford Dictionary.
+ 
+ Site Search
  • /wiki <query>*:* wikipedia your query
  • /wall <query>*:* get a wallpaper from wall.alphacoders.com
+
  • /cash*:* currency converter
  Example:
  `/cash 1 USD INR`  
@@ -198,7 +203,9 @@ __help__ = """
  `/cash 1 usd inr`
  Output: `1.0 USD = 75.505 INR`
 
- •`/reverse` `/rev` : reply to a sticker, or an image to search it!
+ • `/similar`: Suggests a simiar movie as the argument.
+ • `/recommend`: Randomly recommends a movie.
+
 """
 
 ECHO_HANDLER = DisableAbleCommandHandler(
@@ -214,7 +221,7 @@ dispatcher.add_handler(WIKI_HANDLER)
 dispatcher.add_handler(WALLPAPER_HANDLER)
 
 __mod_name__ = "Extras"
-__command_list__ = ["id", "echo", "wiki", "wall", "reverse"]
+__command_list__ = ["id", "echo", "wiki", "wall", "reverse", "ud", "dict", "similar","recommend"]
 __handlers__ = [
     ECHO_HANDLER,
     MD_HELP_HANDLER,

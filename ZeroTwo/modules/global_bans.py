@@ -1,3 +1,4 @@
+from asyncore import dispatcher
 import html
 import time
 from datetime import datetime
@@ -83,32 +84,32 @@ def gban(update: Update, context: CallbackContext):
 
     if int(user_id) in MOD_USERS:
         message.reply_text(
-            "That user is part of the Association\nI can't act against our own."
+            "Moderators can't be gbanned, mess with them to lose your powers. Don't misuse the commands and do some work."
         )
         return
 
     if int(user_id) in SUDOS:
         message.reply_text(
-            "I spy, with my little eye... a disaster! Why are you guys turning on each other?"
+            "Sudo users can't be gbanned. Don't misuse the commands and do some work."
         )
         return
 
     if int(user_id) in REAPERS:
         message.reply_text(
-            "OOOH someone's trying to gban a Demon Disaster! *grabs popcorn*"
+            "Reapers can't be gbanned. Don't misuse the commands and do some work."
         )
         return
 
     if int(user_id) in RONIN:
-        message.reply_text("That's a Tiger! They cannot be banned!")
+        message.reply_text("That's a Ronin! They cannot be banned!")
         return
 
     if int(user_id) in HELLHOUND:
-        message.reply_text("That's a Wolf! They cannot be banned!")
+        message.reply_text("That's a Hellhound! They cannot be banned!")
         return
 
     if user_id == bot.id:
-        message.reply_text("You uhh...want me to punch myself?")
+        message.reply_text("High on weed, are we?")
         return
 
     if user_id in [777000, 1087968824]:
@@ -535,7 +536,7 @@ This also integrates @Spamwatch API to remove Spammers as much as possible from 
 *What is SpamWatch?*
 SpamWatch maintains a large constantly updated ban-list of spambots, trolls, bitcoin spammers and unsavoury characters[.](https://telegra.ph/file/f584b643c6f4be0b1de53.jpg)
 Constantly help banning spammers off from your group automatically So, you wont have to worry about spammers storming your group.
-*Note:* Users can appeal spamwatch bans at @SpamwatchSupport
+*Note:* Users can appeal spamwatch bans at @SpamwatchBot
 """
 
 GBAN_HANDLER = CommandHandler("gban", gban, run_async=True)
@@ -550,14 +551,14 @@ GBAN_ENFORCER = MessageHandler(
     Filters.all & Filters.chat_type.groups, enforce_gban, run_async=True
 )
 
-NEKO_PTB.add_handler(GBAN_HANDLER)
-NEKO_PTB.add_handler(UNGBAN_HANDLER)
-NEKO_PTB.add_handler(GBAN_LIST)
-NEKO_PTB.add_handler(GBAN_STATUS)
+dispatcher.add_handler(GBAN_HANDLER)
+dispatcher.add_handler(UNGBAN_HANDLER)
+dispatcher.add_handler(GBAN_LIST)
+dispatcher.add_handler(GBAN_STATUS)
 
 __mod_name__ = "Anti-Spam"
 __handlers__ = [GBAN_HANDLER, UNGBAN_HANDLER, GBAN_LIST, GBAN_STATUS]
 
 if STRICT_GBAN:  # enforce GBANS if this is set
-    NEKO_PTB.add_handler(GBAN_ENFORCER, GBAN_ENFORCE_GROUP)
+    dispatcher.add_handler(GBAN_ENFORCER, GBAN_ENFORCE_GROUP)
     __handlers__.append((GBAN_ENFORCER, GBAN_ENFORCE_GROUP))

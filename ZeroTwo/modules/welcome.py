@@ -5,6 +5,7 @@ import time
 from functools import partial
 from io import BytesIO
 import ZeroTwo.modules.sql.welcome_sql as sql
+from ZeroTwo.modules.sql.global_bans_sql import is_user_gbanned
 from ZeroTwo import (
     MOD_USERS,
     OWNER_ID,
@@ -226,7 +227,7 @@ def new_member(update: Update, context: CallbackContext):  # sourcery no-metrics
             # Welcome Support
             if new_mem.id in REAPERS:
                 update.effective_message.reply_text(
-                    "Demonic energy in the surroundings!",
+                    "Reaper has joined the group.!",
                     reply_to_message_id=reply,
                 )
                 continue
@@ -234,7 +235,7 @@ def new_member(update: Update, context: CallbackContext):  # sourcery no-metrics
             # Welcome HELLHOUND
             if new_mem.id in HELLHOUND:
                 update.effective_message.reply_text(
-                    "Wolf in the vicinity, be ware!", reply_to_message_id=reply
+                    "Hellhound in the vicinity, be ware!", reply_to_message_id=reply
                 )
                 continue
 
@@ -613,9 +614,13 @@ def left_member(update: Update, context: CallbackContext):  # sourcery no-metric
             # Give the devs a special goodbye
             if left_mem.id in MOD_USERS:
                 update.effective_message.reply_text(
-                    "See you later at the Eagle Union!",
+                    "Moderator left",
                     reply_to_message_id=reply,
                 )
+                return
+
+            # Go away gbanned scum!
+            if is_user_gbanned(left_mem.id):
                 return
 
             # if media goodbye, use appropriate function for it

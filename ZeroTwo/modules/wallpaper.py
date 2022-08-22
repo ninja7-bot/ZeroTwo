@@ -1,8 +1,8 @@
 from random import randint
 
 import requests as r
-from tg_bot import SUPPORT_CHAT, WALL_API, dispatcher
-from tg_bot.modules.disable import DisableAbleCommandHandler
+from ZeroTwo import SUPPORT_CHAT, WALL_API, dispatcher
+from ZeroTwo.modules.disable import DisableAbleCommandHandler
 from telegram import Update
 from telegram.ext import CallbackContext
 

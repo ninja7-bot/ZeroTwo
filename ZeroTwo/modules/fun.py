@@ -6,11 +6,11 @@ from telegram import ParseMode, Update, ChatPermissions
 from telegram.ext import CallbackContext, run_async
 from telegram.error import BadRequest
 
-import tg_bot.modules.fun_strings as fun_strings
-from tg_bot import dispatcher
-from tg_bot.modules.disable import DisableAbleCommandHandler
-from tg_bot.modules.helper_funcs.chat_status import (is_user_admin)
-from tg_bot.modules.helper_funcs.extraction import extract_user
+import ZeroTwo.modules.fun_strings as fun_strings
+from ZeroTwo import dispatcher
+from ZeroTwo.modules.disable import DisableAbleCommandHandler
+from ZeroTwo.modules.helper_funcs.chat_status import (is_user_admin)
+from ZeroTwo.modules.helper_funcs.extraction import extract_user
 
 GIF_ID = 'CgACAgQAAx0CSVUvGgAC7KpfWxMrgGyQs-GUUJgt-TSO8cOIDgACaAgAAlZD0VHT3Zynpr5nGxsE'
 

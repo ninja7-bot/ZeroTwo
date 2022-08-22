@@ -1,12 +1,12 @@
 import random, html
 
-from tg_bot import dispatcher
-from tg_bot.modules.disable import (
+from ZeroTwo import dispatcher
+from ZeroTwo.modules.disable import (
     DisableAbleCommandHandler,
     DisableAbleMessageHandler,
 )
-from tg_bot.modules.sql import afk_sql as sql
-from tg_bot.modules.users import get_user_id
+from ZeroTwo.modules.sql import afk_sql as sql
+from ZeroTwo.modules.users import get_user_id
 from telegram import MessageEntity, Update
 from telegram.error import BadRequest
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, Update

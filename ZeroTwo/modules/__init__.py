@@ -1,4 +1,4 @@
-from tg_bot import LOAD, NO_LOAD, LOGGER
+from ZeroTwo import LOAD, NO_LOAD, LOGGER
 import sys
 
 

@@ -31,7 +31,7 @@ from ZeroTwo import (
     OWNER_ID,
     SUDOS,
     REAPERS,
-    REAPERS,
+    RONIN,
     HELLHOUND,
     INFOPIC,
     dispatcher,
@@ -44,6 +44,7 @@ from ZeroTwo.modules.sql import SESSION
 import ZeroTwo.modules.sql.userinfo_sql as sql
 from ZeroTwo.modules.disable import DisableAbleCommandHandler
 from ZeroTwo.modules.sql.afk_sql import is_afk, set_afk
+from ZeroTwo.modules.sql.global_bans_sql import is_user_gbanned
 from ZeroTwo.modules.sql.users_sql import get_user_num_chats
 from ZeroTwo.modules.helper_funcs.chat_status import sudo_plus
 from ZeroTwo.modules.helper_funcs.extraction import extract_user
@@ -71,41 +72,39 @@ def get_percentage(totalhp, earnedhp):
 
 def hpmanager(user):
     total_hp = (get_user_num_chats(user.id) + 10) * 10
-
-
+    if not is_user_gbanned(user.id):
 
         # Assign new var `new_hp` since we need `total_hp` in
         # end to calculate percentage.
-    new_hp = total_hp
+        new_hp = total_hp
 
         # if no username decrease 25% of hp.
-    if not user.username:
-        new_hp -= no_by_per(total_hp, 25)
-    try:
-        dispatcher.bot.get_user_profile_photos(user.id).photos[0][-1]
-    except IndexError:
+        if not user.username:
+            new_hp -= no_by_per(total_hp, 25)
+        try:
+            dispatcher.bot.get_user_profile_photos(user.id).photos[0][-1]
+        except IndexError:
             # no profile photo ==> -25% of hp
-        new_hp -= no_by_per(total_hp, 25)
+            new_hp -= no_by_per(total_hp, 25)
         # if no /setme exist ==> -20% of hp
-    if not sql.get_user_me_info(user.id):
-         new_hp -= no_by_per(total_hp, 20)
+        if not sql.get_user_me_info(user.id):
+            new_hp -= no_by_per(total_hp, 20)
         # if no bio exsit ==> -10% of hp
-    if not sql.get_user_bio(user.id):
-         new_hp -= no_by_per(total_hp, 10)
+        if not sql.get_user_bio(user.id):
+            new_hp -= no_by_per(total_hp, 10)
 
-    if is_afk(user.id):
-         afkst = set_afk(user.id)
+        if is_afk(user.id):
+            afkst = set_afk(user.id)
             # if user is afk and no reason then decrease 7%
             # else if reason exist decrease 5%
-    if not afkst.reason:
-         new_hp -= no_by_per(total_hp, 7)
-    else:
-         new_hp -= no_by_per(total_hp, 5)
+            new_hp -= no_by_per(total_hp, 7) if not afkst else no_by_per(total_hp, 5)
+            # fbanned users will have (2*number of fbans) less from max HP
+            # Example: if HP is 100 but user has 5 diff fbans
+            # Available HP is (2*5) = 10% less than Max HP
+            # So.. 10% of 100HP = 90HP
 
-        # fbanned users will have (2*number of fbans) less from max HP
-        # Example: if HP is 100 but user has 5 diff fbans
-        # Available HP is (2*5) = 10% less than Max HP
-        # So.. 10% of 100HP = 90HP
+    else:
+        new_hp = no_by_per(total_hp, 5)
 
 
 # Commenting out fban health decrease cause it wasnt working and isnt needed ig.
@@ -173,7 +172,7 @@ def get_id(update: Update, context: CallbackContext):
 @telethn.on(
     events.NewMessage(
         pattern='/ginfo ',
-        from_users=(REAPER or []) + (SUDOS or []) + (REAPERS or [])))
+        from_users=(REAPER or []) + (SUDOS or []) + (RONIN or [])))
 async def group_info(event) -> None:
     chat = event.text.split(' ', 1)[1]
     try:
@@ -301,7 +300,7 @@ def info(update: Update, context: CallbackContext):
     elif user.id in REAPERS:
         text += "\n\n<b>Reaper!</b>"
         disaster_level_present = True
-    elif user.id in REAPERS:
+    elif user.id in RONIN:
         text += "\n\n<b>RONIN!</b>"
         disaster_level_present = True
     elif user.id in HELLHOUND:
@@ -309,8 +308,7 @@ def info(update: Update, context: CallbackContext):
         disaster_level_present = True
 
     if disaster_level_present:
-        text += ' [<a href="https://t.me/ZeroTwoUpdates/23">?</a>]'.format(
-            bot.username)
+        text += 'Use /class to know the details about Authorized Users.'
 
     try:
         user_member = chat.get_member(user.id)

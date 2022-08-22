@@ -1,5 +1,5 @@
 from telegram.ext.filters import Filters
-from tg_bot.modules.helper_funcs.decorators import botcmd, botmsg
+from ZeroTwo.modules.helper_funcs.decorators import botcmd, botmsg
 from telegram import Update, message
 from telegram.ext import CallbackContext
 from ..modules.helper_funcs.anonymous import user_admin, AdminPerms

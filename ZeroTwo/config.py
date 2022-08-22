@@ -17,7 +17,7 @@ class Config(object):
     API_ID = 123456  # integer value, dont use ""
     API_HASH = "awoo"
     TOKEN = "BOT_TOKEN"  # This var used to be API_KEY but it is now TOKEN, adjust accordingly.
-    OWNER_ID = 1606221784  # If you dont know, run the bot and do /id in your private chat with it, also an integer
+    OWNER_ID = 1191870547  # If you dont know, run the bot and do /id in your private chat with it, also an integer
     OWNER_USERNAME = "KillMeOnce"
     SUPPORT_CHAT = ""  # Your own group for support, do not add the @
     JOIN_LOGGER = (
@@ -41,11 +41,11 @@ class Config(object):
     ##List of id's -  (not usernames) for users which have sudo access to the bot.
     SUDOS = get_user_list("elevated_users.json", "sudos")
     ##List of id's - (not usernames) for developers who will have the same perms as the owner
-    MOD_USERS = get_user_list("elevated_users.json", "devs")
+    MOD_USERS = get_user_list("elevated_users.json", "mods")
     ##List of id's (not usernames) for users which are allowed to gban, but can also be banned.
     REAPERS = get_user_list("elevated_users.json", "supports")
     # List of id's (not usernames) for users which WONT be banned/kicked by the bot.
-    REAPERS = get_user_list("elevated_users.json", "REAPERS")
+    RONIN = get_user_list("elevated_users.json", "RONIN")
     HELLHOUND = get_user_list("elevated_users.json", "whitelists")
     DONATION_LINK = None  # EG, paypal
     CERT_PATH = None

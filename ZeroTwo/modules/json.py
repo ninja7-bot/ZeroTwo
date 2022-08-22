@@ -1,6 +1,6 @@
 import io
-from tg_bot.events import register
-from tg_bot import telethn as tbot
+from ZeroTwo.events import register
+from ZeroTwo import telethn as tbot
 from telethon import types
 from telethon import events
 from telethon.tl import functions

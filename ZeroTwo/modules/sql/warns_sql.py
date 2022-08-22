@@ -1,6 +1,6 @@
 import threading
 
-from tg_bot.modules.sql import BASE, SESSION
+from ZeroTwo.modules.sql import BASE, SESSION
 from sqlalchemy import Boolean, Column, String, UnicodeText, distinct, func, Integer
 from sqlalchemy.sql.sqltypes import BigInteger
 from sqlalchemy.dialects import postgresql

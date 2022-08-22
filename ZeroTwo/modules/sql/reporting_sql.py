@@ -1,7 +1,7 @@
 import threading
 from typing import Union
 
-from tg_bot.modules.sql import BASE, SESSION
+from ZeroTwo.modules.sql import BASE, SESSION
 from sqlalchemy import Boolean, Column, String
 from sqlalchemy.sql.sqltypes import BigInteger
 

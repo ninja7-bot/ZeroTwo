@@ -1,7 +1,7 @@
 from datetime import datetime
 from functools import wraps
 from telegram.ext import CallbackContext
-from tg_bot.modules.helper_funcs.misc import is_module_loaded
+from ZeroTwo.modules.helper_funcs.misc import is_module_loaded
 
 FILENAME = __name__.rsplit(".", 1)[-1]
 
@@ -11,9 +11,9 @@ if is_module_loaded(FILENAME):
     from telegram.ext import CommandHandler, JobQueue, run_async
     from telegram.utils.helpers import escape_markdown
 
-    from tg_bot import EVENT_LOGS, LOGGER, dispatcher
-    from tg_bot.modules.helper_funcs.chat_status import user_admin
-    from tg_bot.modules.sql import log_channel_sql as sql
+    from ZeroTwo import EVENT_LOGS, LOGGER, dispatcher
+    from ZeroTwo.modules.helper_funcs.chat_status import user_admin
+    from ZeroTwo.modules.sql import log_channel_sql as sql
 
     def loggable(func):
         @wraps(func)
@@ -175,7 +175,7 @@ if is_module_loaded(FILENAME):
             message.reply_text("No log channel has been set yet!")
 
     def __stats__():
-        return f" {sql.num_logchannels()} log channels set."
+        return f"• {sql.num_logchannels()} log channels set."
 
     def __migrate__(old_chat_id, new_chat_id):
         sql.migrate_chat(old_chat_id, new_chat_id)

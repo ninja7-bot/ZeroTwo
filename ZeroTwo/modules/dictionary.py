@@ -23,7 +23,7 @@ def dict(update: Update, context: CallbackContext):
     message = update.effective_message
     endpoint = "entries"
     language_code = "en-us"
-    word_id = message.text[len("/dict "):]
+    word_id = message.text[len("/dict ") :]
     url = "https://od-api.oxforddictionaries.com/api/v2/" + endpoint + "/" + language_code + "/" + word_id.lower()
     r = requests.get(url, headers = {"app_id": APP_ID, "app_key": APP_KEY})
     try:

@@ -1,7 +1,7 @@
 from telegram.ext.filters import Filters
 from ZeroTwo.modules.helper_funcs.decorators import botcmd, botmsg
 from telegram import Update, message
-from telegram.ext import CallbackContext
+from telegram.ext import CallbackContext, run_async
 from ..modules.helper_funcs.anonymous import user_admin, AdminPerms
 import html
 from ZeroTwo.ex_plugins.dbfunctions import antichannel_status, disable_antichannel, enable_antichannel
@@ -28,7 +28,9 @@ def set_antichannel(update: Update, context: CallbackContext):
     message.reply_html(
         "Antichannel setting is currently {} in {}".format(antichannel_status(chat_id), html.escape(chat.title)))
 
-asnc def eliminate_channel(update: Update, context: CallbackContext):
+@run_async
+@botmsg(Filters.chat_type.groups, group=110)
+def eliminate_channel(update: Update, context: CallbackContext):
     message = update.effective_message
     chat = update.effective_chat
     chat_id = chat.id

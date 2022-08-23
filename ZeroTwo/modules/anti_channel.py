@@ -30,7 +30,7 @@ def set_antichannel(update: Update, context: CallbackContext):
 
 
 @botmsg(Filters.chat_type.groups, group=110)
-def eliminate_channel(update: Update, context: CallbackContext):
+aysnc def eliminate_channel(update: Update, context: CallbackContext):
     message = update.effective_message
     chat = update.effective_chat
     chat_id = chat.id

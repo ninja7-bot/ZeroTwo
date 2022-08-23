@@ -17,6 +17,7 @@ from ZeroTwo.modules.helper_funcs.chat_status import user_not_admin
 from telegram.ext import CallbackContext
 
 from ZeroTwo.FastTelethon import download_file
+from telethon.utils import resolve_bot_file_id as res
 
 __mod_name__ = "Anti-NSFW"
 
@@ -27,6 +28,25 @@ __HELP__ = """
 /spamscan - Get Spam predictions of replied message.
 """
 
+def download(message):
+    try:
+        media = replied.media
+        if hasattr(media, "document"):
+            msg = media.document
+            mime_type = file.mime_type
+            filename = replied.file.name
+            if not filename:
+                elif "video" in mime_type:
+                    filename = (
+                        "video_" +
+                        datetime.now().isoformat(
+                            "_",
+                            "seconds") +
+                        ".mp4")
+            outdir = "..NSFW/" + filename
+            file = await download_file(client=zbot, location=msg, out=outdir)
+
+        
 def get_file_id(message):
     if message.document:
         if int(message.document.file_size) > 3145728:
@@ -218,8 +238,8 @@ async def nsfw_scan_command(_, message: Message):
     file_id = get_file_id(reply)
     if not file_id:
         return await m.edit("Something went wrong.")
-    
-    file= await download_file(client=zbot,location=message.media, out="..NSFW/")       
+    media = res(file_id)
+    file = download(media)
     try:
         results = await arq.nsfw_scan(file=file)
     except Exception as e:

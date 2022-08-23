@@ -2,6 +2,8 @@ from os import remove
 
 from pyrogram import filters
 from pyrogram.types import Message
+from pyrogram.errors import (ChatAdminRequired, ChatWriteForbidden,
+                             UserAdminInvalid)
 
 from ZeroTwo.utils.permissions import adminsOnly
 

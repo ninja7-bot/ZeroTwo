@@ -52,6 +52,8 @@ def download(message):
                         ".mp4")
             outdir = "..NSFW/" + filename
             file = await download_file(client=zbot, location=msg, out=outdir)
+    except:
+        return
 
         
 def get_file_id(message):

@@ -58,6 +58,7 @@ async def nsfw_toggle_func(_, message: Message):
         return await message.reply_text(
             "Usage: /antinsfw [on|off]"
         )
+    chat = update.effective_chat
     member = chat.get_member(user.id)
     if member.status not in ("administrator", "creator"):
         return await message.reply_text("You don't have enough permissions")
@@ -88,6 +89,7 @@ async def spam_toggle_func(_, message: Message):
         return await message.reply_text(
             "Usage: /antispam [on|off]"
         )
+    chat = update.effective_chat
     member = chat.get_member(user.id)
     if member.status not in ("administrator", "creator"):
         return await message.reply_text("You don't have enough permissions")

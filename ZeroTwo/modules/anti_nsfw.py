@@ -14,6 +14,8 @@ from ZeroTwo.ex_plugins.dbfunctions import (disable_nsfw, disable_spam, enable_n
                           enable_spam, is_nsfw_enabled,
                           is_spam_enabled)
 from ZeroTwo.modules.helper_funcs.chat_status import user_not_admin
+from telegram.ext import CallbackContext
+
 
 __mod_name__ = "Anti-NSFW"
 
@@ -127,7 +129,8 @@ async def spam_toggle_func(_, message: Message):
     )
 )
 @user_not_admin
-async def nsfw_watcher(_, message: Message):
+async def nsfw_watcher(context: CallbackContext, message: Message):
+    bot = context.bot
     if not await is_nsfw_enabled(message.chat.id):
         return
     if not message.from_user:
@@ -170,7 +173,8 @@ Avoid sending NSFW messages.
 """)
     
 @user_not_admin
-async def spam_detect(_, message):
+async def spam_detect(context: CallbackContext, message):
+    bot = context.bot
     if not is_spam_enabled(message.chat.id):
         return
     text = message.text or message.caption

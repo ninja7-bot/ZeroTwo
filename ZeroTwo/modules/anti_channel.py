@@ -10,7 +10,7 @@ from ZeroTwo.ex_plugins.dbfunctions import antichannel_status, disable_antichann
 
 @botcmd(command="antichannel", group=100)
 @user_admin(AdminPerms.CAN_RESTRICT_MEMBERS)
-def set_antichannel(update: Update, context: CallbackContext):
+await def set_antichannel(update: Update, context: CallbackContext):
     message = update.effective_message
     chat = update.effective_chat
     args = context.args

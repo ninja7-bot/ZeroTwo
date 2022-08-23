@@ -89,7 +89,7 @@ async def download(message):
                             "_",
                             "seconds") +
                         ".gif")
-        file = await download_file(client=zbot, location=msg)
+        file = await download_file(client=zbot, location=msg, out="NSFW/")
         return file
     else:
         file_id=get_file_id(message)
@@ -170,7 +170,7 @@ async def nsfw_watcher(_, message: Message):
     file_id = get_file_id(message)
     file_unique_id = get_file_unique_id(message)
     if file_id and file_unique_id:
-        file = download(file_id)  
+        file = await zbot.download_media(file_id)  
         try:
             resp = await arq.nsfw_scan(file=file)
         except Exception:

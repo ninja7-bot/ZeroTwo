@@ -246,13 +246,13 @@ async def antichannel_status(chat_id: int) -> bool:
     return False
 
 async def enable_antichannel(chat_id: int):
-    is_antichannel = is_antichannel_enabled(chat_id)
+    is_antichannel = antichannel_status(chat_id)
     if is_antichannel:
         return
     return antichanneldb.delete_one({"chat_id": chat_id})
 
 async def disable_antichannel(chat_id: int):
-    is_antichannel = is_antichannel_enabled(chat_id)
+    is_antichannel = antichannel_status(chat_id)
     if is_antichannel:
         return
     return antichanneldb.insert_one({"chat_id": chat_id})

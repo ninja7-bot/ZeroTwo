@@ -5,7 +5,7 @@ from telegram.ext import CallbackContext
 from ..modules.helper_funcs.anonymous import user_admin, AdminPerms
 import html
 from ZeroTwo.ex_plugins.dbfunctions import antichannel_status, disable_antichannel, enable_antichannel
-
+from ZeroTwo import ZeroTwoTelethonClient as zbot
 
 @botcmd(command="antichannel", group=100)
 @user_admin(AdminPerms.CAN_RESTRICT_MEMBERS)
@@ -28,14 +28,12 @@ def set_antichannel(update: Update, context: CallbackContext):
     message.reply_html(
         "Antichannel setting is currently {} in {}".format(antichannel_status(chat_id), html.escape(chat.title)))
 
-
-@botmsg(Filters.chat_type.groups, group=110)
-def eliminate_channel(update: Update, context: CallbackContext):
+asnc def eliminate_channel(update: Update, context: CallbackContext):
     message = update.effective_message
     chat = update.effective_chat
     chat_id = chat.id
     bot = context.bot
-    if not antichannel_status(chat_id):
+    if not await antichannel_status(chat_id):
         return
     if message.sender_chat and message.sender_chat.type == "channel" and not message.is_automatic_forward:
         message.delete()

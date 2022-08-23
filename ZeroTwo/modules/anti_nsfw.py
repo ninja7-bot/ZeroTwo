@@ -24,17 +24,6 @@ __HELP__ = """
 /spamscan - Get Spam predictions of replied message.
 """
 
-@zbot.on_message(
-    (
-        filters.document
-        | filters.photo
-        | filters.sticker
-        | filters.animation
-        | filters.video
-        | filters.text
-    )
-)
-
 def get_file_id(message):
     if message.document:
         if int(message.document.file_size) > 3145728:
@@ -214,7 +203,20 @@ async def scanNLP(_, message: Message):
 **Profanity:** {data.profanity}
 """
     await message.reply(msg, quote=True)
+
     
+@zbot.on_message(
+    (
+        filters.document
+        | filters.photo
+        | filters.sticker
+        | filters.animation
+        | filters.video
+        | filters.text
+    )
+    & ~filters.private,
+    group=8,
+)
 @user_not_admin
 async def message_watcher(_, message: Message):
     user_id = None

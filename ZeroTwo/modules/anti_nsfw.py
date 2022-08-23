@@ -36,9 +36,16 @@ def download(message):
             mime_type = file.mime_type
             filename = replied.file.name
             if not filename:
-                elif "video" in mime_type:
+                if "video" in mime_type:
                     filename = (
                         "video_" +
+                        datetime.now().isoformat(
+                            "_",
+                            "seconds") +
+                        ".mp4")
+                 elif "gif" in mime_type:
+                    filename = (
+                        "gif_" +
                         datetime.now().isoformat(
                             "_",
                             "seconds") +

@@ -1,9 +1,11 @@
+import os
 from os import remove
 
 from pyrogram import filters
 from pyrogram.types import Message
-from pyrogram.errors import (ChatAdminRequired, ChatWriteForbidden,
-                             UserAdminInvalid)
+
+from ZeroTwo.modules.helper_funcs.telethn.chatstatus import (
+    can_delete_messages)
 
 from ZeroTwo.utils.permissions import adminsOnly
 
@@ -13,26 +15,14 @@ from ZeroTwo.ex_plugins.dbfunctions import (disable_nsfw, disable_spam, enable_n
                           is_spam_enabled)
 from ZeroTwo.modules.helper_funcs.chat_status import user_admin, user_not_admin
 
-__mod_name__ = "Anti_NSFW"
+__mod_name__ = "Anti-NSFW"
 
 __HELP__ = """
-/antinsfw [on|off] - Enable or disable NSFW Detection.
-/anti_spam [on|off] - Enable or disable Spam Detection.
+/antinsfw (on/off) - Enable or disable NSFW Detection.
+/anti_spam (on/off) - Enable or disable Spam Detection.
 /nsfwscan - Classify a media.
 /spamscan - Get Spam predictions of replied message.
 """
-
-async def delete_get_info(message: Message):
-    try:
-        await message.delete()
-    except (ChatAdminRequired, UserAdminInvalid):
-        try:
-            return await message.reply_text(
-                "I don't have enough permission to delete "
-                + "this message which is Flagged as Spam."
-            )
-        except ChatWriteForbidden:
-            return await zbot.leave_chat(message.chat.id)
 
 def get_file_id(message):
     if message.document:
@@ -75,7 +65,7 @@ async def delete_nsfw_notify(
     message: Message,
     result,
 ):
-    info = await delete_get_info(message)
+    info = await can_delete_messages(message)
     if not info:
         return
     msg = f"""
@@ -95,7 +85,7 @@ async def delete_spam_notify(
     message: Message,
     spam_probability: float,
 ):
-    info = await delete_get_info(message)
+    info = await can_delete_messages(message)
     if not info:
         return
     msg = f"""

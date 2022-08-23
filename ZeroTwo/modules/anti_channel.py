@@ -26,7 +26,7 @@ def set_antichannel(update: Update, context: CallbackContext):
             message.reply_text("Unrecognized arguments {}".format(s))
         return
     message.reply_html(
-        "Antichannel setting is currently {} in {}".format(antichannel_status(chat.id), html.escape(chat.title)))
+        "Antichannel setting is currently {} in {}".format(antichannel_status(chat_id=chat.id), html.escape(chat.title)))
 
 
 @botmsg(Filters.chat_type.groups, group=110)

@@ -47,12 +47,13 @@ def announcestat(update: Update, context: CallbackContext) -> str:
             )
             return log_message
     else:
+        if does_chat_log(chat_it):
+            result=True
         update.effective_message.reply_text(
             "Give me some arguments to choose a setting! on/off, yes/no!\n\n"
-            "Your current setting is: {}\n"
+            "Your current setting is: {result}\n"
             "When True, any admin actions in your group will be announced."
-            "When False, admin actions in your group will not be announced.".format(
-                does_chat_log(chat_id)
+            "When False, admin actions in your group will not be announced."
             )
         )
         return ""

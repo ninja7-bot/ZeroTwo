@@ -28,7 +28,7 @@ __HELP__ = """
 /spamscan - Get Spam predictions of replied message.
 """
 
-def download(message):
+async def download(message):
     try:
         media = replied.media
         if hasattr(media, "document"):

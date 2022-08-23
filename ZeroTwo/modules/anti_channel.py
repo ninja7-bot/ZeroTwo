@@ -10,17 +10,17 @@ from ZeroTwo.ex_plugins.dbfunctions import antichannel_status, disable_antichann
 
 @botcmd(command="antichannel", group=100)
 @user_admin(AdminPerms.CAN_RESTRICT_MEMBERS)
-await def set_antichannel(update: Update, context: CallbackContext):
+def set_antichannel(update: Update, context: CallbackContext):
     message = update.effective_message
     chat = update.effective_chat
     args = context.args
     if len(args) > 0:
         s = args[0].lower()
         if s in ["yes", "on"]:
-            enable_antichannel(chat.id)
+            await enable_antichannel(chat_idchat.id)
             message.reply_html("Enabled antichannel in {}".format(html.escape(chat.title)))
         elif s in ["off", "no"]:
-            disable_antichannel(chat.id)
+            await disable_antichannel(chat_id=chat.id)
             message.reply_html("Disabled antichannel in {}".format(html.escape(chat.title)))
         else:
             message.reply_text("Unrecognized arguments {}".format(s))

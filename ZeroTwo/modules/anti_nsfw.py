@@ -70,6 +70,10 @@ def get_file_id(message):
             if not message.sticker.thumbs:
                 return
             return message.sticker.thumbs[0].file_id
+        if message.sticker.is_video:
+            if not message.sticker.thumbs:
+                return
+            return message.sticker.thumbs[0].file_id
         return message.sticker.file_id
 
     if message.photo:

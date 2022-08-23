@@ -3,10 +3,9 @@ from os import remove
 from pyrogram import filters
 from pyrogram.types import Message
 
-from telegram import Update
+from ZeroTwo.utils.permissions import adminsOnly
 
 from ZeroTwo import arq, ZeroTwoTelethonClient
-from ZeroTwo.modules.helper_funcs.extraction import extract_user
 from ZeroTwo.ex_plugins.dbfunctions import (disable_nsfw, disable_spam, enable_nsfw,
                           enable_spam, is_nsfw_enabled,
                           is_spam_enabled)
@@ -51,7 +50,7 @@ def get_file_id(message):
             return
         return message.video.thumbs[0].file_id
 
-@user_admin
+@adminsOnly("can_change_info")
 @ZeroTwoTelethonClient.on_message(
     filters.command("antinsfw") & ~filters.private, group=3
 )
@@ -60,10 +59,6 @@ async def nsfw_toggle_func(update: Update, message: Message):
         return await message.reply_text(
             "Usage: /antinsfw [on|off]"
         )
-    chat = update.effective_chat
-    member = chat.get_member(user.id)
-    if member.status not in ("administrator", "creator"):
-        return await message.reply_text("You don't have enough permissions")
     status = message.text.split(None, 1)[1].strip()
     status = status.lower()
     chat_id = message.chat.id
@@ -82,7 +77,7 @@ async def nsfw_toggle_func(update: Update, message: Message):
             "Unknown Suffix, Use /antinsfw [on|off]"
         )
 
-@user_admin
+@adminsOnly("can_change_info")
 @ZeroTwoTelethonClient.on_message(
     filters.command("antispam") & ~filters.private, group=3
 )
@@ -91,10 +86,6 @@ async def spam_toggle_func(update: Update, message: Message):
         return await message.reply_text(
             "Usage: /antispam [on|off]"
         )
-    chat = update.effective_chat
-    member = chat.get_member(user.id)
-    if member.status not in ("administrator", "creator"):
-        return await message.reply_text("You don't have enough permissions")
     status = message.text.split(None, 1)[1].strip()
     status = status.lower()
     chat_id = message.chat.id

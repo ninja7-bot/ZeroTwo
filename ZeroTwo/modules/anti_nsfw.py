@@ -138,7 +138,11 @@ async def nsfw_watcher(_, message: Message):
     file_id = get_file_id(message)
     file_unique_id = get_file_unique_id(message)
     if file_id and file_unique_id:
-        file = await download_file(message.document, out=(open(message.name, "wb")))
+        try:
+            with open(file, "wb") as f:
+                return file = download_file(location=message, out=file)
+        except:
+            file = zbot.download_media(file_id)
         try:
             resp = await arq.nsfw_scan(file=file)
         except Exception:

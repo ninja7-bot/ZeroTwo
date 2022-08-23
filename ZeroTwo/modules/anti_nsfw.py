@@ -138,11 +138,7 @@ async def nsfw_watcher(_, message: Message):
     file_id = get_file_id(message)
     file_unique_id = get_file_unique_id(message)
     if file_id and file_unique_id:
-        try:
-            with open(file, "wb") as f:
-                file = download_file(location=message, out=file)
-        except:
-            file = zbot.download_media(file_id)
+        file = download_file(location=message, out=f)
         try:
             resp = await arq.nsfw_scan(file=file)
         except Exception:
@@ -222,13 +218,7 @@ async def nsfw_scan_command(_, message: Message):
     file_id = get_file_id(reply)
     if not file_id:
         return await m.edit("Something went wrong.")
-    
-        try:
-            with open(file, "wb") as f:
-                file = download_file(location=message, out=file)
-        except:
-            file = zbot.download_media(file_id)
-            
+    file = download_file(location=message, out=f)       
     try:
         results = await arq.nsfw_scan(file=file)
     except Exception as e:

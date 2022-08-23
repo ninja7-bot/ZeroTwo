@@ -6,7 +6,7 @@ from telegram.chatmemberupdated import ChatMemberUpdated
 from telegram.ext import CallbackContext
 from telegram.ext.chatmemberhandler import ChatMemberHandler
 
-from ZeroTwo.ex_plugins.dbfunctions import does_chat_log, enable_chat_log, disable_chat_log
+from ZeroTwo.ex_plugins.dbfunctions import does_chat_log
 
 from ZeroTwo import dispatcher
 from ZeroTwo.modules.log_channel import loggable

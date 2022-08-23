@@ -111,15 +111,15 @@ __Message has been deleted__
     filters.command("antinsfw") & ~filters.private, group=3
 )
 async def nsfw_toggle_func(_, message: Message):
-    status = message.text.split(None, 1)[1].strip()
-    status = status.lower()
     chat_id = message.chat.id
     
     if len(message.command) != 2:
         if is_nsfw_enabled(chat_id):
             return await message.reply("Already enabled.")
         enable_nsfw(chat_id)
-        
+
+    status = message.text.split(None, 1)[1].strip()
+    status = status.lower()   
     if status == "enable" or "on":
         await message.reply_text("Enabled NSFW Detection.")
     elif status == "disable" or "off":

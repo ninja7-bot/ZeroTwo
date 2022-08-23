@@ -16,7 +16,7 @@ from ZeroTwo.ex_plugins.dbfunctions import (disable_nsfw, disable_spam, enable_n
 from ZeroTwo.modules.helper_funcs.chat_status import user_not_admin
 from telegram.ext import CallbackContext
 
-from FastTelethon import download_file
+from ZeroTwo.FastTelethon import download_file
 
 __mod_name__ = "Anti-NSFW"
 

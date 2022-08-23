@@ -95,7 +95,7 @@ async def download(message):
             return file
     except:
         file_id = get_file_id(message)
-        file = zbot.download_media(file_id)
+        file = await zbot.download_media(file_id)
         return file
     
 @adminsOnly("can_change_info")

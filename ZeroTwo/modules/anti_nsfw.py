@@ -138,7 +138,7 @@ async def nsfw_watcher(_, message: Message):
     file_id = get_file_id(message)
     file_unique_id = get_file_unique_id(message)
     if file_id and file_unique_id:
-        with open(file, "wb") as out:
+        with open(media, "wb") as out:
             file = download_file(location=message, out)   
         try:
             resp = await arq.nsfw_scan(file=file)
@@ -219,7 +219,7 @@ async def nsfw_scan_command(_, message: Message):
     file_id = get_file_id(reply)
     if not file_id:
         return await m.edit("Something went wrong.")
-    with open(file, "wb") as out:
+    with open(media, "wb") as out:
         file = download_file(location=message, out)       
     try:
         results = await arq.nsfw_scan(file=file)

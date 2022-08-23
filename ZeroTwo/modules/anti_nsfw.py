@@ -128,9 +128,7 @@ async def spam_toggle_func(_, message: Message):
         | filters.text
     )
 )
-@user_not_admin
-async def nsfw_watcher(context: CallbackContext, message: Message):
-    bot = context.bot
+async def nsfw_watcher(_, message: Message):
     if not await is_nsfw_enabled(message.chat.id):
         return
     if not message.from_user:
@@ -172,9 +170,8 @@ async def nsfw_watcher(context: CallbackContext, message: Message):
 Avoid sending NSFW messages.
 """)
     
-@user_not_admin
-async def spam_detect(context: CallbackContext, message):
-    bot = context.bot
+
+async def spam_detect(_, message):
     if not is_spam_enabled(message.chat.id):
         return
     text = message.text or message.caption

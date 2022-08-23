@@ -55,7 +55,6 @@ def announcestat(update: Update, context: CallbackContext) -> str:
             "When True, any admin actions in your group will be announced."
             "When False, admin actions in your group will not be announced."
             )
-        )
         return ""
 
 

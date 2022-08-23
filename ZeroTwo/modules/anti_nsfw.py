@@ -13,9 +13,9 @@ from ZeroTwo import arq, ZeroTwoTelethonClient as zbot
 from ZeroTwo.ex_plugins.dbfunctions import (disable_nsfw, disable_spam, enable_nsfw,
                           enable_spam, is_nsfw_enabled,
                           is_spam_enabled)
-from ZeroTwo.modules.helper_funcs.chat_status import user_admin, user_not_admin
+from ZeroTwo.modules.helper_funcs.chat_status import user_not_admin
 
-__mod_name__ = "Anti_NSFW"
+__mod_name__ = "Anti-NSFW"
 
 __HELP__ = """
 /antinsfw [on|off] - Enable or disable NSFW Detection.
@@ -60,36 +60,7 @@ def get_file_unique_id(message):
         return
     return m.file_unique_id
 
-
-async def delete_nsfw_notify(message: Message, result):
-    if await can_delete_messages(message):
-            msg = f""" 🚨 **NSFW ALERT**  🚔
-            **Prediction:**
-            **Safe:** `{result.neutral} %`
-            **Porn:** `{result.porn} %`
-            **Adult:** `{result.sexy} %`
-            **Hentai:** `{result.hentai} %`
-            **Drawings:** `{result.drawings} %`
-            """
-    await zbot.send_message(message.chat.id, text=msg)
-
-    if not await can_delete_messages(message):
-        await zbot.send_message("Delete messages permission isn't granted.")
-
-
-
-async def delete_spam_notify(message: Message, spam_probability: float):
-    if await can_delete_messages(message):
-        msg = f"""
-🚨      **SPAM ALERT**  🚔
-        **Spam Probability:** {spam_probability} %
-        __Message has been deleted__
-        """
-    await zbot.send_message(message.chat.id, text=msg)
-
-    if not await can_delete_messages(message):
-        await zbot.send_message("Delete messages permission isn't granted.")
-      
+    
 @adminsOnly("can_change_info")
 @zbot.on_message(
     filters.command("antinsfw") & ~filters.private, group=3
@@ -142,6 +113,87 @@ async def spam_toggle_func(_, message: Message):
         await message.reply_text(
             "Unknown Suffix, Use /anti_spam [on|off]"
         )
+
+
+
+@zbot.on_message(
+    (
+        filters.document
+        | filters.photo
+        | filters.sticker
+        | filters.animation
+        | filters.video
+        | filters.text
+    )
+)
+@user_not_admin
+async def nsfw_watcher(_, message: Message):
+    if not await is_nsfw_enabled(message.chat.id):
+        return
+    if not message.from_user:
+        return
+
+    file_id = get_file_id(message)
+    file_unique_id = get_file_unique_id(message)
+    if file_id and file_unique_id:
+        file = await zbot.download_media(file_id)
+        try:
+            resp = await arq.nsfw_scan(file=file)
+        except Exception:
+            try:
+                return os.remove(file)
+            except Exception:
+                return
+        os.remove(file)
+        result = resp.result
+        nsfw = result.is_nsfw
+        if not nsfw:
+            return
+        try:
+            if can_delete_messages:
+                await message.delete()
+            else:
+                await message.reply_text("Delete Permissions not granted.")
+        except Exception:
+            return
+        await message.reply_text(
+            f""" 
+**NSFW Image Detected & Deleted Successfully!**
+**User:** {message.from_user.mention} [`{message.from_user.id}`]
+**Safe:** `{result.neutral} %`
+**Porn:** `{result.porn} %`
+**Adult:** `{result.sexy} %`
+**Hentai:** `{result.hentai} %`
+**Drawings:** `{result.drawings} %`
+
+Avoid sending NSFW messages.
+""")
+    
+@user_not_admin
+async def spam_detect(_, message):
+    if not is_spam_enabled(message.chat.id):
+        return
+    text = message.text or message.caption
+    if not text:
+        return
+    resp = await arq.nlp(text)
+    result = resp.result[0]
+    if not result.is_spam:
+        return
+    try:
+        if can_delete_messages:
+            await message.delete()
+        else:
+            await message.reply_text("Delete Permissions not granted/")
+    except Exception:
+        return
+    await message.reply_text(
+        f"""
+**Spam Message was detected and deleted!**
+**Spam Probability:** {result.spam_probability} %
+__Message has been deleted__
+""")
+
 
 
 @zbot.on_message(filters.command("nsfwscan"), group=3)
@@ -203,59 +255,4 @@ async def scanNLP(_, message: Message):
 **Profanity:** {data.profanity}
 """
     await message.reply(msg, quote=True)
-
     
-@zbot.on_message(
-    (
-        filters.document
-        | filters.photo
-        | filters.sticker
-        | filters.animation
-        | filters.video
-        | filters.text
-    )
-    & ~filters.private,
-    group=8,
-)
-@user_not_admin
-async def message_watcher(_, message: Message):
-    user_id = None
-    chat_id = None
-
-    if message.chat.type in ["group", "supergroup"]:
-        chat_id = message.chat.id
-
-    if not chat_id or not user_id:
-        return
-
-    file_id = get_file_id(message)
-    file_unique_id = get_file_unique_id(message)
-    if file_id and file_unique_id:
-        file = await zbot.download_media(file_id)
-        try:
-            resp = await arq.nsfw_scan(file=file)
-        except Exception:
-            try:
-                return os.remove(file)
-            except Exception:
-                return
-        os.remove(file)
-        if resp.ok:
-            if resp.result.is_nsfw:
-                if is_nsfw_enabled(chat_id):
-                    return await delete_nsfw_notify(
-                        message, resp.result
-                    )
-
-    text = message.text or message.caption
-    if not text:
-        return
-    resp = await arq.nlp(text)
-    if not resp.ok:
-        return
-    result = resp.result[0]
-    if not result.is_spam:
-        return
-    if not is_spam_enabled(chat_id):
-        return
-    await delete_spam_notify(message, result.spam_probability)

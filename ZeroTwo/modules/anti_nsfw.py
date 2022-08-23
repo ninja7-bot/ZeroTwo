@@ -24,6 +24,17 @@ __HELP__ = """
 /spamscan - Get Spam predictions of replied message.
 """
 
+@zbot.on_message(
+    (
+        filters.document
+        | filters.photo
+        | filters.sticker
+        | filters.animation
+        | filters.video
+        | filters.text
+    )
+)
+
 def get_file_id(message):
     if message.document:
         if int(message.document.file_size) > 3145728:

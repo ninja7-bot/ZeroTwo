@@ -6,7 +6,8 @@ from telegram.chatmemberupdated import ChatMemberUpdated
 from telegram.ext import CallbackContext
 from telegram.ext.chatmemberhandler import ChatMemberHandler
 
-import ZeroTwo.modules.sql.logger_sql as sql
+from ZeroTwo.ex_plugins.dbfunctions import does_chat_log, enable_chat_log, disable_chat_log
+
 from ZeroTwo import dispatcher
 from ZeroTwo.modules.log_channel import loggable
 
@@ -29,7 +30,7 @@ def extract_status_change(chat_member_update: ChatMemberUpdated):
 
 
 def do_announce(chat):  # announce to chat or only to log channel?
-    return bool(chat.type != "channel" and sql.does_chat_log(chat.id))
+    return bool(chat.type != "channel" and does_chat_log(chat_id))
 
 
 @loggable

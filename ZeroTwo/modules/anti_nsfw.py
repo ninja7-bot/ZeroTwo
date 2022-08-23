@@ -252,7 +252,7 @@ async def nsfw_scan_command(_, message: Message):
     if not file_id:
         return await m.edit("Something went wrong.")
     media = res(file_id)
-    file = download(media)
+    file = await download(media)
     try:
         results = await arq.nsfw_scan(file=file)
     except Exception as e:

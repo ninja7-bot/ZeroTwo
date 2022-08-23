@@ -92,7 +92,9 @@ async def download(message):
         file = await download_file(client=zbot, location=msg)
         return file
     else:
-        file = await zbot.download_media(media)
+        file_id=get_file_id(message)
+        file = pbot.download_media(file_id)
+        return file
     
 @adminsOnly("can_change_info")
 @zbot.on_message(

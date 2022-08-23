@@ -83,3 +83,4 @@ pytimeparse
 PyYAML>=5.3.1
 tmdbv3api
 telebot
+FastTelethon

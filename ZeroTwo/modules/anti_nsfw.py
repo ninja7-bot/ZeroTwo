@@ -28,34 +28,6 @@ __HELP__ = """
 /spamscan - Get Spam predictions of replied message.
 """
 
-async def download(message):
-    try:
-        media = replied.media
-        if hasattr(media, "document"):
-            msg = media.document
-            mime_type = file.mime_type
-            filename = replied.file.name
-            if not filename:
-                if "video" in mime_type:
-                    filename = (
-                        "video_" +
-                        datetime.now().isoformat(
-                            "_",
-                            "seconds") +
-                        ".mp4")
-                elif "gif" in mime_type:
-                    filename = (
-                        "gif_" +
-                        datetime.now().isoformat(
-                            "_",
-                            "seconds") +
-                        ".mp4")
-            outdir = "..NSFW/" + filename
-            file = await download_file(client=zbot, location=msg, out=outdir)
-    except:
-        return
-
-        
 def get_file_id(message):
     if message.document:
         if int(message.document.file_size) > 3145728:
@@ -96,6 +68,35 @@ def get_file_unique_id(message):
         return
     return m.file_unique_id
 
+async def download(message):
+    try:
+        media = message.media
+        if hasattr(media, "document"):
+            msg = media.document
+            mime_type = file.mime_type
+            filename = message.file.name
+            if not filename:
+                if "video" in mime_type:
+                    filename = (
+                        "video_" +
+                        datetime.now().isoformat(
+                            "_",
+                            "seconds") +
+                        ".mp4")
+                elif "gif" in mime_type:
+                    filename = (
+                        "gif_" +
+                        datetime.now().isoformat(
+                            "_",
+                            "seconds") +
+                        ".gif")
+            outdir = "..NSFW/" + filename
+            file = await download_file(client=zbot, location=msg, out=outdir)
+            return file
+    except:
+        file_id = get_file_id(message)
+        file = zbot.download_media(file_id)
+        return file
     
 @adminsOnly("can_change_info")
 @zbot.on_message(

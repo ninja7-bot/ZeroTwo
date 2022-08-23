@@ -13,7 +13,6 @@ from ZeroTwo.mongo import db
 notesdb = db.notes
 filtersdb = db.filters
 warnsdb = db.warns
-nsfwdb = db.nsfw
 spamdb = db.spam
 chatsdb = db.chats
 usersdb = db.users
@@ -22,8 +21,12 @@ coupledb = db.couple
 captchadb = db.captcha
 solved_captcha_db = db.solved_captcha
 captcha_cachedb = db.captcha_cache
+
+nsfwdb = db.nsfw
 antiservicedb = db.antiservice
 antichanneldb = db.antichannel
+logchanneldb = db.logchannel
+
 pmpermitdb = db.pmpermit
 welcomedb = db.welcome_text
 blacklist_filtersdb = db.blacklistFilters
@@ -237,6 +240,25 @@ async def remove_warns(chat_id: int, name: str) -> bool:
         )
         return True
     return False
+
+#Announce
+async def does_chat_log(chat_id: int) -> bool:
+    chat = logchannel.find_one({"chat_id": chat_id})
+    if not chat:
+        return True
+    return False
+
+async def enable_chat_log(chat_id: int):
+    enable_chat_log = does_chat_log(chat_id)
+    if enable_chat_log:
+        return
+    return does_chat_log.delete_one({"chat_id": chat_id})
+
+async def disable_chat_log(chat_id: int):
+    disable_chat_log = does_chat_log(chat_id)
+    if disable_chat_log:
+        return
+    return disable_chat_log.insert_one({"chat_id": chat_id})
 
 #Anti-Channel
 async def antichannel_status(chat_id: int) -> bool:

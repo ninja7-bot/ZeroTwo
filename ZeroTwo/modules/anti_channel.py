@@ -33,6 +33,7 @@ def set_antichannel(update: Update, context: CallbackContext):
 def eliminate_channel(update: Update, context: CallbackContext):
     message = update.effective_message
     chat = update.effective_chat
+    chat_id = chat.id
     bot = context.bot
     if not antichannel_status(chat_id):
         return

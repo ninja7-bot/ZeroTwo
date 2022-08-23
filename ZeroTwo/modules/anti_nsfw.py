@@ -69,34 +69,30 @@ def get_file_unique_id(message):
     return m.file_unique_id
 
 async def download(message):
-    try:
-        media = message.media
-        if hasattr(media, "document"):
-            msg = media.document
-            mime_type = file.mime_type
-            filename = message.file.name
-            if not filename:
-                if "video" in mime_type:
-                    filename = (
-                        "video_" +
-                        datetime.now().isoformat(
-                            "_",
-                            "seconds") +
-                        ".mp4")
-                elif "gif" in mime_type:
-                    filename = (
-                        "gif_" +
-                        datetime.now().isoformat(
+    media = message.media
+    if hasattr(media, "document"):
+        msg = media.document
+        mime_type = file.mime_type
+        filename = message.file.name
+        if not filename:
+            if "video" in mime_type:
+                filename = (
+                    "video_" +
+                    datetime.now().isoformat(
+                        "_",
+                        "seconds") +
+                    ".mp4")
+            elif "gif" in mime_type:
+                filename = (
+                    "gif_" +
+                    datetime.now().isoformat(
                             "_",
                             "seconds") +
                         ".gif")
-            outdir = "..NSFW/" + filename
-            file = await download_file(client=zbot, location=msg, out=outdir)
-            return file
-    except:
-        file_id = get_file_id(message)
-        file = await zbot.download_media(file_id)
+        file = await download_file(client=zbot, location=msg)
         return file
+    else:
+        file= = await zbot.download_media(media)
     
 @adminsOnly("can_change_info")
 @zbot.on_message(

@@ -43,7 +43,7 @@ def download(message):
                             "_",
                             "seconds") +
                         ".mp4")
-                 elif "gif" in mime_type:
+                elif "gif" in mime_type:
                     filename = (
                         "gif_" +
                         datetime.now().isoformat(

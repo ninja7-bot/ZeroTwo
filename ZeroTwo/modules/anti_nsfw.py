@@ -140,7 +140,7 @@ async def nsfw_watcher(_, message: Message):
     if file_id and file_unique_id:
         try:
             with open(file, "wb") as f:
-                return file = download_file(location=message, out=file)
+                file = download_file(location=message, out=file)
         except:
             file = zbot.download_media(file_id)
         try:
@@ -225,7 +225,7 @@ async def nsfw_scan_command(_, message: Message):
     
         try:
             with open(file, "wb") as f:
-                return file = download_file(location=message, out=file)
+                file = download_file(location=message, out=file)
         except:
             file = zbot.download_media(file_id)
             

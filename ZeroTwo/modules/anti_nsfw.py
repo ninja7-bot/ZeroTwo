@@ -3,6 +3,8 @@ from os import remove
 from pyrogram import filters
 from pyrogram.types import Message
 
+from telegram import Update
+
 from ZeroTwo import arq, ZeroTwoTelethonClient
 from ZeroTwo.modules.helper_funcs.extraction import extract_user
 from ZeroTwo.ex_plugins.dbfunctions import (disable_nsfw, disable_spam, enable_nsfw,

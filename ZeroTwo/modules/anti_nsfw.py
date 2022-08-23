@@ -219,7 +219,7 @@ async def nsfw_scan_command(_, message: Message):
     if not file_id:
         return await m.edit("Something went wrong.")
     
-    file= await download_file(client=zbot,location=message.file.name, out="..NSFW/")       
+    file= await download_file(client=zbot,location=message.reply_to_message, out="..NSFW/")       
     try:
         results = await arq.nsfw_scan(file=file)
     except Exception as e:

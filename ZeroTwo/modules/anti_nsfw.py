@@ -54,7 +54,7 @@ def get_file_id(message):
 @ZeroTwoTelethonClient.on_message(
     filters.command("antinsfw") & ~filters.private, group=3
 )
-async def nsfw_toggle_func(update: Update, message: Message):
+async def nsfw_toggle_func(_, message: Message):
     if len(message.command) != 2:
         return await message.reply_text(
             "Usage: /antinsfw [on|off]"
@@ -81,7 +81,7 @@ async def nsfw_toggle_func(update: Update, message: Message):
 @ZeroTwoTelethonClient.on_message(
     filters.command("antispam") & ~filters.private, group=3
 )
-async def spam_toggle_func(update: Update, message: Message):
+async def spam_toggle_func(_, message: Message):
     if len(message.command) != 2:
         return await message.reply_text(
             "Usage: /antispam [on|off]"

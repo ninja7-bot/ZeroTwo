@@ -15,11 +15,11 @@ from ZeroTwo.ex_plugins.dbfunctions import (disable_nsfw, disable_spam, enable_n
                           is_spam_enabled)
 from ZeroTwo.modules.helper_funcs.chat_status import user_admin, user_not_admin
 
-__mod_name__ = "Anti-NSFW"
+__mod_name__ = "Anti_NSFW"
 
 __HELP__ = """
-/antinsfw (on/off) - Enable or disable NSFW Detection.
-/anti_spam (on/off) - Enable or disable Spam Detection.
+/antinsfw [on|off] - Enable or disable NSFW Detection.
+/anti_spam [on|off] - Enable or disable Spam Detection.
 /nsfwscan - Classify a media.
 /spamscan - Get Spam predictions of replied message.
 """
@@ -61,40 +61,34 @@ def get_file_unique_id(message):
     return m.file_unique_id
 
 
-async def delete_nsfw_notify(
-    message: Message,
-    result,
-):
-    info = await can_delete_messages(message)
-    if not info:
-        return
-    msg = f"""
-🚨 **NSFW ALERT**  🚔
-{info}
-**Prediction:**
-    **Safe:** `{result.neutral} %`
-    **Porn:** `{result.porn} %`
-    **Adult:** `{result.sexy} %`
-    **Hentai:** `{result.hentai} %`
-    **Drawings:** `{result.drawings} %`
-"""
+async def delete_nsfw_notify(message: Message, result):
+    if await can_delete_messages(message):
+            msg = f""" 🚨 **NSFW ALERT**  🚔
+            **Prediction:**
+            **Safe:** `{result.neutral} %`
+            **Porn:** `{result.porn} %`
+            **Adult:** `{result.sexy} %`
+            **Hentai:** `{result.hentai} %`
+            **Drawings:** `{result.drawings} %`
+            """
     await zbot.send_message(message.chat.id, text=msg)
 
+    if not await can_delete_messages(message):
+        await zbot.send_message("Delete messages permission isn't granted.")
 
-async def delete_spam_notify(
-    message: Message,
-    spam_probability: float,
-):
-    info = await can_delete_messages(message)
-    if not info:
-        return
-    msg = f"""
-🚨 **SPAM ALERT**  🚔
-{info}
-**Spam Probability:** {spam_probability} %
-__Message has been deleted__
-"""
+
+
+async def delete_spam_notify(message: Message, spam_probability: float):
+    if await can_delete_messages(message):
+        msg = f"""
+🚨      **SPAM ALERT**  🚔
+        **Spam Probability:** {spam_probability} %
+        __Message has been deleted__
+        """
     await zbot.send_message(message.chat.id, text=msg)
+
+    if not await can_delete_messages(message):
+        await zbot.send_message("Delete messages permission isn't granted.")
       
 @adminsOnly("can_change_info")
 @zbot.on_message(

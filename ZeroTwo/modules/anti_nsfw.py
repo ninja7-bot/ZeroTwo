@@ -54,7 +54,6 @@ def get_file_id(message):
     filters.command("antinsfw") & ~filters.private, group=3
 )
 async def nsfw_toggle_func(_, message: Message):
-    user_id = extract_user(message, args)
     if len(message.command) != 2:
         return await message.reply_text(
             "Usage: /antinsfw [on|off]"

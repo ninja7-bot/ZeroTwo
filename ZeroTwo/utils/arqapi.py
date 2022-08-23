@@ -11,11 +11,9 @@ from google_trans_new import google_translator
 from Python_ARQ import ARQ
 from search_engine_parser import GoogleSearch
 
-from ZeroTwo import BOT_ID, OWNER_ID, ARQ_API_URL, ARQ_API_KEY
+from ZeroTwo import BOT_ID, OWNER_ID, ARQ_API_KEY
 from ZeroTwo import ZeroTwoTelethonClient
 
-ARQ_API = "WZQUBA-PFAZQJ-OMIINH-MIVHYM-ARQ"
-ARQ_API_KEY = "WZQUBA-PFAZQJ-OMIINH-MIVHYM-ARQ"
 SUDOERS = OWNER_ID
 ARQ_API_URL = "https://arq.hamker.in"
 

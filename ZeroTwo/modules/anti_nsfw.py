@@ -27,6 +27,8 @@ __HELP__ = """
 /spamscan - Get Spam predictions of replied message.
 """
 
+out="..NSFW/"
+
 def get_file_id(message):
     if message.document:
         if int(message.document.file_size) > 3145728:

@@ -15,9 +15,8 @@ from ZeroTwo.ex_plugins.dbfunctions import (disable_nsfw, disable_spam, enable_n
                           is_spam_enabled)
 from ZeroTwo.modules.helper_funcs.chat_status import user_not_admin
 from telegram.ext import CallbackContext
-
+from telethon.utils import resolve_bot_file_id as res
 from ZeroTwo.FastTelethon import download_file
-import mimetypes
 
 __mod_name__ = "Anti-NSFW"
 
@@ -219,7 +218,8 @@ async def nsfw_scan_command(_, message: Message):
     file_id = get_file_id(reply)
     if not file_id:
         return await m.edit("Something went wrong.")
-    file= await download_file(client=zbot,location=message.document, out="..NSFW/")       
+    a=res(file_id)
+    file= await download_file(client=zbot,location=a, out=open(media, 'wb'))       
     try:
         results = await arq.nsfw_scan(file=file)
     except Exception as e:

@@ -26,7 +26,7 @@ from ZeroTwo.modules.warns import warn
 from ZeroTwo.modules.helper_funcs.string_handling import extract_time
 from ZeroTwo.modules.connection import connected
 from ZeroTwo.modules.sql.approve_sql import is_approved
-from ZeroTwo.modules.sql.nsfw_sql import as sql
+import ZeroTwo.modules.sql.nsfw_sql as sql
 from ZeroTwo import dispatcher, LOGGER
 
 def get_file_id(message):

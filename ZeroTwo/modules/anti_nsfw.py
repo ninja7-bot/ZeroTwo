@@ -270,7 +270,7 @@ async def nsfw_watcher(context, message: Message):
     bot = zbot
     user = message.from_user
     chat_id = message.chat.id
-    chat = message.bot.get_chat
+    chat = message.get_chat
     file_id = get_file_id(message)
     file_unique_id = get_file_unique_id(message)
 

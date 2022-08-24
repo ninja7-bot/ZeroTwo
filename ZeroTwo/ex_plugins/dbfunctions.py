@@ -302,13 +302,13 @@ async def disable_nsfw(chat_id: int):
 
 #Hopefully works!
 async def set_nsfw_strength(chat_id: int, nsfwtype: int, value):
-    chat = nsfwdb.find_one({"chat_id": chat_id})
+    chat = nsfwdb.is_nsfw_enabled(chat_id)
     if not chat:
         return 
     return nsfwdb.insert_one({"chat_id": chat_id}, {"nsfwtype": nsfwtype}, {"value": value})
 
 async def get_nsfw_setting(chat_id: int):
-    chat = nsfwdb.find_one({"chat_id": chat_id})
+    chat = nsfwdb.set_nsfw_strength({"chat_id": chat_id})
     if not chat:
         return
     return chat["nsfw_type"], chat["value"]

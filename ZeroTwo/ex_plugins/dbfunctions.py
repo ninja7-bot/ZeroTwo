@@ -307,7 +307,7 @@ async def set_nsfw_strength(chat_id: int, nsfwtype: int, value):
         return 
     return nsfwdb.insert_one({"chat_id": chat_id}, {"nsfwtype": nsfwtype}, {"value": value})
 
-async def get_nsfw_strength(chat_id: int):
+async def get_nsfw_setting(chat_id: int):
     chat = nsfwdb.find_one({"chat_id": chat_id})
     if not chat:
         return

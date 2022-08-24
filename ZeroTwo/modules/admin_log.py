@@ -6,7 +6,7 @@ from telegram.utils.helpers import escape_markdown
 from ZeroTwo import dispatcher, LOGGER
 from telegram.ext import CommandHandler
 
-from ZeroTwo.ex_plugins.dbfunctions import (stop_chat_logging, admin_chat, get_admin_chat)
+from ZeroTwo.ex_plugins.dbfunctions import (stop_chat_logging, set_admin_chat, get_admin_chat)
 from ZeroTwo.modules.helper_funcs.chat_status import user_admin
 
 @user_admin
@@ -51,14 +51,14 @@ def logging(update: Update, context: CallbackContext):
         message.reply_text("No admin chat has been set for this group!")
 
 @user_admin        
-def set_admin_chat(update, context):
+def set_chat(update, context):
     bot = context.bot
     message=update.effective_message
     chat=update.effective_chat
     if chat.type==chat.SUPERGROUP:
         message.reply_text("Forward the text message to the main chat.")
     elif message.forward_from_chat:
-        admin_chat(chat.id, message.forward_from_chat.id)
+        set_admin_chat(chat.id, message.forward_from_chat.id)
         try:
             message.delete()
         except BadRequest as excp:
@@ -103,7 +103,7 @@ def unsetlog(update: Update, context: CallbackContext):
         message.reply_text("No admin chat has been set yet!")
 
 LOG_HANDLER = CommandHandler("logchat", logging, run_async=True)
-SET_LOG_HANDLER = CommandHandler("setchat", set_admin_chat, run_async=True)
+SET_LOG_HANDLER = CommandHandler("setchat", set_chat, run_async=True)
 UNSET_LOG_HANDLER = CommandHandler("unlogchat", unsetlog, run_async=True)
 
 dispatcher.add_handler(LOG_HANDLER)

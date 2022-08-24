@@ -262,7 +262,11 @@ Action has been taken against the user.
         | filters.text
     )
 )
-async def nsfw_watcher(context, message: Message):
+async def nsfw_watcher(context, update):
+    chat = update.effective_chat
+    message = update.effective_message
+    user = update.effective_user
+    bot = context.bot
     if not await is_nsfw_enabled(message.chat.id):
         return
     if not message.from_user:
@@ -295,8 +299,8 @@ async def nsfw_watcher(context, message: Message):
         try:
             if getmode == 0:
                 bot.restrict_chat_member(
-                    chat.id,
-                    user.id,
+                    chat_id,
+                    user_id,
                     permissions=ChatPermissions(
                         can_send_messages=True,
                         can_send_media_messages=False,

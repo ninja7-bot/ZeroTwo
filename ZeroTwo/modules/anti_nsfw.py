@@ -28,16 +28,6 @@ from ZeroTwo.modules.connection import connected
 from ZeroTwo.modules.sql.approve_sql import is_approved
 from ZeroTwo import dispatcher, LOGGER
 
-
-__mod_name__ = "Anti-NSFW"
-
-__HELP__ = """
-/antinsfw [on|off] - Enable or disable NSFW Detection.
-/anti_spam [on|off] - Enable or disable Spam Detection.
-/nsfwscan - Classify a media.
-/spamscan - Get Spam predictions of replied message.
-"""
-
 def get_file_id(message):
     if message.document:
         if int(message.document.file_size) > 3145728:

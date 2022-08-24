@@ -247,7 +247,7 @@ async def nsfw_watcher(_,message: Message):
             except Exception:
                 return
         os.remove(file)
-        result = resp.result
+        result = resp.result[0]
         nsfw = result.is_nsfw
         if not nsfw:
             return
@@ -284,7 +284,7 @@ async def nsfw_watcher(_,message: Message):
                 warn(
                     user,
                     chat,
-                    ("Using blacklisted trigger: {}"),
+                    ("Sending NSFW Media."),
                     message,
                     user,
                 )

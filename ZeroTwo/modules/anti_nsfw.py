@@ -18,7 +18,7 @@ from telegram.ext import CommandHandler, MessageHandler, Filters, run_async
 from ZeroTwo import arq, ZeroTwoTelethonClient as zbot
 from ZeroTwo.ex_plugins.dbfunctions import (disable_nsfw, disable_spam, enable_nsfw,
                           enable_spam, is_nsfw_enabled,
-                          is_spam_enabled, set_nsfw_strength, get_nsfw_setting)
+                          is_spam_enabled)
 from ZeroTwo.modules.helper_funcs.chat_status import user_not_admin, user_admin
 from ZeroTwo.modules.helper_funcs.alternate import send_message, typing_action
 from ZeroTwo.modules.log_channel import loggable
@@ -26,6 +26,7 @@ from ZeroTwo.modules.warns import warn
 from ZeroTwo.modules.helper_funcs.string_handling import extract_time
 from ZeroTwo.modules.connection import connected
 from ZeroTwo.modules.sql.approve_sql import is_approved
+from ZeroTwo.modules.sql.nsfw_sql import as sql
 from ZeroTwo import dispatcher, LOGGER
 
 def get_file_id(message):
@@ -75,19 +76,19 @@ def nsfw_mode(update, context):
     if args:
         if args[0].lower() in ["default"]:
             settypensfw = "default"
-            set_nsfw_strength(chat_id, 0, "0")
+            sql.set_nsfw_strength(chat_id, 0, "0")
         elif args[0].lower() in ["ban"]:
             settypensfw = "ban the sender"
-            set_nsfw_strength(chat_id, 1, "0")
+            sql.set_nsfw_strength(chat_id, 1, "0")
         elif args[0].lower() == "warn":
             settypensfw = "warn the sender"
-            set_nsfw_strength(chat_id, 2, "0")
+            sql.set_nsfw_strength(chat_id, 2, "0")
         elif args[0].lower() == "mute":
             settypensfw = "mute the sender"
-            set_nsfw_strength(chat_id, 3, "0")
+            sql.set_nsfw_strength(chat_id, 3, "0")
         elif args[0].lower() == "kick":
             settypensfw = "kick the sender"
-            set_nsfw_strength(chat_id, 4, "0")
+            sql.set_nsfw_strength(chat_id, 4, "0")
         elif args[0].lower() == "tban":
             if len(args) == 1:
                 teks = """It looks like you tried to set time value for nsfw but you didn't specified time; Try, `/nsfwmode tban <timevalue>`.
@@ -101,7 +102,7 @@ def nsfw_mode(update, context):
                 send_message(update.effective_message, teks, parse_mode="markdown")
                 return ""
             settypensfw = "temporarily ban for {}".format(args[1])
-            set_nsfw_strength(chat_id, 5, str(args[1]))
+            sql.set_nsfw_strength(chat_id, 5, str(args[1]))
         elif args[0].lower() == "tmute":
             if len(args) == 1:
                 teks = """It looks like you tried to set time value for nsfw but you didn't specified  time; try, `/nsfwmode tmute <timevalue>`.
@@ -115,7 +116,7 @@ def nsfw_mode(update, context):
                 send_message(update.effective_message, teks, parse_mode="markdown")
                 return ""
             settypensfw = "temporarily mute for {}".format(args[1])
-            set_nsfw_strength(chat_id, 6, str(args[1]))
+            sql.set_nsfw_strength(chat_id, 6, str(args[1]))
         else:
             send_message(
                 update.effective_message,
@@ -250,7 +251,7 @@ async def nsfw_watcher(_,message: Message):
         nsfw = result.is_nsfw
         if not nsfw:
             return
-        getmode, value = get_nsfw_setting(chat_id)
+        getmode, value = sql.get_nsfw_setting(chat_id)
         try:
             if getmode == 0:
                 bot.restrict_chat_member(

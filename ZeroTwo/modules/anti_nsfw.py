@@ -70,7 +70,7 @@ def get_file_unique_id(message):
 @typing_action
 def nsfw_mode(update, context):
     chat = update.effective_chat
-    user = user
+    user = update.effective_user
     msg = update.effective_message
     args = context.args
 
@@ -262,7 +262,6 @@ Action has been taken against the user.
         | filters.text
     )
 )
-@user_not_admin
 async def nsfw_watcher(context, message: Message):
     if not await is_nsfw_enabled(message.chat.id):
         return

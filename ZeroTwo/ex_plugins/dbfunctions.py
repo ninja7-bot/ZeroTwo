@@ -26,6 +26,7 @@ nsfwdb = db.nsfw
 antiservicedb = db.antiservice
 antichanneldb = db.antichannel
 logchanneldb = db.logchannel
+adminchatdb = db.adminchat
 
 pmpermitdb = db.pmpermit
 welcomedb = db.welcome_text
@@ -240,6 +241,26 @@ async def remove_warns(chat_id: int, name: str) -> bool:
         )
         return True
     return False
+
+#Admin Logger
+async def get_admin_chat(chat_id: int) -> bool:
+    chat = adminchat.find_one({"chat_id": chat_id})
+    if not chat:
+        return True
+    return False
+
+async def set_chat_log(chat_id: int, admin_chat:int):
+    enable_chat_log = does_chat_log(chat_id)
+    if enable_chat_log:
+        return
+    return set_chat_log.delete_one({"chat_id": chat_id}, {"admin_chat": admin_chat})
+
+async def stop_log_chat(chat_id: int):
+    disable_chat_log = does_chat_log(chat_id)
+    if disable_chat_log:
+        return
+    return stop_chat_log.insert_one({"chat_id": chat_id})
+
 
 #Announce
 async def does_chat_log(chat_id: int) -> bool:

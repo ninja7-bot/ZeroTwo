@@ -4,7 +4,7 @@ aiohttp==3.8.1
 alphabet_detector==0.0.7
 beautifulsoup4==4.11.1
 bleach==5.0.1
-cachetools==5.2.0
+cachetools==4.2.2
 cloudscraper==1.2.60
 emoji==2.0.0
 envparse==0.2.0

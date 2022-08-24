@@ -262,7 +262,7 @@ Action has been taken against the user.
         | filters.text
     )
 )
-async def nsfw_watcher(context, update):
+async def nsfw_watcher(_,message: Message):
     if not await is_nsfw_enabled(message.chat.id):
         return
     if not message.from_user:

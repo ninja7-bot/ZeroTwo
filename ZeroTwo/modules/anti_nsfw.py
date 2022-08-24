@@ -267,7 +267,7 @@ async def nsfw_watcher(context, message: Message):
         return
     if not message.from_user:
         return
-    bot = context.bot
+    bot = zbot
     user = message.from_user
     chat_id = message.chat.id
     chat = message.bot.get_chat

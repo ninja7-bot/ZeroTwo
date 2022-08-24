@@ -255,7 +255,7 @@ async def set_chat_log(chat_id: int, admin_chat:int):
         return
     return set_chat_log.delete_one({"chat_id": chat_id}, {"admin_chat": admin_chat})
 
-async def stop_log_chat(chat_id: int):
+async def stop_chat_logging(chat_id: int):
     disable_chat_log = does_chat_log(chat_id)
     if disable_chat_log:
         return

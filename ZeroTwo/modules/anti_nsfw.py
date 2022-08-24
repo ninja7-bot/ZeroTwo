@@ -13,7 +13,7 @@ from ZeroTwo.utils.permissions import adminsOnly
 from telegram import ParseMode, ChatPermissions
 from telegram.error import BadRequest
 from telegram.utils.helpers import mention_html
-from telegram.ext import CommandHandler
+from telegram.ext import CommandHandler, MessageHandler, Filters
 
 from ZeroTwo import arq, ZeroTwoTelethonClient as zbot
 from ZeroTwo.ex_plugins.dbfunctions import (disable_nsfw, disable_spam, enable_nsfw,

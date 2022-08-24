@@ -13,7 +13,7 @@ from ZeroTwo.utils.permissions import adminsOnly
 from telegram import ParseMode, ChatPermissions
 from telegram.error import BadRequest
 from telegram.utils.helpers import mention_html
-from telegram.ext import CommandHandler, MessageHandler, Filters
+from telegram.ext import CommandHandler, MessageHandler, Filters, run_async
 
 from ZeroTwo import arq, ZeroTwoTelethonClient as zbot
 from ZeroTwo.ex_plugins.dbfunctions import (disable_nsfw, disable_spam, enable_nsfw,
@@ -64,30 +64,14 @@ def get_file_unique_id(message):
         return
     return m.file_unique_id
 
-@user_admin
-@typing_action
+@run_async
 def nsfw_mode(update, context):
-    chat = update.effective_chat
     user = update.effective_user
     msg = update.effective_message
     args = context.args
-
-    conn = connected(context.bot, update, chat, user.id, need_admin=True)
-    if conn:
-        chat = dispatcher.bot.getChat(conn)
-        chat_id = conn
-        chat_name = dispatcher.bot.getChat(conn).title
-    else:
-        if update.effective_message.chat.type == "private":
-            send_message(
-                update.effective_message,
-                "This command can be only used in group not in PM",
-            )
-            return ""
-        chat = update.effective_chat
-        chat_id = update.effective_chat.id
-        chat_name = update.effective_message.chat.title
-
+    chat = update.effective_chat
+    chat_id = update.effective_chat.id
+    chat_name = update.effective_message.chat.title
     if args:
         if args[0].lower() in ["default"]:
             settypensfw = "default"
@@ -137,25 +121,8 @@ def nsfw_mode(update, context):
                 update.effective_message,
                 "I only understand: default/warn/ban/kick/mute/tban/tmute!",
             )
-            return ""
-        if conn:
-            text = "Changed nsfw mode: `{}` in *{}*!".format(
-                settypensfw,
-                chat_name,
-            )
-        else:
-            text = "Changed nsfw mode: `{}`!".format(settypensfw)
-        send_message(update.effective_message, text, parse_mode="markdown")
-        return (
-            "<b>{}:</b>\n"
-            "<b>Admin:</b> {}\n"
-            "Changed the nsfw mode. will {}.".format(
-                html.escape(chat.title),
-                mention_html(user.id, html.escape(user.first_name)),
-                settypensfw,
-            )
-        )
-    getmode, getvalue = get_nsfw_setting(chat.id)
+            return ""       
+    getmode, getvalue = get_nsfw_setting(chat_id)
     if getmode == 0:
         settypensfw = "default"
     elif getmode == 1:
@@ -170,16 +137,11 @@ def nsfw_mode(update, context):
         settypensfw = "temporarily ban for {}".format(getvalue)
     elif getmode == 6:
         settypensfw = "temporarily mute for {}".format(getvalue)
-    if conn:
-        text = "Current NSFW Mode: *{}* in *{}*.".format(
-            settypensfw,
-            chat_name,
-        )
-    else:
-        text = "Current NSFW Mode: *{}*.".format(settypensfw)
+    text = "Current NSFW Mode: *{}*.".format(settypensfw)
     send_message(update.effective_message, text, parse_mode=ParseMode.MARKDOWN)
     return ""
-BLACKLISTMODE_HANDLER = CommandHandler(
+
+NSFWMODE_HANDLER = CommandHandler(
     "nsfwmode", nsfw_mode, pass_args=True, run_async=True
 )
 

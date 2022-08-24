@@ -64,8 +64,6 @@ def get_file_unique_id(message):
         return
     return m.file_unique_id
 
-
-@loggable
 @user_admin
 @typing_action
 def nsfw_mode(update, context):

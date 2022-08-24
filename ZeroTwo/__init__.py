@@ -33,7 +33,7 @@ logging.basicConfig(
     format=FORMAT,
     datefmt="[%X]",
 )
-logging.getLogger("pyrogram").setLevel(logging.INFO)
+#logging.getLogger("pyrogram").setLevel(logging.INFO)
 logging.getLogger('ptbcontrib.postgres_persistence.postgrespersistence').setLevel(logging.WARNING)
 
 LOGGER = logging.getLogger('[ZeroTwo]')

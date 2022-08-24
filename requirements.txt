@@ -10,8 +10,6 @@ SQLAlchemy==1.4.32
 psycopg2-binary
 aiofiles
 feedparser
-faker
-hachoir
 pykeyboard
 pynewtonmath
 ffmpeg-python
@@ -82,5 +80,3 @@ git+https://github.com/python-telegram-bot/ptbcontrib.git
 pytimeparse
 PyYAML>=5.3.1
 tmdbv3api
-telebot
-SibylSystem

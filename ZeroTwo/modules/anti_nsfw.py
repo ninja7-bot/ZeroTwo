@@ -263,10 +263,6 @@ Action has been taken against the user.
     )
 )
 async def nsfw_watcher(context, update):
-    chat = update.effective_chat
-    message = update.effective_message
-    user = update.effective_user
-    bot = context.bot
     if not await is_nsfw_enabled(message.chat.id):
         return
     if not message.from_user:
@@ -274,7 +270,6 @@ async def nsfw_watcher(context, update):
     bot = zbot
     user = message.from_user
     chat_id = message.chat.id
-    chat = message.get_chat
     file_id = get_file_id(message)
     file_unique_id = get_file_unique_id(message)
 

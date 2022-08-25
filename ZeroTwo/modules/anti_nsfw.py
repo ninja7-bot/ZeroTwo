@@ -249,7 +249,7 @@ async def nsfw_watcher(_,message: Message):
         admin_chat = get_admin_chat(chat_id)
         if admin_chat:
             admin_chat_id = bot.get_chat(admin_chat)
-            send_log(chat_id, admin_chat_id, result=message)
+            send_log(orig_chat_id=chat_id, admin_chat_id, result=message)
         else:
             return
         if not nsfw:

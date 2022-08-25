@@ -56,11 +56,6 @@ def set_chat(update, context):
     bot = context.bot
     message = update.effective_message
     chat = update.effective_chat
-    try:
-        chat_id = str(args[0])
-        del args[0]
-    except TypeError:
-        update.effective_message.reply_text("Please give me a Group ID to set as admin chat!")
     if len(args) == 1:
         try:
             admin_chat = set_admin_chat(chat.id, chat_id)

@@ -1,6 +1,6 @@
 from ZeroTwo.modules.helper_funcs.chat_status import user_not_admin
 
-from ZeroTwo.modules.helper_funcs.decorators import botcmd
+from ZeroTwo.modules.helper_funcs.decorators import botcmd, botmsg
 from telegram import Update, Message
 from telegram.ext import CallbackContext
 from ..modules.helper_funcs.anonymous import user_admin, AdminPerms

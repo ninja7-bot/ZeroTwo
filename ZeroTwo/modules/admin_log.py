@@ -57,6 +57,7 @@ def set_chat(update, context):
     message = update.effective_message
     chat = update.effective_chat
     if len(args) == 1:
+        chat_id = args
         try:
             admin_chat = set_admin_chat(chat.id, chat_id)
             if admin_chat:

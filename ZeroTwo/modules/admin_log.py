@@ -17,8 +17,7 @@ def send_log(admin_chat_id: str, orig_chat_id: str, result: str):
             chat_id=admin_chat_id,
             result,
             parse_mode=ParseMode.HTML,
-            disable_web_page_preview=True,
-        )
+            disable_web_page_preview=True)
     except BadRequest as excp:
         if excp.message == "Chat not found":
             bot.send_message(

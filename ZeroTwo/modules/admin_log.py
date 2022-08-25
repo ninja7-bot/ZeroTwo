@@ -15,7 +15,7 @@ def send_log(admin_chat_id: str, orig_chat_id: str, result: str):
     try:
         bot.send_message(
             admin_chat_id,
-            result,
+            text=result,
             parse_mode=ParseMode.HTML,
             disable_web_page_preview=True,
         )

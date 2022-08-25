@@ -1,4 +1,3 @@
-from ZeroTwo.modules.helper_funcs.chat_status import is_user_admin
 from telegram.ext.filters import Filters
 from ZeroTwo.modules.helper_funcs.decorators import botcmd, botmsg
 from telegram import Update, Message
@@ -34,9 +33,8 @@ async def eliminate_channel(update: Update, context: CallbackContext):
     chat = update.effective_chat
     bot = context.bot
     chat_id = chat.id
-    if is_user_admin:
-        return
-    if not await antichannel_status(chat_id):
+    status = await antichannel_status(chat_id)
+    if not status:
         return
     if message.sender_chat and message.sender_chat.type == "channel" and not message.is_automatic_forward:
         message.delete()

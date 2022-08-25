@@ -243,23 +243,23 @@ async def remove_warns(chat_id: int, name: str) -> bool:
     return False
 
 #Admin Logger
-async def get_admin_chat(chat_id: int) -> bool:
+async def set_admin_chat(chat_id: int, admin_chat:int) -> bool:
     chat = adminchat.find_one({"chat_id": chat_id})
-    if not chat:
-        return True
+    if chat:
+        return
+    return set_chat_log.insert_one({"chat_id": chat_id}, {"admin_chat": admin_chat})
+
+async def get_admin_chat(chat_id: int):
+    admin_chat = adminchat.findone(chat_id)
+    if admin_chat:
+        return
     return False
 
-async def set_chat_log(chat_id: int, admin_chat:int):
-    enable_chat_log = does_chat_log(chat_id)
-    if enable_chat_log:
+async def stop_chat_logging(chat_id: int, admin_chat: int) -> bool:
+    disable_chat_log = adminchat.find_one(chat_id)
+    if not disable_chat_log:
         return
-    return set_chat_log.delete_one({"chat_id": chat_id}, {"admin_chat": admin_chat})
-
-async def stop_chat_logging(chat_id: int):
-    disable_chat_log = does_chat_log(chat_id)
-    if disable_chat_log:
-        return
-    return stop_chat_log.insert_one({"chat_id": chat_id})
+    return stop_chat_log.delete_one({"chat_id": chat_id}, {"admin_chat": admin_chat})
 
 
 #Announce

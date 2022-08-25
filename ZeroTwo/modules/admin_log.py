@@ -58,13 +58,13 @@ def set_chat(update, context):
     chat = update.effective_chat
     if len(args) == 1:
         try:
-            chat_id = int(args)
+            chat_id = int(args[0])
             admin_chat = set_admin_chat(chat.id, chat_id)
             if admin_chat:
                 bot.sendMessage(int(chat_id), f"This group will be admin chat for {chat.title}.")
         except TelegramError:
-            chat_id = str(args)
-            LOGGER.warning("Couldn't set group as admin chat: %s", str(chat_id))
+            chat_id = str(args[0])
+            LOGGER.warning("Couldn't set group as admin chat: %s", chat_id)
             update.effective_message.reply_text(
                 "Couldn't set the group as admin chat. Perhaps I'm not part of that group?"
             )

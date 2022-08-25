@@ -52,41 +52,33 @@ def logging(update: Update, context: CallbackContext):
 
 @user_admin        
 def set_chat(update, context):
+    args = context.args
     bot = context.bot
-    message=update.effective_message
-    chat=update.effective_chat
-    if chat.type==chat.SUPERGROUP:
-        message.reply_text("Forward the text message to the main chat.")
-    elif message.forward_from_chat:
-        set_admin_chat(chat.id, message.forward_from_chat.id)
+    message = update.effective_message
+    chat = update.effective_chat
+    try:
+        chat_id = str(args[0])
+        del args[0]
+    except TypeError:
+        update.effective_message.reply_text("Please give me a Group ID to set as admin chat!")
+    if len(args) == 1:
         try:
-            message.delete()
-        except BadRequest as excp:
-            if excp.message == "Message to delete not found":
-                    pass
-            else:
-                send_message("Error deleting message in log channel. Should work anyway though."
-                )
-        try:
-            bot.send_message(
-                message.forward_from_chat.id,
-                f"This channel has been set as the log channel for {chat.title or chat.first_name}.",
+            admin_chat = set_admin_chat(chat.id, chat_id)
+            if admin_chat:
+                bot.sendMessage(int(chat_id), f"This group will be admin chat for {chat.title}.")
+        except TelegramError:
+            LOGGER.warning("Couldn't set group as admin chat: %s", str(chat_id))
+            update.effective_message.reply_text(
+                "Couldn't set the group as admin chat. Perhaps I'm not part of that group?"
             )
-        except Unauthorized as excp:
-            if excp.message == "Forbidden: bot is not a member of the channel chat":
-                bot.send_message(chat.id, "Successfully set log channel!")
-            else:
-                LOGGER.exception("ERROR in setting the log channel.")
-
-        bot.send_message(chat.id, "Successfully set admin chat!")
 
     else:
         message.reply_text(
             "The steps to set a admin chat are:\n"
             " - add bot to the desired admin chat\n"
-            " - send /setchat to the admin chat\n"
-            " - forward the /setchat to the group\n"
+            " - send /setchat chat_id where chat_id is the ID of admin chat\n"
         )
+        
 @user_admin
 def unsetlog(update: Update, context: CallbackContext):
     bot = context.bot

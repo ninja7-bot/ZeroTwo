@@ -1,7 +1,7 @@
 from telegram.ext import CallbackContext
 
 from telegram import ParseMode, Update
-from telegram.error import BadRequest, Unauthorized
+from telegram.error import BadRequest, Unauthorized, TelegramError
 from telegram.utils.helpers import escape_markdown
 from ZeroTwo import dispatcher, LOGGER
 from telegram.ext import CommandHandler
@@ -57,12 +57,13 @@ def set_chat(update, context):
     message = update.effective_message
     chat = update.effective_chat
     if len(args) == 1:
-        chat_id = args
         try:
+            chat_id = int(args)
             admin_chat = set_admin_chat(chat.id, chat_id)
             if admin_chat:
                 bot.sendMessage(int(chat_id), f"This group will be admin chat for {chat.title}.")
         except TelegramError:
+            chat_id = str(args)
             LOGGER.warning("Couldn't set group as admin chat: %s", str(chat_id))
             update.effective_message.reply_text(
                 "Couldn't set the group as admin chat. Perhaps I'm not part of that group?"

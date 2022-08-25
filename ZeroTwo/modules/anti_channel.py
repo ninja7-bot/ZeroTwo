@@ -1,4 +1,4 @@
-from ZeroTwo.modules.helper_funcs.chat_status import user_not_admin
+from ZeroTwo.modules.helper_funcs.chat_status import is_user_admin
 from telegram.ext.filters import Filters
 from ZeroTwo.modules.helper_funcs.decorators import botcmd, botmsg
 from telegram import Update, Message
@@ -28,13 +28,14 @@ def set_antichannel(update: Update, context: CallbackContext):
     message.reply_html(
         "Antichannel setting is currently {} in {}".format(antichannel_status(chat.id), html.escape(chat.title)))
 
-@user_not_admin
 @botmsg(Filters.chat_type.groups, group=110)
 async def eliminate_channel(update: Update, context: CallbackContext):
     message = update.effective_message
     chat = update.effective_chat
     bot = context.bot
     chat_id = chat.id
+    if is_user_admin:
+        return
     if not await antichannel_status(chat_id):
         return
     if message.sender_chat and message.sender_chat.type == "channel" and not message.is_automatic_forward:

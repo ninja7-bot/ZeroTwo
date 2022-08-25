@@ -33,13 +33,10 @@ async def eliminate_channel(update: Update, context: CallbackContext):
     message = update.effective_message
     chat = update.effective_chat
     bot = context.bot
-    if chat.type == chat.GROUP or chat.SUPERGROUP:
-        if await antichannel_status(chat.id):
-            if message.send_chat and message.send_chat.type == "channel" and not message.is_automatic_forward:
-                message.delete()
-                sender_chat = message.sender_chat
-                bot.ban_chat_sender_chat(sender_chat_id=sender_chat.id, chat_id=chat.id)
-            else:
-                return
-        else:
-            return
+    chat_id = chat.id
+    if not antichannel_status(chat_id):
+        return
+    if message.sender_chat and message.sender_chat.type == "channel" and not message.is_automatic_forward:
+        message.delete()
+        sender_chat = message.sender_chat
+        bot.ban_chat_sender_chat(sender_chat_id=sender_chat.id, chat_id=chat.id)

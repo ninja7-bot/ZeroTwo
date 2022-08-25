@@ -19,7 +19,7 @@ from ZeroTwo import arq, ZeroTwoTelethonClient as zbot
 from ZeroTwo.ex_plugins.dbfunctions import (disable_nsfw, disable_spam, enable_nsfw,
                           enable_spam, is_nsfw_enabled,
                           is_spam_enabled, get_admin_chat)
-from ZeroTwo.modules.helper_funcs.chat_status import user_not_admin, user_admin
+from ZeroTwo.modules.helper_funcs.chat_status import user_not_admin
 from ZeroTwo.modules.helper_funcs.alternate import send_message, typing_action
 from ZeroTwo.modules.log_channel import loggable
 from ZeroTwo.modules.warns import warn

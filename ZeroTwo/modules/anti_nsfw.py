@@ -246,8 +246,12 @@ async def nsfw_watcher(_,message: Message):
         os.remove(file)
         result = resp.result[0]
         nsfw = result.is_nsfw
-        if get_admin_chat(chat_id):
+        admin_chat = get_admin_chat(chat_id)
+        if admin_chat:
+            admin_chat_id = bot.get_chat(admin_chat)
             send_log(chat_id, admin_chat_id, message)
+        else:
+            return
         if not nsfw:
             return
         getmode, value = sql.get_nsfw_setting(chat_id)

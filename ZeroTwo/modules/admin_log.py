@@ -9,7 +9,7 @@ from telegram.ext import CommandHandler
 from ZeroTwo.ex_plugins.dbfunctions import (stop_chat_logging, set_admin_chat, get_admin_chat)
 from ZeroTwo.modules.helper_funcs.chat_status import user_admin
 
-@user_admin
+
 def send_log(
     context: CallbackContext, admin_chat_id: str, orig_chat_id: str, result: str):
     bot = context.bot

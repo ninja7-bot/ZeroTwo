@@ -1,6 +1,6 @@
 from telegram.ext import CallbackContext
 
-from telegram import ParseMode, Update
+from telegram import ParseMode, Update, Bot
 from telegram.error import BadRequest, Unauthorized, TelegramError
 from telegram.utils.helpers import escape_markdown
 from ZeroTwo import dispatcher, LOGGER
@@ -10,9 +10,8 @@ from ZeroTwo.ex_plugins.dbfunctions import (stop_chat_logging, set_admin_chat, g
 from ZeroTwo.modules.helper_funcs.chat_status import user_admin
 
 
-def send_log(
-    context: CallbackContext, admin_chat_id: str, orig_chat_id: str, result: str):
-    bot = context.bot
+def send_log(admin_chat_id: str, orig_chat_id: str, result: str):
+    bot = Bot
     try:
         bot.send_message(
             admin_chat_id,

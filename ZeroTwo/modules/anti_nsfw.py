@@ -18,13 +18,14 @@ from telegram.ext import CommandHandler, MessageHandler, Filters, run_async
 from ZeroTwo import arq, ZeroTwoTelethonClient as zbot
 from ZeroTwo.ex_plugins.dbfunctions import (disable_nsfw, disable_spam, enable_nsfw,
                           enable_spam, is_nsfw_enabled,
-                          is_spam_enabled)
+                          is_spam_enabled, get_admin_chat)
 from ZeroTwo.modules.helper_funcs.chat_status import user_not_admin, user_admin
 from ZeroTwo.modules.helper_funcs.alternate import send_message, typing_action
 from ZeroTwo.modules.log_channel import loggable
 from ZeroTwo.modules.warns import warn
 from ZeroTwo.modules.helper_funcs.string_handling import extract_time
 from ZeroTwo.modules.connection import connected
+from ZeroTwo.modules.admin_log import send_log
 from ZeroTwo.modules.sql.approve_sql import is_approved
 import ZeroTwo.modules.sql.nsfw_sql as sql
 from ZeroTwo import dispatcher, LOGGER
@@ -233,10 +234,6 @@ async def nsfw_watcher(_,message: Message):
     chat_id = message.chat.id
     file_id = get_file_id(message)
     file_unique_id = get_file_unique_id(message)
-
-    if is_approved(chat_id, user.id):
-        return
-
     if file_id and file_unique_id:
         file = await zbot.download_media(file_id)
         try:
@@ -249,6 +246,8 @@ async def nsfw_watcher(_,message: Message):
         os.remove(file)
         result = resp.result[0]
         nsfw = result.is_nsfw
+        if get_admin_chat(chat_id):
+            send_log(chat_id, admin_chat_id, message)
         if not nsfw:
             return
         getmode, value = sql.get_nsfw_setting(chat_id)

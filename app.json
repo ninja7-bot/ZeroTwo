@@ -10,7 +10,6 @@
     
    "logo":    "https://telegra.ph/file/f22d73dc5d935142b6d0c.png",  
    "repository": "https://github.com/ninja7-bot/ZeroTwo",
-  ],  
    "env": {
       "TOKEN": {
           "description": "Your bot token. Get one from @BotFather duh",

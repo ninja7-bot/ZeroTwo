@@ -10,13 +10,6 @@
     
    "logo":    "https://telegra.ph/file/f22d73dc5d935142b6d0c.png",  
    "repository": "https://github.com/ninja7-bot/ZeroTwo",
-   "buildpacks": [
-    {
-      "url": "https://github.com/heroku/heroku-buildpack-python"
-    },
-    {
-      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
-    }
   ],  
    "env": {
       "TOKEN": {

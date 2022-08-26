@@ -97,7 +97,6 @@ if ENV:
     ARQ_API_KEY = os.environ.get("ARQ_API", None)
     DONATION_LINK = os.environ.get("DONATION_LINK")
     LOAD = os.environ.get("LOAD", "").split()
-    HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", None)
     HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", None)
     TEMP_DOWNLOAD_DIRECTORY = os.environ.get("TEMP_DOWNLOAD_DIRECTORY", "./")
     NO_LOAD = os.environ.get("NO_LOAD", "translation").split()

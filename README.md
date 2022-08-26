@@ -13,4 +13,4 @@ From NekoRobot, HoriSan and all the modules passed down ever since the forking j
 
 
 ### Deploy
- [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/ninja7-bot/Zero-Two)
+ [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/ninja7-bot/ZeroTwo)

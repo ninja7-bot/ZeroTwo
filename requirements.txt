@@ -41,7 +41,7 @@ pretty_errors
 pygithub
 TgCrypto
 pyrogram==1.4.9
-
+gpytranslate
 git+https://github.com/Sorrybabe/downloader
 asyncio
 cloudscraper

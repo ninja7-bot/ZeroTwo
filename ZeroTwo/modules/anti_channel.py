@@ -31,6 +31,6 @@ async def eliminate_channel(_, message: Message):
     chat_id = chat.id
     if not await antichannel_status(chat_id):
         return
-    if message.sender_chat and message.sender_chat.type == "channel" and not message.is_automatic_forward:
+    if message.chat.type == "channel" and not message.linked_channel:
         await message.delete()
         message.chat.ban_member(sender_chat_id=channel.id, chat_id=chat.id)

@@ -33,5 +33,4 @@ def eliminate_channel(_, message: Message):
         return
     if message.sender_chat and message.sender_chat.type == "channel" and not message.is_automatic_forward:
         await message.delete()
-        sender_chat = channel.id
-        message.chat.ban_member(sender_chat_id=sender_chat, chat_id)
+        message.chat.ban_member(sender_chat_id=channel.id, chat_id=chat.id)

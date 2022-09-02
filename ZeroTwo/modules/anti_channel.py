@@ -12,8 +12,8 @@ from ZeroTwo import ZeroTwoTelethonClient as zbot
 async def set_antichannel(_, message: Message):
     chat_id = message.chat.id
     args = message.command
-    if len(args) > 0:
-        s = args[0].lower()
+    if len(args) > 1:
+        s = args[1].lower()
         if s in ["yes", "on"]:
             await enable_antichannel(chat_id)
             await message.reply_text(f"Enabled antichannel in **{chat.title}**")

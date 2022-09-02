@@ -26,11 +26,12 @@ async def set_antichannel(_, message: Message):
     await message.reply_text(
         f"Antichannel setting is currently `{antichannel_status(chat_id)}` in **{message.chat.title}**.")
 
-@zbot.on_message(~filters.channel, group=3)
+@zbot.on_message(~filters.group, group=3)
 async def eliminate_channel(_, message: Message):
     chat_id = message.chat.id
     if not await antichannel_status(chat_id):
         return
     if message.sender_chat and message.sender_chat.type == "channel" and not message.linked_chat:
         await message.delete()
-        await zbot.ban_chat_member(chat_id, message.channel.id)
+        sender_chat = message.sender_chat.id
+        await zbot.ban_chat_member(chat_id, sender_chat)

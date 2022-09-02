@@ -16,15 +16,15 @@ async def set_antichannel(_, message: Message):
         s = args[1].lower()
         if s in ["yes", "on"]:
             await enable_antichannel(chat_id)
-            await message.reply_text(f"Enabled antichannel in **{chat.title}**")
+            await message.reply_text(f"Enabled antichannel in **{message.chat.title}**")
         elif s in ["off", "no"]:
             await disable_antichannel(chat_id)
-            await message.reply_text(f"Disabled antichannel in **{chat.title}**")
+            await message.reply_text(f"Disabled antichannel in **{message.chat.title}**")
         else:
             await message.reply_text(f"Unrecognized arguments `{s}`")
         return
     message.reply_text(
-        f"Antichannel setting is currently `{antichannel_status(chat_id)}` in **{chat.title}**.")
+        f"Antichannel setting is currently `{antichannel_status(chat_id)}` in **{message.chat.title}**.")
 
 @zbot.on_message(filters.command("antichannel"), group=3)
 async def eliminate_channel(_, message: Message):

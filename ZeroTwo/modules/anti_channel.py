@@ -31,6 +31,6 @@ async def eliminate_channel(_, message: Message):
     chat_id = message.chat.id
     if not await antichannel_status(chat_id):
         return
-    if message.chat.type == "channel" and not message.linked_chat:
+    if message.sender_chat and message.sender_chat.type == "channel" and not message.linked_chat:
         await message.delete()
         await zbot.ban_chat_member(chat_id, message.channel.id)

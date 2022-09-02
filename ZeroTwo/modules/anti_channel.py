@@ -34,11 +34,11 @@ custom_chat_filter = filters.create(lambda _, __, message: bool(message.sender_c
 @zbot.on_message(custom_message_filter & filters.group & custom_chat_filter)
 async def eliminate_channel(_, message: Message):
     chat_id = message.chat.id
+    sender_chat = message.sender_chat.id
     if not await antichannel_status(chat_id):
         return
     try:
-        await message.delete()
-        sender_chat = message.sender_chat.id
-        await zbot.ban_chat_member(chat_id, sender_chat)
+        message.delete()
+        zbot.ban_chat_member(chat_id, sender_chat)
     except:
         return await message.reply_text("Admin rights gib wen?")

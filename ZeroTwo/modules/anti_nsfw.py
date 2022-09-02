@@ -236,8 +236,6 @@ async def scan_command(_, message: Message):
         return await message.reply("Reply to a message to scan it.")
     r = message.reply_to_message
     text = r.text or r.caption
-    if not text:
-        return await message.reply("Can't scan that")
     data = await arq.nlp(text)
     data = data.result[0]
     msg = f"""
@@ -247,26 +245,24 @@ async def scan_command(_, message: Message):
 **Ham:** {data.ham}
 **Profanity:** {data.profanity}
 """
-    await message.reply(msg, quote=True)
-    if not message.reply_to_message:
-        await message.reply_text(err)
-        return
-    reply = message.reply_to_message
-    m = await message.reply_text("Scanning")
-    file_id = get_file_id(reply)
-    if not file_id:
-        return await m.edit("Something went wrong.")
-    file = await download(reply)
-    try:
-        results = await arq.nsfw_scan(file=file)
-    except Exception as e:
-        return await m.edit(str(e))
-    remove(file)
-    if not results.ok:
-        return await m.edit(results.result)
-    results = results.result
-    await m.edit(
-        f"""
+    if not text:
+        await message.reply(msg, quote=True)
+        reply = message.reply_to_message
+        m = await message.reply_text("Scanning")
+        file_id = get_file_id(reply)
+        if not file_id:
+            return await m.edit("Something went wrong.")
+        file = await download(reply)
+        try:
+            results = await arq.nsfw_scan(file=file)
+        except Exception as e:
+            return await m.edit(str(e))
+        remove(file)
+        if not results.ok:
+            return await m.edit(results.result)
+        results = results.result
+        await m.edit(
+            f"""
 **Neutral:** `{results.neutral} %`
 **Porn:** `{results.porn} %`
 **Hentai:** `{results.hentai} %`

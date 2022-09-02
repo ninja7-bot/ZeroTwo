@@ -24,8 +24,7 @@ __mod_name__ = "Anti-NSFW"
 __HELP__ = """
 /antinsfw [on|off] - Enable or disable NSFW Detection.
 /anti_spam [on|off] - Enable or disable Spam Detection.
-/nsfwscan - Classify a media.
-/spamscan - Get Spam predictions of replied message.
+/scan - To scan a message for NSFW or Spam.
 """
 
 def get_file_id(message):
@@ -230,22 +229,29 @@ __Message has been deleted__
 
 
 
-@zbot.on_message(filters.command("nsfwscan"), group=3)
-async def nsfw_scan_command(_, message: Message):
+@zbot.on_message(filters.command("scan"), group=3)
+async def scan_command(_, message: Message):
     err = "Reply to an image/document/sticker/animation to scan it."
+    if not message.reply_to_message:
+        return await message.reply("Reply to a message to scan it.")
+    r = message.reply_to_message
+    text = r.text or r.caption
+    if not text:
+        return await message.reply("Can't scan that")
+    data = await arq.nlp(text)
+    data = data.result[0]
+    msg = f"""
+**Is Spam:** {data.is_spam}
+**Spam Probability:** {data.spam_probability} %
+**Spam:** {data.spam}
+**Ham:** {data.ham}
+**Profanity:** {data.profanity}
+"""
+    await message.reply(msg, quote=True)
     if not message.reply_to_message:
         await message.reply_text(err)
         return
     reply = message.reply_to_message
-    if (
-        not reply.document
-        and not reply.photo
-        and not reply.sticker
-        and not reply.animation
-        and not reply.video
-    ):
-        await message.reply_text(err)
-        return
     m = await message.reply_text("Scanning")
     file_id = get_file_id(reply)
     if not file_id:
@@ -269,24 +275,3 @@ async def nsfw_scan_command(_, message: Message):
 **NSFW:** `{results.is_nsfw}`
 """
     )
-
-
-@zbot.on_message(filters.command("spamscan"), group=3)
-async def scanNLP(_, message: Message):
-    if not message.reply_to_message:
-        return await message.reply("Reply to a message to scan it.")
-    r = message.reply_to_message
-    text = r.text or r.caption
-    if not text:
-        return await message.reply("Can't scan that")
-    data = await arq.nlp(text)
-    data = data.result[0]
-    msg = f"""
-**Is Spam:** {data.is_spam}
-**Spam Probability:** {data.spam_probability} %
-**Spam:** {data.spam}
-**Ham:** {data.ham}
-**Profanity:** {data.profanity}
-"""
-    await message.reply(msg, quote=True)
-    

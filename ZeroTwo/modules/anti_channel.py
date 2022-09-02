@@ -27,7 +27,7 @@ async def set_antichannel(_, message: Message):
         f"Antichannel setting is currently `{antichannel_status(chat_id)}` in **{chat.title}**.")
 
 @zbot.on_message(filters.command("antichannel"), group=3)
-def eliminate_channel(_, message: Message):
+async def eliminate_channel(_, message: Message):
     chat_id = chat.id
     if not await antichannel_status(chat_id):
         return

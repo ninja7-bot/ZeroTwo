@@ -29,7 +29,7 @@ async def set_antichannel(_, message: Message):
 @zbot.on_message(filters.command("antichannel"), group=3)
 def eliminate_channel(_, message: Message):
     chat_id = chat.id
-    if not antichannel_status(chat_id):
+    if not await antichannel_status(chat_id):
         return
     if message.sender_chat and message.sender_chat.type == "channel" and not message.is_automatic_forward:
         await message.delete()

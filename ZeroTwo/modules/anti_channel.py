@@ -23,10 +23,10 @@ async def set_antichannel(_, message: Message):
         else:
             await message.reply_text(f"Unrecognized arguments `{s}`")
         return
-    message.reply_text(
+    await message.reply_text(
         f"Antichannel setting is currently `{antichannel_status(chat_id)}` in **{message.chat.title}**.")
 
-@zbot.on_message(filters.command("antichannel"), group=3)
+@zbot.on_message(~filters.private, group=3)
 async def eliminate_channel(_, message: Message):
     chat_id = chat.id
     if not await antichannel_status(chat_id):

@@ -23,7 +23,7 @@ async def set_antichannel(_, message: Message):
         else:
             await message.reply_text(f"Unrecognized arguments `{s}`")
         return
-    message.reply_html(
+    message.reply_text(
         f"Antichannel setting is currently `{antichannel_status(chat_id)}` in **{chat.title}**.")
 
 @zbot.on_message(filters.command("antichannel"), group=3)

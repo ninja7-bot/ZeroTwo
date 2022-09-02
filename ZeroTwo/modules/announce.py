@@ -4,10 +4,10 @@ from telegram import Update
 from telegram.ext import CallbackContext
 from telegram.utils.helpers import mention_html
 
-from tg_bot.modules.log_channel import loggable
-from tg_bot.modules.helper_funcs.decorators import botcmd
+from ZeroTwo.modules.log_channel import loggable
+from ZeroTwo.modules.helper_funcs.decorators import botcmd
 
-import tg_bot.modules.sql.logger_sql as sql
+import ZeroTwo.modules.sql.logger_sql as sql
 from ..modules.helper_funcs.anonymous import user_admin as u_admin, AdminPerms
 
 

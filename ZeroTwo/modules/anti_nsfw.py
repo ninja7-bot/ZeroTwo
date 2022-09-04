@@ -236,15 +236,16 @@ async def scan_command(_, message: Message):
         return await message.reply("Reply to a message to scan it.")
     r = message.reply_to_message
     text = r.text or r.caption
-    data = await arq.nlp(text)
-    data = data.result[0]
-    msg = f"""
+    if text:
+        data = await arq.nlp(text)
+        data = data.result[0]
+        msg = f"""
 **Is Spam:** `{data.is_spam}`
 **Spam Probability:** `{data.spam_probability} %`
 **Spam:** `{data.spam}`
 **Ham:** `{data.ham}`
 **Profanity:** `{data.profanity}`
-"""
+    """
     if not text:
         await message.reply(msg, quote=True)
         reply = message.reply_to_message

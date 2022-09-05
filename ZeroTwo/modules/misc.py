@@ -180,7 +180,24 @@ def wall(update: Update, context: CallbackContext):
             timeout=60,
         )
 
-
+def checklist(update: Update, context: CallbackContext):
+    msg = update.effective_message
+    options = []
+    args = context.args
+    name=update.effective_user.first_name
+    text=f"Checklist for {name}!"
+    x = msg.split("|")
+    for i in range(len(x)):
+        options.append(x[i])
+    message = context.bot.send_poll(
+        update.effective_chat.id,
+        text,
+        options,
+        is_anonymous=True,
+        allow_multiple_answers=True
+    )
+    
+    
 __help__ = """
 *Available commands:*
 
@@ -214,17 +231,20 @@ ECHO_HANDLER = DisableAbleCommandHandler(
 MD_HELP_HANDLER = CommandHandler("markdownhelp", markdown_help, run_async=True)
 WIKI_HANDLER = DisableAbleCommandHandler("wiki", wiki)
 WALLPAPER_HANDLER = DisableAbleCommandHandler("wall", wall, run_async=True)
+CHECKLIST_HANDLER = DisableAbleCommandHandler("checklist", checklist, run_async=True)
 
 dispatcher.add_handler(ECHO_HANDLER)
 dispatcher.add_handler(MD_HELP_HANDLER)
 dispatcher.add_handler(WIKI_HANDLER)
 dispatcher.add_handler(WALLPAPER_HANDLER)
+dispatcher.add_handler(CHECKLIST_HANDLER)
 
 __mod_name__ = "Extras"
-__command_list__ = ["id", "echo", "wiki", "wall", "reverse", "ud", "dict", "similar","recommend"]
+__command_list__ = ["id", "echo", "wiki", "wall", "reverse", "ud", "dict", "similar","recommend", "checklist"]
 __handlers__ = [
     ECHO_HANDLER,
     MD_HELP_HANDLER,
     WIKI_HANDLER,
     WALLPAPER_HANDLER,
+    CHECKLIST_HANDLER,
 ]

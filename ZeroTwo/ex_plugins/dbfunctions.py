@@ -23,6 +23,7 @@ solved_captcha_db = db.solved_captcha
 captcha_cachedb = db.captcha_cache
 
 nsfwdb = db.nsfw
+nsfwmode = db.nsfwmode
 antiservicedb = db.antiservice
 antichanneldb = db.antichannel
 logchanneldb = db.logchannel
@@ -322,10 +323,10 @@ async def set_nsfw_strength(chat_id: int, nsfwtype: int, value):
     chat = nsfwdb.is_nsfw_enabled(chat_id)
     if not chat:
         return 
-    return nsfwdb.insert_one({"chat_id": chat_id}, {"nsfwtype": nsfwtype}, {"value": value})
+    return nsfwmodedb.insert_one({"chat_id": chat_id}, {"nsfwtype": nsfwtype}, {"value": value})
 
 async def get_nsfw_setting(chat_id: int) -> list:
-    chat = nsfwdb.find_one({"chat_id": chat_id})
+    chat = nsfwmodedb.find_one({"chat_id": chat_id})
     if not chat:
         return
     return chat["nsfw_type"], chat["value"]

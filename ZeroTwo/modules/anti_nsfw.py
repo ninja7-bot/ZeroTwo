@@ -274,12 +274,12 @@ async def nsfw_watcher(_, message: Message):
             try:
                 if getmode == 1:
                     try:
-                        message.delete()
+                        await message.delete()
                     except BadRequest:
                         pass
                 elif getmode == 2:
                     try:
-                        message.delete()
+                        await message.delete()
                     except BadRequest:
                         pass
                     warn(
@@ -290,27 +290,27 @@ async def nsfw_watcher(_, message: Message):
                     )
                     return
                 elif getmode == 3:
-                    message.delete()
+                    await message.delete()
                     bot.restrict_chat_member(
                         messgae.chat.id,
                         message.user.id,
                         permissions=ChatPermissions(can_send_messages=False),
                     )
                 elif getmode == 4:
-                    message.delete()
+                    await message.delete()
                     res = chat.unban_member(update.effective_user.id)
                     return
                 elif getmode == 5:
-                    message.delete()
+                    await message.delete()
                     chat.kick_member(user.id)
                     return
                 elif getmode == 6:
-                    message.delete()
+                    await message.delete()
                     bantime = extract_time(message, value)
                     chat.kick_member(user.id, until_date=bantime)
                     return
                 elif getmode == 7:
-                    message.delete()
+                    await message.delete()
                     mutetime = extract_time(message, value)
                     bot.restrict_chat_member(
                         message.chat.id,

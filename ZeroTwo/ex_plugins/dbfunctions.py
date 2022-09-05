@@ -321,15 +321,15 @@ async def disable_spam(chat_id: int):
 
 async def set_nsfw_strength(chat_id: int, nsfwtype: int, value):
     chat = nsfwdb.is_nsfw_enabled(chat_id)
-    if not chat:
-        return 
-    return nsfwmodedb.insert_one({"chat_id": chat_id}, {"nsfwtype": nsfwtype}, {"value": value})
+    if chat:
+        return nsfwmodedb.insert_one({"chat_id": chat_id}, {"nsfwtype": nsfwtype}, {"value": value})
+    return 
 
 async def get_nsfw_setting(chat_id: int) -> list:
     chat = nsfwmodedb.find_one({"chat_id": chat_id})
-    if not chat:
-        return
-    return chat["nsfw_type"], chat["value"]
+    if chat:
+        return chat["nsfw_type"], chat["value"]
+    return
 
 async def is_served_chat(chat_id: int) -> bool:
     chat = await chatsdb.find_one({"chat_id": chat_id})

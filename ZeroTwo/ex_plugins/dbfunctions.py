@@ -264,7 +264,7 @@ async def disable_chat_log(chat_id: int):
 async def antichannel_status(chat_id: int) -> bool:
     chat = antichanneldb.find_one({"chat_id": chat_id})
     if not chat:
-        return True
+        return False
     return False
 
 async def enable_antichannel(chat_id: int):

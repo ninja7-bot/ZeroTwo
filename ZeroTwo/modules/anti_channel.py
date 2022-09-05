@@ -23,8 +23,9 @@ async def set_antichannel(_, message: Message):
         else:
             await message.reply_text(f"Unrecognized arguments `{s}`")
         return
-    await message.reply_text(
-        f"Antichannel setting is currently `{antichannel_status(chat_id)}` in **{message.chat.title}**.")
+    elif len(args) == 1:
+        await message.reply_text(
+            f"Antichannel setting is currently `{antichannel_status(chat_id)}` in **{message.chat.title}**.")
 
     
 custom_message_filter = filters.create(
@@ -39,6 +40,6 @@ async def eliminate_channel(_, message: Message):
         return
     try:
         message.delete()
-        zbot.ban_chat_member(chat_id, sender_chat)
+        bot.ban_chat_member(chat_id, sender_chat)
     except:
         return await message.reply_text("Admin rights gib wen?")

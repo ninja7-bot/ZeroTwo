@@ -190,7 +190,7 @@ async def nsfw_toggle_func(_, message: Message):
     chat_id = message.chat.id
     
     if len(message.command) != 2:
-        status = is_nsfw_enabled(chat_id):
+        status = is_nsfw_enabled(chat_id)
         await message.reply(text=f"Usage: /anti_spam [on|off]\n\nCurrent Setting: `{status}`")
 
     status = message.text.split(None, 1)[1].strip()

@@ -105,19 +105,19 @@ async def blacklist_mode(_, message: Message):
     if args:
         if args[1].lower() in ["del", "delete"]:
             settypensfw = "delete blacklisted message"
-            set_nsfw_strength(chat_id, 1, "0")
+            await set_nsfw_strength(chat_id, 1, "0")
         elif args[1].lower() == "warn":
             settypensfw = "warn the sender"
-            set_nsfw_strength(chat_id, 2, "0")
+            await set_nsfw_strength(chat_id, 2, "0")
         elif args[1].lower() == "mute":
             settypensfw = "mute the sender"
-            set_nsfw_strength(chat_id, 3, "0")
+            await set_nsfw_strength(chat_id, 3, "0")
         elif args[1].lower() == "kick":
             settypensfw = "kick the sender"
-            set_nsfw_strength(chat_id, 4, "0")
+            await set_nsfw_strength(chat_id, 4, "0")
         elif args[1].lower() == "ban":
             settypensfw = "ban the sender"
-            set_nsfw_strength(chat_id, 5, "0")
+            await set_nsfw_strength(chat_id, 5, "0")
         elif args[1].lower() == "tban":
             if len(args) == 1:
                 teks = """It looks like you tried to set time value for blacklist but you didn't specified time; Try, `/blacklistmode tban <timevalue>`.
@@ -130,28 +130,30 @@ async def blacklist_mode(_, message: Message):
     Example of time value: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."""
                 message.reply_text(teks)
                 return ""
-            settypensfw = "temporarily ban for {}".format(args[1])
-            set_nsfw_strength(chat_id, 6, str(args[1]))
+            time=args[2]
+            settypensfw = f"temporarily ban for {time}"
+            await set_nsfw_strength(chat_id, 6, str(args[2]))
         elif args[1].lower() == "tmute":
             if len(args) == 1:
                 teks = """It looks like you tried to set time value for blacklist but you didn't specified  time; try, `/blacklistmode tmute <timevalue>`.
     Examples of time value: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."""
                 message.reply_text(teks)
                 return ""
-            restime = extract_time(message, args[1])
+            restime = extract_time(message, args[2])
             if not restime:
                 teks = """Invalid time value!
     Examples of time value: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."""
                 message.reply_text(teks)
                 return ""
-            settypensfw = "temporarily mute for {}".format(args[1])
-            set_nsfw_strength(chat_id, 7, str(args[1]))
+            time=args[2]
+            settypensfw = f"temporarily mute for {time}"
+            set_nsfw_strength(chat_id, 7, str(args[2]))
         else:
             message.reply_text(
                 "I only understand: del/warn/ban/kick/mute/tban/tmute!",
             )
             return ""
-        text = "Changed blacklist mode: `{settypensfw}`!"
+        text = f"Changed blacklist mode: `{settypensfw}`!"
         message.reply_text(text)
         user_mention = message.reply_to_message.from_user.mention
         return (
@@ -159,7 +161,7 @@ async def blacklist_mode(_, message: Message):
             f"**Admin:** {user_mention}\n"
             f"Changed the NSFW mode. will `{settypensfw}`."
         )
-    getmode, getvalue = get_nsfw_setting(chat_id)
+    getmode, getvalue = await get_nsfw_setting(chat_id)
     if getmode == 1:
         settypensfw = "delete"
     elif getmode == 2:
@@ -251,7 +253,7 @@ async def nsfw_watcher(_, message: Message):
         return
     if not message.from_user:
         return
-    getmode, value = get_nsfw_setting(chat_id)
+    getmode, value = await get_nsfw_setting(chat_id)
 
     file_id = get_file_id(message)
     file_unique_id = get_file_unique_id(message)

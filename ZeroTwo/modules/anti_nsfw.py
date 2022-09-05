@@ -4,20 +4,20 @@ from os import remove
 from pyrogram import filters
 from pyrogram.types import Message
 
-from ZeroTwo.modules.helper_funcs.telethn.chatstatus import (
-    can_delete_messages)
-
-from ZeroTwo.utils.permissions import adminsOnly
-
-from ZeroTwo import arq, ZeroTwoTelethonClient as zbot
-from ZeroTwo.ex_plugins.dbfunctions import (disable_nsfw, disable_spam, enable_nsfw,
-                          enable_spam, is_nsfw_enabled,
-                          is_spam_enabled)
-from ZeroTwo.modules.helper_funcs.chat_status import user_not_admin
 from telegram.ext import CallbackContext
-
-from ZeroTwo.FastTelethon import download_file
 from telethon.utils import resolve_bot_file_id as res
+
+from ZeroTwo.modules.helper_funcs.telethn.chatstatus import can_delete_messages
+from ZeroTwo.utils.permissions import adminsOnly
+from ZeroTwo.modules.log_channel import loggable
+from ZeroTwo.modules.warns import warn
+from ZeroTwo.modules.helper_funcs.string_handling import extract_time
+from ZeroTwo import LOGGER, arq, ZeroTwoTelethonClient as zbot
+from ZeroTwo.ex_plugins.dbfunctions import (disable_nsfw, disable_spam, enable_nsfw, enable_spam, is_nsfw_enabled, is_spam_enabled)
+from ZeroTwo.ex_plugins.dbfunctions import (set_nsfw_strength, get_nsfw_setting)
+from ZeroTwo.modules.helper_funcs.chat_status import user_not_admin
+from ZeroTwo.FastTelethon import download_file
+
 
 __mod_name__ = "Anti-NSFW"
 
@@ -95,6 +95,91 @@ async def download(message):
         file = await zbot.download_media(file_id)
         return file
     
+@loggable
+@adminsOnly("can_change_info")
+@zbot.on_message(filters.command("nsfwmode") & ~filters.edited & ~filters.groups)
+async def blacklist_mode(_, message: Message):
+    args = message.command
+    chat_id = message.chat.id
+    chat_name=message.chat.title
+    if args:
+        if args[1].lower() in ["del", "delete"]:
+            settypensfw = "delete blacklisted message"
+            set_nsfw_strength(chat_id, 1, "0")
+        elif args[1].lower() == "warn":
+            settypensfw = "warn the sender"
+            set_nsfw_strength(chat_id, 2, "0")
+        elif args[1].lower() == "mute":
+            settypensfw = "mute the sender"
+            set_nsfw_strength(chat_id, 3, "0")
+        elif args[1].lower() == "kick":
+            settypensfw = "kick the sender"
+            set_nsfw_strength(chat_id, 4, "0")
+        elif args[1].lower() == "ban":
+            settypensfw = "ban the sender"
+            set_nsfw_strength(chat_id, 5, "0")
+        elif args[1].lower() == "tban":
+            if len(args) == 1:
+                teks = """It looks like you tried to set time value for blacklist but you didn't specified time; Try, `/blacklistmode tban <timevalue>`.
+    Examples of time value: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."""
+                message.reply_text(teks)
+                return ""
+            restime = extract_time(message, args[1])
+            if not restime:
+                teks = """Invalid time value!
+    Example of time value: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."""
+                message.reply_text(teks)
+                return ""
+            settypensfw = "temporarily ban for {}".format(args[1])
+            set_nsfw_strength(chat_id, 6, str(args[1]))
+        elif args[1].lower() == "tmute":
+            if len(args) == 1:
+                teks = """It looks like you tried to set time value for blacklist but you didn't specified  time; try, `/blacklistmode tmute <timevalue>`.
+    Examples of time value: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."""
+                message.reply_text(teks)
+                return ""
+            restime = extract_time(message, args[1])
+            if not restime:
+                teks = """Invalid time value!
+    Examples of time value: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 weeks."""
+                message.reply_text(teks)
+                return ""
+            settypensfw = "temporarily mute for {}".format(args[1])
+            set_nsfw_strength(chat_id, 7, str(args[1]))
+        else:
+            message.reply_text(
+                "I only understand: del/warn/ban/kick/mute/tban/tmute!",
+            )
+            return ""
+        text = "Changed blacklist mode: `{settypensfw}`!"
+        message.reply_text(text)
+        user_mention = message.reply_to_message.from_user.mention
+        return (
+            f"**{chat_name}:**\n"
+            f"**Admin:** {user_mention}\n"
+            f"Changed the NSFW mode. will `{settypensfw}`."
+        )
+    getmode, getvalue = get_nsfw_setting(chat_id)
+    if getmode == 1:
+        settypensfw = "delete"
+    elif getmode == 2:
+        settypensfw = "warn"
+    elif getmode == 3:
+        settypensfw = "mute"
+    elif getmode == 4:
+        settypensfw = "kick"
+    elif getmode == 5:
+        settypensfw = "ban"
+    elif getmode == 6:
+        settypensfw = f"temporarily ban for {getvalue}"
+    elif getmode == 7:
+        settypensfw = f"temporarily mute for {getvalue}"
+    text = f"Current NSFW Mode: *{settypensfw}*"
+
+    message.reply_text(text)
+    return ""    
+
+    
 @adminsOnly("can_change_info")
 @zbot.on_message(
     filters.command("antinsfw") & ~filters.private, group=3
@@ -161,10 +246,12 @@ async def spam_toggle_func(_, message: Message):
     )
 )
 async def nsfw_watcher(_, message: Message):
+    chat_id = message.chat.id
     if not await is_nsfw_enabled(message.chat.id):
         return
     if not message.from_user:
         return
+    getmode, value = get_nsfw_setting(chat_id)
 
     file_id = get_file_id(message)
     file_unique_id = get_file_unique_id(message)
@@ -183,12 +270,59 @@ async def nsfw_watcher(_, message: Message):
         if not nsfw:
             return
         try:
-            if can_delete_messages:
-                await message.delete()
-            else:
-                await message.reply_text("Delete Permissions not granted.")
+            try:
+                if getmode == 1:
+                    try:
+                        message.delete()
+                    except BadRequest:
+                        pass
+                elif getmode == 2:
+                    try:
+                        message.delete()
+                    except BadRequest:
+                        pass
+                    warn(
+                        message.user,
+                        message.chat,
+                        ("NSFW Media"),
+                        message,
+                    )
+                    return
+                elif getmode == 3:
+                    message.delete()
+                    bot.restrict_chat_member(
+                        messgae.chat.id,
+                        message.user.id,
+                        permissions=ChatPermissions(can_send_messages=False),
+                    )
+                elif getmode == 4:
+                    message.delete()
+                    res = chat.unban_member(update.effective_user.id)
+                    return
+                elif getmode == 5:
+                    message.delete()
+                    chat.kick_member(user.id)
+                    return
+                elif getmode == 6:
+                    message.delete()
+                    bantime = extract_time(message, value)
+                    chat.kick_member(user.id, until_date=bantime)
+                    return
+                elif getmode == 7:
+                    message.delete()
+                    mutetime = extract_time(message, value)
+                    bot.restrict_chat_member(
+                        message.chat.id,
+                        message.user.id,
+                        datetime.now() + timedelta(mutetime)
+                        permissions=ChatPermissions(can_send_messages=False),
+                    )
+                    return
+            except BadRequest as excp:
+                if excp.message != "Message to delete not found":
+                    LOGGER.exception("Error while deleting NSFW message.")   
         except Exception:
-            return
+            return await message.reply_text("Delete Permissions not granted.")
         await message.reply_text(
             f""" 
 **NSFW Image Detected & Deleted Successfully!**

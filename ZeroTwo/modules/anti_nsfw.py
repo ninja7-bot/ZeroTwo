@@ -97,7 +97,7 @@ async def download(message):
     
 @loggable
 @adminsOnly("can_change_info")
-@zbot.on_message(filters.command("nsfwmode") & ~filters.edited & ~filters.groups)
+@zbot.on_message(filters.command("nsfwmode") & ~filters.edited & ~filters.group)
 async def blacklist_mode(_, message: Message):
     args = message.command
     chat_id = message.chat.id

@@ -322,11 +322,11 @@ async def disable_spam(chat_id: int):
 async def set_nsfw_strength(chat_id: int, nsfwtype: int, value):
     chat = nsfwdb.is_nsfw_enabled(chat_id)
     if chat:
-        return nsfwmodedb.insert_one({"chat_id": chat_id}, {"nsfwtype": nsfwtype}, {"value": value})
+        return nsfwmode.insert_one({"chat_id": chat_id}, {"nsfwtype": nsfwtype}, {"value": value})
     return 
 
 async def get_nsfw_setting(chat_id: int) -> list:
-    chat = nsfwmodedb.find_one({"chat_id": chat_id})
+    chat = nsfwmode.find_one({"chat_id": chat_id})
     if chat:
         return chat["nsfw_type"], chat["value"]
     return

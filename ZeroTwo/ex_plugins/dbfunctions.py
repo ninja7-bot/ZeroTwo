@@ -333,7 +333,7 @@ async def get_nsfw_setting(chat_id: int) -> list:
             value=mode["value"]
         return nsfw_type, value
     except:
-        return None, None
+        return 1, None
 
 async def is_served_chat(chat_id: int) -> bool:
     chat = await chatsdb.find_one({"chat_id": chat_id})

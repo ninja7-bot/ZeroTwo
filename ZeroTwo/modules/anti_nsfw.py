@@ -246,7 +246,7 @@ async def scan_command(_, message: Message):
 **Ham:** `{data.ham}`
 **Profanity:** `{data.profanity}`
     """
-        await message.reply(msg, quote=True)
+        await m.edit(msg, quote=True)
     if not text:
         reply = message.reply_to_message
         m = await message.reply_text("Scanning")

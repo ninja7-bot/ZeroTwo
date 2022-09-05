@@ -178,7 +178,7 @@ async def blacklist_mode(_, message: Message):
         settypensfw = f"temporarily mute for {getvalue}"
     else:
         text = f"Current Blacklist Settings: {settypensfw}"
-    message.reply_text(text)
+        message.reply_text(text)
     return ""  
 
     

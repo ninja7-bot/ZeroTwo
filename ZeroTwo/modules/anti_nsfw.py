@@ -102,7 +102,7 @@ async def blacklist_mode(_, message: Message):
     args = message.command
     chat_id = message.chat.id
     chat_name=message.chat.title
-    if args:
+    if len(args)>1:
         if args[1].lower() in ["del", "delete"]:
             settypensfw = "delete blacklisted message"
             await set_nsfw_strength(chat_id, 1, "0")

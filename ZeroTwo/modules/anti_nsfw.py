@@ -236,6 +236,7 @@ async def scan_command(_, message: Message):
     r = message.reply_to_message
     text = r.text or r.caption
     if text:
+        m = await message.reply_text("Scanning")
         data = await arq.nlp(text)
         data = data.result[0]
         msg = f"""
@@ -245,6 +246,7 @@ async def scan_command(_, message: Message):
 **Ham:** `{data.ham}`
 **Profanity:** `{data.profanity}`
     """
+        await message.reply(msg, quote=True)
     if not text:
         reply = message.reply_to_message
         m = await message.reply_text("Scanning")

@@ -176,10 +176,10 @@ async def blacklist_mode(_, message: Message):
         settypensfw = f"temporarily ban for {getvalue}"
     elif getmode == 7:
         settypensfw = f"temporarily mute for {getvalue}"
-    text = f"Current NSFW Mode: *{settypensfw}*"
-
+    else:
+        text = f"Current Blacklist Settings: {settypensfw}"
     message.reply_text(text)
-    return ""    
+    return ""  
 
     
 @adminsOnly("can_change_info")

@@ -42,6 +42,6 @@ async def eliminate_channel(_, message: Message):
         return
     try:
         await message.delete()
-        zbot.ban_chat_member(chat_id, sender_chat)
+        await zbot.ban_chat_member(chat_id, sender_chat)
     except:
         return await message.reply_text("Admin rights gib wen?")

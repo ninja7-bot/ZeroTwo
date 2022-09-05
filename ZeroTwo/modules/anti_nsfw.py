@@ -314,7 +314,7 @@ async def nsfw_watcher(_, message: Message):
                     bot.restrict_chat_member(
                         message.chat.id,
                         message.user.id,
-                        datetime.now() + timedelta(mutetime)
+                        datetime.now() + timedelta(mutetime),
                         permissions=ChatPermissions(can_send_messages=False),
                     )
                     return

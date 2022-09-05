@@ -160,7 +160,7 @@ def gban(update: Update, context: CallbackContext):
 
     start_time = time.time()
     datetime_fmt = "%Y-%m-%dT%H:%M"
-    current_time = datetime.utcnow().strftime(datetime_fmt)
+    current_time = datetime.istnow().strftime(datetime_fmt)
 
     if chat.type != "private":
         chat_origin = "<b>{} ({})</b>\n".format(html.escape(chat.title), chat.id)

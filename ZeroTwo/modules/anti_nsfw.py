@@ -231,9 +231,8 @@ __Message has been deleted__
 
 @zbot.on_message(filters.command("scan"), group=3)
 async def scan_command(_, message: Message):
-    err = "Reply to an image/document/sticker/animation to scan it."
     if not message.reply_to_message:
-        return await message.reply("Reply to a message to scan it.")
+        return await message.reply("Reply to some media or text to scan it.")
     r = message.reply_to_message
     text = r.text or r.caption
     if text:
@@ -247,7 +246,6 @@ async def scan_command(_, message: Message):
 **Profanity:** `{data.profanity}`
     """
     if not text:
-        await message.reply(msg, quote=True)
         reply = message.reply_to_message
         m = await message.reply_text("Scanning")
         file_id = get_file_id(reply)

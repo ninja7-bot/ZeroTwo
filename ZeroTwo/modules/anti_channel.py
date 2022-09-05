@@ -24,8 +24,10 @@ async def set_antichannel(_, message: Message):
             await message.reply_text(f"Unrecognized arguments `{s}`")
         return
     elif len(args) == 1:
+        status=antichannel_status(chat_id)
+        title=message.chat.title
         await message.reply_text(
-            f"Antichannel setting is currently `{antichannel_status(chat_id)}` in **{message.chat.title}**.")
+            f"Antichannel setting is currently `{status}` in **{title}**.")
 
     
 custom_message_filter = filters.create(

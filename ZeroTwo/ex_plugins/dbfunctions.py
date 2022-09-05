@@ -327,9 +327,13 @@ async def set_nsfw_strength(chat_id: int, nsfwtype: int, value):
 
 async def get_nsfw_setting(chat_id: int) -> list:
     chat = nsfwmode.find_one({"chat_id": chat_id})
-    if chat:
-        return chat["nsfw_type"], chat["value"]
-    return
+    try:
+        for mode in chat:
+            nsfw_type=mode["nsfwtype"]
+            value=mode["value"]
+        return nsfw_type, value
+    except:
+        return None, None
 
 async def is_served_chat(chat_id: int) -> bool:
     chat = await chatsdb.find_one({"chat_id": chat_id})

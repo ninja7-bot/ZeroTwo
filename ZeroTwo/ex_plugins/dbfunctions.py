@@ -292,13 +292,13 @@ async def no_network(chat_id: int):
     is_no_network = await network_status(chat_id)
     if is_no_network:
         return
-    return antichanneldb.delete_one({"chat_id": chat_id})
+    return antichanneldb.insert_one({"chat_id": chat_id})
 
 async def yes_network(chat_id: int):
     is_yes_network = await network_status(chat_id)
     if is_yes_network:
         return
-    return antichanneldb.insert_one({"chat_id": chat_id})
+    return antichanneldb.delete_one({"chat_id": chat_id})
 
 async def save_tag(name: str):
     return networkdb.append({"tag": name})

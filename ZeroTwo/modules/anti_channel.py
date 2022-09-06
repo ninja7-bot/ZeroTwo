@@ -83,9 +83,9 @@ async def eliminate_user(_, message):
   user=message.from_user
   uid=user.id
   first=user.first_name
+  last=""
   if user.last_name:
-    last=user.last_name
-  return last
+    last+=user.last_name
   if not await network_status(chat_id):
     return
   for i in network_names:

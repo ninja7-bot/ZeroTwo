@@ -105,8 +105,9 @@ async def networks(_, message: Message):
 async def network_scan(_, message: Message):
   user=message.from_user
   first=user.first_name
+  last=""
   if user.last_name:
-    last=user.last_name
+    last+=user.last_name
   if first or last in network_names:
     await zbot.send_message(f"**Network Tag** `{last}` found in name the of {first}.")
   else:

@@ -74,7 +74,7 @@ async def toggle_network(_, message: Message):
         await message.reply_text(
             f"Anti Network System setting is currently `{status}` in **{title}**.\nCheck Banned Networks by running `/networks`.")
         
-"""
+@zbot.on_message()
 async def eliminate_user(_, message):
   if not message.from_user:
     return
@@ -86,15 +86,15 @@ async def eliminate_user(_, message):
   last=""
   if user.last_name:
     last+=user.last_name
-  #if not await network_status(chat_id):
-  #  return
+  if not await network_status(chat_id):
+    return
   if first or last in network_names:
     await message.delete()
-    #await chat.ban_member(uid)
-    #await zbot.send_message(text=f"Banned `{uid}`: **{user.mention}** for Network Tag in name.", chat_id=message.chat.id)
+    await chat.ban_member(uid)
+    await zbot.send_message(text=f"Banned `{uid}`: **{user.mention}** for Network Tag in name.", chat_id=message.chat.id)
   else:
     return
-"""
+
 @zbot.on_message(filters.command("networks"), group=3)
 async def networks(_, message: Message):
     m = message
@@ -102,47 +102,3 @@ async def networks(_, message: Message):
     for i in network_names:
       msg+=f"- `{i}`\n"
     await message.reply_text(msg)
-    
-@zbot.on_message(
-    (
-        filters.document
-        | filters.photo
-        | filters.sticker
-        | filters.animation
-        | filters.video
-        | filters.text
-    )
-)
-async def network_scan(_, message: Message):
-  user=message.from_user
-  uid=user.id
-  chat_id=message.chat.id
-  first=user.first_name
-  last=""
-  if user.last_name:
-    last+=user.last_name
-  if first or last in network_names:
-    await zbot.ban_chat_member(chat_id, user_id=uid)
-    await zbot.send_message(text=)
-  else:
-    return
-                         
-async def network_scan(_, message):
-  if not yes_network(message.chat.id):
-    return
-  first=message.from_user.first_name
-  last=""
-  if message.from_user.last_name:
-    last+=message.from_user.last_name
-  try:
-    if can_delete_messages:
-      await message.delete()
-    else:
-      await message.reply_text("Delete Permissions not granted.")
-    if can_ban_users:
-      await chat.ban_member(message.from_user.id)
-    else:
-      await message.reply_text("Ban Permissions not granted.")
-  except Exception:
-    return
-  await message.reply_text(f"**Network Tag** `{last}` found in name of {first}.")

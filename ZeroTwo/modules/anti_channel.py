@@ -91,7 +91,7 @@ async def eliminate_user(_, message: Message):
         await zbot.ban_chat_member(chat_id, uid)
         await message.reply_text(f"Banned `{uid}`: **{user.mention}** for Network Tag in name.")
       except:
-        await zbot.send_message(text=f"Admin Rights are missing.\n{user.mention} have a network tag in their name.")
+        await zbot.send_message(text=f"Admin Rights are missing.\n{user.mention} have a network tag in their name.",chat_id)
         
 @zbot.on_message(filters.command("networks"), group=3)
 async def networks(_, message: Message):
@@ -104,12 +104,13 @@ async def networks(_, message: Message):
 @zbot.on_message(filters.command("nscan"), group=3)
 async def network_scan(_, message: Message):
   user=message.from_user
+  chat_id=message.chat.id
   first=user.first_name
   last=""
   if user.last_name:
     last+=user.last_name
   if first or last in network_names:
-    await zbot.send_message(text=f"**Network Tag** `{last}` found in name the of {first}.")
+    await zbot.send_message(text=f"**Network Tag** `{last}` found in name the of {first}.", chat_id)
   else:
-    await zbot.send_message(text=f"{first} is not having any specified network tag in their name. Update network_names if they do have a network tag immediately.")
+    await zbot.send_message(text=f"{first} is not having any specified network tag in their name. Update network_names if they do have a network tag immediately.", chat_id)
                          

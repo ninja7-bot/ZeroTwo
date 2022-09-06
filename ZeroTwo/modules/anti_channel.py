@@ -97,17 +97,21 @@ async def add_network(_, message: Message):
     m = message
     uid=m.from_user.id
     tag=message.command
-    msg="Currently Blacklisted Network tags are:\n"
+    msg="**Currently Blacklisted Network tags are**:\n"
     if len(tag)==1:
         if uid==1191870547:
             for i in network_names:
-                msg+=f"-{i}\n"
+                msg+=f"- `{i}`\n"
             await message.reply_text(msg)
         else:
             await message.reply_text("You're not authorized. Bot only command for now.")
     if uid==1191870547:
         to_add=tag[1]
+        
+        if to_add in network_names:
+            return await message.reply_text("Network is already in the banned list.")
+        
         network_names.append(to_add)
-        return message.reply_text(f"Added the tag {to_add} to Banned Networks.")
+        return await message.reply_text(f"Added the tag {to_add} to Banned Networks.")
     else:
-        return message.reply_text("You're not authorized. Bot only command for now.")
+        return await message.reply_text("You're not authorized. Bot owner only command for now.")

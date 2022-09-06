@@ -8,6 +8,7 @@ from pyrogram.types import Message
 
 from ZeroTwo.ex_plugins.dbfunctions import (antichannel_status, disable_antichannel, enable_antichannel, 
                                             no_network, yes_network, network_status)
+from ZeroTwo.modules.helper_funcs.telethn.chatstatus import can_delete_messages, can_ban_users
 from ZeroTwo import ZeroTwoTelethonClient as zbot
 
 @user_admin(AdminPerms.CAN_RESTRICT_MEMBERS)

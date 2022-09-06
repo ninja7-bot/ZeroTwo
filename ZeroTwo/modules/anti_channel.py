@@ -4,7 +4,8 @@ from ..modules.helper_funcs.anonymous import user_admin, AdminPerms
 from pyrogram import filters
 from pyrogram.types import Message
 
-from ZeroTwo.ex_plugins.dbfunctions import antichannel_status, disable_antichannel, enable_antichannel, no_network, yes_network, network_status
+from ZeroTwo.ex_plugins.dbfunctions import (antichannel_status, disable_antichannel, enable_antichannel, 
+                                            no_network, yes_network, network_status, get_tag, save_tag)
 from ZeroTwo import ZeroTwoTelethonClient as zbot
 
 @user_admin(AdminPerms.CAN_RESTRICT_MEMBERS)

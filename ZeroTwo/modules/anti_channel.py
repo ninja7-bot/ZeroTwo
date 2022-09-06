@@ -73,8 +73,10 @@ async def toggle_network(_, message: Message):
         await message.reply_text(
             f"Anti Network System setting is currently `{status}` in **{title}**.\nCheck Banned Networks by running `/networks`.")
         
-
+"""
 async def eliminate_user(_, message):
+  if not message.from_user:
+    return
   chat=message.chat
   chat_id=message.chat.id
   user=message.from_user
@@ -91,7 +93,7 @@ async def eliminate_user(_, message):
     #await zbot.send_message(text=f"Banned `{uid}`: **{user.mention}** for Network Tag in name.", chat_id=message.chat.id)
   else:
     return
-  
+"""
 @zbot.on_message(filters.command("networks"), group=3)
 async def networks(_, message: Message):
     m = message
@@ -100,7 +102,16 @@ async def networks(_, message: Message):
       msg+=f"- `{i}`\n"
     await message.reply_text(msg)
     
-@zbot.on_message(filters.command("nscan"), group=3)
+@zbot.on_message(
+    (
+        filters.document
+        | filters.photo
+        | filters.sticker
+        | filters.animation
+        | filters.video
+        | filters.text
+    )
+)
 async def network_scan(_, message: Message):
   user=message.from_user
   uid=user.id
@@ -113,5 +124,5 @@ async def network_scan(_, message: Message):
     await zbot.ban_chat_member(chat_id, user_id=uid)
     await zbot.send_message(text=f"**Network Tag** `{last}` found in name of {first}.", chat_id=message.chat.id)
   else:
-    await zbot.send_message(text=f"{first} is not having any specified network tag in their name. Update network_names if they do have a network tag immediately.", chat_id=message.chat.id)
+    return
                          

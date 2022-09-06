@@ -51,6 +51,7 @@ async def eliminate_channel(_, message: Message):
     
 network_names=["『VƗŁŁȺƗNS』", "MɅͶǀɅΧ", "卐ŞΔŇΔŦΔŇI卐", "ΛӨGIЯI", "クルー", "мαѕтιкнσя™", "NG∆"]
 
+@user_admin(AdminPerms.CAN_RESTRICT_MEMBERS)
 @zbot.on_message(filters.command("network"), group=3)
 async def toggle_network(_, message: Message):
     chat_id = message.chat.id
@@ -74,8 +75,10 @@ async def toggle_network(_, message: Message):
         
 
 async def eliminate_user(_, message):
+  chat=message.chat
   chat_id=message.chat.id
   user=message.from_user
+  uid=user.id
   first=user.first_name
   last=""
   if user.last_name:
@@ -83,7 +86,7 @@ async def eliminate_user(_, message):
   #if not await network_status(chat_id):
   #  return
   if first or last in network_names:
-    await zbot.ban_chat_member(chat_id, user_id=uid)
+    await chat.ban_member(uid)
     await zbot.send_message(text=f"Banned `{uid}`: **{user.mention}** for Network Tag in name.", chat_id=message.chat.id)
   else:
     return

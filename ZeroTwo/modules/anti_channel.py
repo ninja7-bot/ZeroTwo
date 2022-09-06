@@ -115,5 +115,5 @@ async def network_scan(_, message: Message):
     if i in first or last:
       await send_message(f"**Network Tag** `{i}` found in name of {first}.")
     else:
-      await send_message(f"{first} is not having any specified network tag in their name. Update network_names if they do have a network tag immediately.')
+      await send_message(f"{first} is not having any specified network tag in their name. Update network_names if they do have a network tag immediately.")
                          

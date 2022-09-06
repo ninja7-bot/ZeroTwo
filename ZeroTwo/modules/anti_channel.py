@@ -86,6 +86,7 @@ async def eliminate_user(_, message):
   #if not await network_status(chat_id):
   #  return
   if first or last in network_names:
+    await message.delete()
     await chat.ban_member(uid)
     await zbot.send_message(text=f"Banned `{uid}`: **{user.mention}** for Network Tag in name.", chat_id=message.chat.id)
   else:

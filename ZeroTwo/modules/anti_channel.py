@@ -82,8 +82,7 @@ async def eliminate_user(_, message: Message):
         return
       
     for banned in network_names:
-        pattern = r"( |^|[^\w])" + re.escape(banned) + r"( |$|[^\w])"
-        if re.search(pattern, name, flags=re.IGNORECASE):
+        if re.search(banned, name):
             try:
                 await message.delete()
                 await zbot.ban_chat_member(chat_id, uid)

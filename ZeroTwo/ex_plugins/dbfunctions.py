@@ -301,10 +301,16 @@ async def yes_network(chat_id: int):
     return antichanneldb.insert_one({"chat_id": chat_id})
 
 async def save_tag(name: str):
-    return networkdb.insert_one({"tag": name})
+    return networkdb.append({"tag": name})
 
-async def get_tag():
-    return networkdb.find(tag)
+async def get_tag() -> list:
+    tags = networkdb.find({"tag": name)
+    if not tags:
+        return []
+    network_names = []
+    for names in await tags.to_list(length=1000000000):
+        network_names.append(names)
+    return network_names
     
 #NSFW Scanning
 async def is_nsfw_enabled(chat_id: int) -> bool:

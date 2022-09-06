@@ -46,7 +46,7 @@ async def eliminate_channel(_, message: Message):
     except:
         return await message.reply_text("Admin rights gib wen?")
     
-network_names=["『VƗŁŁȺƗNS』", "MɅͶǀɅΧ", "卐ŞΔŇΔŦΔŇI卐", "ΛӨGIЯI", "クルー"]
+#network_names=["『VƗŁŁȺƗNS』", "MɅͶǀɅΧ", "卐ŞΔŇΔŦΔŇI卐", "ΛӨGIЯI", "クルー"]
 
 @zbot.on_message(filters.command("network"), group=3)
 async def toggle_network(_, message: Message):
@@ -79,6 +79,7 @@ async def eliminate_user(_, message: Message):
     
     if not await network_status(chat_id):
         return
+    network_names = get_tag()
     
     for banned in network_names:
         pattern = r"( |^|[^\w])" + re.escape(banned) + r"( |$|[^\w])"
@@ -98,6 +99,9 @@ async def add_network(_, message: Message):
     uid=m.from_user.id
     tag=message.command
     msg="**Currently Blacklisted Network tags are**:\n"
+    
+    network_names=get_tag()
+    
     if len(tag)==1:
         if uid==1191870547:
             for i in network_names:
@@ -111,7 +115,7 @@ async def add_network(_, message: Message):
         if to_add in network_names:
             return await message.reply_text("Network is already in the banned list.")
         
-        network_names.append(to_add)
+        await save_tag(to_add)
         return await message.reply_text(f"Added the tag {to_add} to Banned Networks.")
     else:
         return await message.reply_text("You're not authorized. Bot owner only command for now.")

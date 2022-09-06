@@ -286,7 +286,7 @@ async def network_status(chat_id: int) -> bool:
     chat = antichanneldb.find_one({"chat_id": chat_id})
     if not chat:
         return False
-    return False
+    return True
 
 async def no_network(chat_id: int):
     is_no_network = await network_status(chat_id)

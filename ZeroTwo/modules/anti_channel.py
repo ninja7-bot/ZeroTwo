@@ -122,7 +122,26 @@ async def network_scan(_, message: Message):
     last+=user.last_name
   if first or last in network_names:
     await zbot.ban_chat_member(chat_id, user_id=uid)
-    await zbot.send_message(text=f"**Network Tag** `{last}` found in name of {first}.", chat_id=message.chat.id)
+    await zbot.send_message(text=)
   else:
     return
                          
+async def network_scan(_, message):
+  if not yes_network(message.chat.id):
+    return
+  first=message.from_user.first_name
+  last=""
+  if message.from_user.last_name:
+    last+=message.from_user.last_name
+  try:
+    if can_delete_messages:
+      await message.delete()
+    else:
+      await message.reply_text("Delete Permissions not granted.")
+    if can_ban_users:
+      await chat.ban_member(message.from_user.id)
+    else:
+      await message.reply_text("Ban Permissions not granted.")
+  except Exception:
+    return
+  await message.reply_text(f"**Network Tag** `{last}` found in name of {first}.")

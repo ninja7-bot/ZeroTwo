@@ -71,7 +71,7 @@ async def toggle_network(_, message: Message):
         
 @zbot.on_message(filters.group)
 async def eliminate_user(_, message: Message):
-    message=m
+    m=message
     chat_id = message.chat.id
     user=m.user
     name = m.user.first_name + m.user.last_name
@@ -94,7 +94,7 @@ async def eliminate_user(_, message: Message):
         
 @zbot.on_message(filters.command("addnetwork"), group=3)
 async def add_network(_, message: Message):
-    message = m
+    m = message
     uid=m.user.id
     tag=message.command
     if len(tag)==1:

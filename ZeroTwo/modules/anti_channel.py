@@ -74,7 +74,7 @@ async def eliminate_user(_, message: Message):
     m=message
     chat_id = message.chat.id
     user=m.from_user
-    name = m.user.first_name + m.user.last_name
+    name = m.from_user.first_name + m.from_user.last_name
     uid=m.user.id
     
     if not await network_status(chat_id):
@@ -97,10 +97,12 @@ async def add_network(_, message: Message):
     m = message
     uid=m.from_user.id
     tag=message.command
+    msg="Currently Blacklisted Network tags are:\n"
     if len(tag)==1:
         if uid==1191870547:
             for i in network_names:
-                await message.reply_text(f"Currently Blacklisted Network tags are:\n-{i}")
+                msg+=f"-{i}\n"
+            await message.reply_text(msg)
         else:
             await message.reply_text("You're not authorized. Bot only command for now.")
     if uid==1191870547:

@@ -304,7 +304,7 @@ async def save_tag(name: str):
     return networkdb.append({"tag": name})
 
 async def get_tag() -> list:
-    tags = networkdb.find({"tag": name)
+    tags = networkdb.find({"tag": name})
     if not tags:
         return []
     network_names = []

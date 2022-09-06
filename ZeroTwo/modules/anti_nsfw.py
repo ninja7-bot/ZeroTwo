@@ -7,7 +7,7 @@ from pyrogram.types import Message
 from telegram.ext import CallbackContext
 from telethon.utils import resolve_bot_file_id as res
 
-from ZeroTwo.modules.helper_funcs.telethn.chatstatus import can_delete_messages
+from ZeroTwo.modules.helper_funcs.telethn.chatstatus import can_delete_messages, is_user_admin
 from ZeroTwo.utils.permissions import adminsOnly
 from ZeroTwo.modules.log_channel import loggable
 from ZeroTwo.modules.warns import warn
@@ -252,6 +252,9 @@ async def nsfw_watcher(_, message: Message):
         return
     if not message.from_user:
         return
+    if is_user_admin:
+        return
+    
     getmode, value = await get_nsfw_setting(chat_id)
 
     file_id = get_file_id(message)

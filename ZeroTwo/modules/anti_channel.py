@@ -86,23 +86,16 @@ async def eliminate_user(_, message: Message):
     
     if not await network_status(chat_id):
         return
-      
-    for i in network_names:
-      await zbot.send_message("ZZZZZZZZZZZZZZZZZZ")
-      if i in first or last:
-        try:
-          await message.delete()
-          await zbot.ban_chat_member(chat_id, uid)
-          await zbot.send_message(f"Banned `{user.id}`: **{user.mention}** for Network Tag [{i}] in name.")
-        except:
-          return await message.reply_text("Admin rights gib wen?")
-      else:
-        return
+    if last in network_names:
+      try:
+        await zbot.ban_chat_member(chat_id, uid)
+        await message.reply_text(f"Banned `{uid}`: **{user.mention}** for Network Tag [{last}] in name.")
+      except:
+        await zbot.send_message(f"Admin Rights are missing.\n{user.mention} have a network tag [{last}] in their name.")
         
 @zbot.on_message(filters.command("networks"), group=3)
 async def networks(_, message: Message):
     m = message
-    uid=m.from_user.id
     msg="**Currently Blacklisted Network tags are**:\n"
     for i in network_names:
       msg+=f"- `{i}`\n"

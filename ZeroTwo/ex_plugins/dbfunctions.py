@@ -22,6 +22,7 @@ captchadb = db.captcha
 solved_captcha_db = db.solved_captcha
 captcha_cachedb = db.captcha_cache
 
+networkdb=db.network
 nsfwdb = db.nsfw
 nsfwmode = db.nsfwmode
 antiservicedb = db.antiservice
@@ -277,6 +278,25 @@ async def enable_antichannel(chat_id: int):
 async def disable_antichannel(chat_id: int):
     is_antichannel = await antichannel_status(chat_id)
     if is_antichannel:
+        return
+    return antichanneldb.insert_one({"chat_id": chat_id})
+
+#Anti-Network
+async def network_status(chat_id: int) -> bool:
+    chat = antichanneldb.find_one({"chat_id": chat_id})
+    if not chat:
+        return False
+    return False
+
+async def no_network(chat_id: int):
+    is_no_network = await network_status(chat_id)
+    if is_no_network:
+        return
+    return antichanneldb.delete_one({"chat_id": chat_id})
+
+async def yes_network(chat_id: int):
+    is_yes_network = await network_status(chat_id)
+    if is_yes_network:
         return
     return antichanneldb.insert_one({"chat_id": chat_id})
 

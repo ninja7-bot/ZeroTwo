@@ -76,12 +76,12 @@ async def eliminate_user(_, message: Message):
     chat_id = message.chat.id
     user=m.from_user
     name = str(m.from_user.first_name) + str(m.from_user.last_name)
-    uid=m.user.id
+    uid=m.from_user.id
     
     if not await network_status(chat_id):
         return
       
-    tags = await get_tag()
+    tags = await get_tag
     network_names = list(tags)
     
     for banned in network_names:

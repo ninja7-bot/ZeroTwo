@@ -101,6 +101,7 @@ async def networks(_, message: Message):
 async def network_scan(_, message: Message):
   user=message.from_user
   uid=user.id
+  chat_id=message.chat.id
   first=user.first_name
   last=""
   if user.last_name:

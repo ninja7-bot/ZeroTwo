@@ -77,21 +77,21 @@ async def eliminate_user(_, message: Message):
     m=message
     chat_id = message.chat.id
     user=m.from_user
+    uid=m.from_user.id
     first = str(m.from_user.first_name)
     if m.from_user.last_name:
       last=m.from_user.last_name
       return last
     
-    uid=m.from_user.id
-    
     if not await network_status(chat_id):
         return
-    if last in network_names:
+      
+    if first or last in network_names:
       try:
         await zbot.ban_chat_member(chat_id, uid)
-        await message.reply_text(f"Banned `{uid}`: **{user.mention}** for Network Tag [{last}] in name.")
+        await message.reply_text(f"Banned `{uid}`: **{user.mention}** for Network Tag in name.")
       except:
-        await zbot.send_message(f"Admin Rights are missing.\n{user.mention} have a network tag [{last}] in their name.")
+        await zbot.send_message(f"Admin Rights are missing.\n{user.mention} have a network tag in their name.")
         
 @zbot.on_message(filters.command("networks"), group=3)
 async def networks(_, message: Message):
@@ -103,7 +103,7 @@ async def networks(_, message: Message):
     
 @zbot.on_message(filters.command("nscan"), group=3)
 async def network_scan(_, message: Message):
-  user=message.user
+  user=message.from_user
   first=user.first_name
   if user.last_name:
     last=user.last_name

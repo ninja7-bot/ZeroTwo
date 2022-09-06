@@ -91,7 +91,8 @@ async def eliminate_user(_, message: Message):
         await zbot.ban_chat_member(chat_id, uid)
         await message.reply_text(f"Banned `{uid}`: **{user.mention}** for Network Tag in name.")
       except:
-        await zbot.send_message(f"Admin Rights are missing.\n{user.mention} have a network tag in their name.")
+        txt=f"Admin Rights are missing.\n{user.mention} have a network tag in their name."
+        await zbot.send_message(txt)
         
 @zbot.on_message(filters.command("networks"), group=3)
 async def networks(_, message: Message):

@@ -300,7 +300,12 @@ async def yes_network(chat_id: int):
         return
     return antichanneldb.insert_one({"chat_id": chat_id})
 
+async def save_tag(name: str):
+    return networkdb.insert_one({"tag": name})
 
+async def get_tag():
+    return networkdb.find(tag)
+    
 #NSFW Scanning
 async def is_nsfw_enabled(chat_id: int) -> bool:
     chat = nsfwdb.find_one({"chat_id": chat_id})

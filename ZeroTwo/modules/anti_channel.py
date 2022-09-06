@@ -89,15 +89,15 @@ async def eliminate_user(_, message: Message):
       
     for i in network_names:
       await zbot.send_message("ZZZZZZZZZZZZZZZZZZ")
-        if i in first or last:
-            try:
-                await message.delete()
-                await zbot.ban_chat_member(chat_id, uid)
-                await zbot.send_message(f"Banned `{user.id}`: **{user.mention}** for Network Tag [{i}] in name.")
-            except:
-                return await message.reply_text("Admin rights gib wen?")
-        else:
-            return
+      if i in first or last:
+        try:
+          await message.delete()
+          await zbot.ban_chat_member(chat_id, uid)
+          await zbot.send_message(f"Banned `{user.id}`: **{user.mention}** for Network Tag [{i}] in name.")
+         except:
+          return await message.reply_text("Admin rights gib wen?")
+      else:
+        return
         
 @zbot.on_message(filters.command("networks"), group=3)
 async def networks(_, message: Message):

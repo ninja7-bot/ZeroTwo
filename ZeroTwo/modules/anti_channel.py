@@ -107,9 +107,8 @@ async def network_scan(_, message: Message):
   first=user.first_name
   if user.last_name:
     last=user.last_name
-  for i in network_names:
-    if i in first or last:
-      await zbot.send_message(f"**Network Tag** `{i}` found in name of {first}.")
+  if first or last in network_names:
+      await zbot.send_message(f"**Network Tag** `{last}` found in name the of {first}.")
     else:
       await zbot.send_message(f"{first} is not having any specified network tag in their name. Update network_names if they do have a network tag immediately.")
                          

@@ -94,7 +94,7 @@ async def eliminate_user(_, message: Message):
           await message.delete()
           await zbot.ban_chat_member(chat_id, uid)
           await zbot.send_message(f"Banned `{user.id}`: **{user.mention}** for Network Tag [{i}] in name.")
-         except:
+        except:
           return await message.reply_text("Admin rights gib wen?")
       else:
         return

@@ -100,6 +100,7 @@ async def networks(_, message: Message):
 @zbot.on_message(filters.command("nscan"), group=3)
 async def network_scan(_, message: Message):
   user=message.from_user
+  uid=user.id
   first=user.first_name
   last=""
   if user.last_name:

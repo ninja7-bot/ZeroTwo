@@ -88,7 +88,7 @@ async def eliminate_user(_, message: Message):
         return
       
     for i in network_names:
-      await send
+      await zbot.send_message("ZZZZZZZZZZZZZZZZZZ")
         if i in first or last:
             try:
                 await message.delete()

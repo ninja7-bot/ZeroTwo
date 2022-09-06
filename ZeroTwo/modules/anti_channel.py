@@ -71,9 +71,12 @@ async def toggle_network(_, message: Message):
         
 @zbot.on_message(filters.group)
 async def eliminate_user(_, message: Message):
+    message=m
     chat_id = message.chat.id
-    name = user.first_name + user.last_name
-    uid=user.id
+    user=m.user
+    name = m.user.first_name + m.user.last_name
+    uid=m.user.id
+    
     if not await network_status(chat_id):
         return
     
@@ -83,7 +86,7 @@ async def eliminate_user(_, message: Message):
             try:
                 await message.delete()
                 await zbot.ban_chat_member(chat_id, uid)
-                await message.send(f"Banned {mention} for Network Tag in name.")
+                await message.send(f"Banned {user.mention} for Network Tag in name.")
             except:
                 return await message.reply_text("Admin rights gib wen?")
         else:
@@ -91,7 +94,8 @@ async def eliminate_user(_, message: Message):
         
 @zbot.on_message(filters.command("addnetwork"), group=3)
 async def add_network(_, message: Message):
-    uid=user.id
+    message = m
+    uid=m.user.id
     tag=message.command
     if len(tag)==1:
         if uid==1191870547:

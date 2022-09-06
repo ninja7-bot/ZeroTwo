@@ -82,21 +82,21 @@ async def eliminate_user(_, message):
   chat_id=message.chat.id
   user=message.from_user
   uid=user.id
-  f=user.first_name
+  first=user.first_name
   if user.last_name:
-    l=user.last_name
-  return l
+    last=user.last_name
+  return last
   if not await network_status(chat_id):
     return
   for i in network_names:
-    x=re.search(i, f) or re.search(i, l)
+    x=re.search(i, first) or re.search(i, last)
     if x:
       await message.delete()
       await chat.ban_member(uid)
       await zbot.send_message(text=f"Banned `{uid}`: **{user.mention}** for Network Tag [{i}] in name.", chat_id=message.chat.id)
     else:
       return
-
+  
 @zbot.on_message(filters.command("networks"), group=3)
 async def networks(_, message: Message):
     m = message

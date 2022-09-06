@@ -80,7 +80,9 @@ async def eliminate_user(_, message: Message):
     
     if not await network_status(chat_id):
         return
-    network_names = get_tag()
+      
+    tags = await get_tag()
+    network_names = list(tags)
     
     for banned in network_names:
         pattern = r"( |^|[^\w])" + re.escape(banned) + r"( |$|[^\w])"
@@ -88,7 +90,7 @@ async def eliminate_user(_, message: Message):
             try:
                 await message.delete()
                 await zbot.ban_chat_member(chat_id, uid)
-                await message.send(f"Banned {user.mention} for Network Tag in name.")
+                await message.send(f"Banned `{user.id}`: **{user.mention}** for Network Tag in name.")
             except:
                 return await message.reply_text("Admin rights gib wen?")
         else:
@@ -101,7 +103,8 @@ async def add_network(_, message: Message):
     tag=message.command
     msg="**Currently Blacklisted Network tags are**:\n"
     
-    network_names=get_tag()
+    tags=await get_tag
+    network_names=list(tags)
     
     if len(tag)==1:
         if uid==1191870547:

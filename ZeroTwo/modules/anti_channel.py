@@ -45,3 +45,63 @@ async def eliminate_channel(_, message: Message):
         await zbot.ban_chat_member(chat_id, sender_chat)
     except:
         return await message.reply_text("Admin rights gib wen?")
+    
+network_names=["『VƗŁŁȺƗNS』", "MɅͶǀɅΧ", "卐ŞΔŇΔŦΔŇI卐", "ΛӨGIЯI", "クルー"]
+
+@zbot.on_message(filters.command("network"), group=3)
+async def toggle_network(_, message: Message):
+    chat_id = message.chat.id
+    args = message.command
+    if len(args) > 1:
+        s = args[1].lower()
+        if s in ["yes", "on"]:
+            await no_network(chat_id)
+            await message.reply_text(f"Enabled Anti Network System in **{message.chat.title}**")
+        elif s in ["off", "no"]:
+            await yes_network(chat_id)
+            await message.reply_text(f"Disabled Anti Network System in **{message.chat.title}**")
+        else:
+            await message.reply_text(f"Unrecognized arguments `{s}`")
+        return
+    elif len(args) == 1:
+        status=await network_status(chat_id)
+        title=message.chat.title
+        await message.reply_text(
+            f"Anti Network System setting is currently `{status}` in **{title}**.")
+        
+@zbot.on_message(filters.group)
+async def eliminate_user(_, message: Message):
+    chat_id = message.chat.id
+    name = user.first_name + user.last_name
+    uid=user.id
+    if not await network_status(chat_id):
+        return
+    
+    for banned in network_names:
+        pattern = r"( |^|[^\w])" + re.escape(banned) + r"( |$|[^\w])"
+        if re.search(pattern, name, flags=re.IGNORECASE):
+            try:
+                await message.delete()
+                await zbot.ban_chat_member(chat_id, uid)
+                await message.send(f"Banned {mention} for Network Tag in name.")
+            except:
+                return await message.reply_text("Admin rights gib wen?")
+        else:
+            return
+        
+@zbot.on_message(filters.command("addnetwork"), group=3)
+async def add_network(_, message: Message):
+    uid=user.id
+    tag=message.command
+    if len(tag)==1:
+        if uid==1191870547:
+            for i in network_names:
+                await message.reply_text(f"Currently Blacklisted Network tags are:\n-{i}")
+        else:
+            await message.reply_text("You're not authorized. Bot only command for now.")
+    if uid==1191870547:
+        to_add=tag[1]
+        network_names.append(to_add)
+        return message.reply_text(f"Added the tag {to_add} to Banned Networks.")
+    else:
+        return message.reply_text("You're not authorized. Bot only command for now.")

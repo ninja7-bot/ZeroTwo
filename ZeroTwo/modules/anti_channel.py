@@ -81,7 +81,7 @@ async def eliminate_user(_, message: Message):
     if not await network_status(chat_id):
         return
       
-    network_names=await get_tag
+    network_names = await get_tag()
     
     for banned in network_names:
         pattern = r"( |^|[^\w])" + re.escape(banned) + r"( |$|[^\w])"
@@ -102,7 +102,7 @@ async def add_network(_, message: Message):
     tag=message.command
     msg="**Currently Blacklisted Network tags are**:\n"
    
-    network_names=await get_tag
+    network_names=await get_tag()
     
     if len(tag)==1:
         if uid==1191870547:

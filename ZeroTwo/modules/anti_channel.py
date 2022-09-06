@@ -5,7 +5,7 @@ from pyrogram import filters
 from pyrogram.types import Message
 
 from ZeroTwo.ex_plugins.dbfunctions import (antichannel_status, disable_antichannel, enable_antichannel, 
-                                            no_network, yes_network, network_status, get_tag, save_tag)
+                                            no_network, yes_network, network_status)
 from ZeroTwo import ZeroTwoTelethonClient as zbot
 
 @user_admin(AdminPerms.CAN_RESTRICT_MEMBERS)
@@ -47,7 +47,7 @@ async def eliminate_channel(_, message: Message):
     except:
         return await message.reply_text("Admin rights gib wen?")
     
-#network_names=["『VƗŁŁȺƗNS』", "MɅͶǀɅΧ", "卐ŞΔŇΔŦΔŇI卐", "ΛӨGIЯI", "クルー"]
+network_names=["『VƗŁŁȺƗNS』", "MɅͶǀɅΧ", "卐ŞΔŇΔŦΔŇI卐", "ΛӨGIЯI", "クルー", "мαѕтιкнσя™", "NG∆"]
 
 @zbot.on_message(filters.command("network"), group=3)
 async def toggle_network(_, message: Message):
@@ -68,7 +68,7 @@ async def toggle_network(_, message: Message):
         status=await network_status(chat_id)
         title=message.chat.title
         await message.reply_text(
-            f"Anti Network System setting is currently `{status}` in **{title}**.")
+            f"Anti Network System setting is currently `{status}` in **{title}**.\nCheck Banned Networks by running `/networks`.")
         
 @zbot.on_message(filters.group)
 async def eliminate_user(_, message: Message):
@@ -81,8 +81,6 @@ async def eliminate_user(_, message: Message):
     if not await network_status(chat_id):
         return
       
-    network_names = await get_tag()
-    
     for banned in network_names:
         pattern = r"( |^|[^\w])" + re.escape(banned) + r"( |$|[^\w])"
         if re.search(pattern, name, flags=re.IGNORECASE):
@@ -95,29 +93,11 @@ async def eliminate_user(_, message: Message):
         else:
             return
         
-@zbot.on_message(filters.command("addnetwork"), group=3)
-async def add_network(_, message: Message):
+@zbot.on_message(filters.command("networks"), group=3)
+async def networks(_, message: Message):
     m = message
     uid=m.from_user.id
-    tag=message.command
     msg="**Currently Blacklisted Network tags are**:\n"
-   
-    network_names=await get_tag()
-    
-    if len(tag)==1:
-        if uid==1191870547:
-            for i in network_names:
-                msg+=f"- `{i}`\n"
-            await message.reply_text(msg)
-        else:
-            await message.reply_text("You're not authorized. Bot only command for now.")
-    if uid==1191870547:
-        to_add=tag[1]
-        
-        if to_add in network_names:
-            return await message.reply_text("Network is already in the banned list.")
-        
-        await save_tag(to_add)
-        return await message.reply_text(f"Added the tag {to_add} to Banned Networks.")
-    else:
-        return await message.reply_text("You're not authorized. Bot owner only command for now.")
+    for i in network_names:
+      msg+=f"- `{i}`\n"
+    await message.reply_text(msg)

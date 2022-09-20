@@ -49,7 +49,7 @@ async def eliminate_channel(_, message: Message):
         await zbot.ban_chat_member(chat_id, sender_chat)
     except:
         return await message.reply_text("Admin rights gib wen?")
-    
+"""    
 network_names=["『VƗŁŁȺƗNS』", "MɅͶǀɅΧ", "卐ŞΔŇΔŦΔŇI卐", "ΛӨGIЯI", "クルー", "мαѕтιкнσя™", "NG∆"]
 
 @user_admin(AdminPerms.CAN_RESTRICT_MEMBERS)
@@ -103,3 +103,4 @@ async def networks(_, message: Message):
     for i in network_names:
       msg+=f"- `{i}`\n"
     await message.reply_text(msg)
+"""

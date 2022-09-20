@@ -322,7 +322,7 @@ def new_member(update: Update, context: CallbackContext):  # sourcery no-metrics
                     chat.id,
                     new_mem.id,
                     permissions=ChatPermissions(
-                        can_send_messages=True,
+                        can_send_messages=False,
                         can_send_media_messages=False,
                         can_send_other_messages=False,
                         can_invite_users=False,
@@ -331,7 +331,7 @@ def new_member(update: Update, context: CallbackContext):  # sourcery no-metrics
                         can_change_info=False,
                         can_add_web_page_previews=False,
                     ),
-                    until_date=(int(time.time() + 24 * 60 * 60)),
+                    until_date=(int(time.time() + 10 * 60)),
                 )
             if welc_mutes == "strong":
                 welcome_bool = False

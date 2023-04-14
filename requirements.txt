@@ -24,7 +24,7 @@ CurrencyConverter
 googletrans==4.0.0rc1
 google-trans-new
 jikanpy
-speedtest-cli
+#speedtest-cli
 regex
 bleach
 wikipedia
@@ -65,7 +65,7 @@ envparse
 better_profanity
 textblob 
 nudepy
-nekos.py
+#nekos.py
 motor
 fontTools
 opencv-python-headless
